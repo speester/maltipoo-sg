@@ -1,0 +1,189 @@
+---
+// Core page. Copy authored against briefs/maltipoo-lifespan-health.json (2026-07-13).
+// Regulatory/health schedule facts verbatim from the CANONICAL block in business-context.md.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo Lifespan and Health in Singapore | Maltipoo.sg';
+const description =
+  'Maltipoos commonly live 12 to 15 years. The health issues worth knowing, the Singapore vaccination schedule, and what a licensed shop actually checks before handover.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Lifespan & Health', url: '/maltipoo-lifespan-health' },
+];
+
+const faqItems = [
+  {
+    q: 'How long do Maltipoos live?',
+    a: 'Commonly 12 to 15 years, with well-cared-for dogs going beyond. [VERIFY range against a vet source] Small dogs outlive large ones as a class, and daily care, weight control and dental habits move the needle more than anything else.',
+  },
+  {
+    q: 'What health problems are common in Maltipoos?',
+    a: 'The watch list is short: patella luxation (a slipping kneecap common in toy breeds), dental crowding that makes tooth care non-negotiable, and tear-duct or eye irritation on light faces. None is a reason to avoid the breed; all are reasons to know the signs.',
+  },
+  {
+    q: 'Should I get pet insurance in Singapore?',
+    a: 'Worth pricing while your puppy is young; premiums and exclusions grow with age. [VERIFY current SG insurer landscape before citing names] Weigh it against self-saving a fixed monthly amount; either beats being uncovered at 3am.',
+  },
+  {
+    q: 'How often should a Maltipoo see the vet?',
+    a: 'Through the vaccination course: weeks 6, 8 and 12, with an optional fourth visit at week 16 if your vet advises. After that, the annual booster doubles as the yearly check-up, with sterilisation usually advised from around seven months.',
+  },
+  {
+    q: 'How do I spot a healthy Maltipoo puppy?',
+    a: 'Bright eyes, clean ears, no discharge, steady weight gain, and paperwork: vaccination records for weeks 6 and 8 at minimum, plus a seller you can find on the AVS registry. A seller who cannot produce records is the health risk.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-lifespan-health',
+    title,
+    description,
+    aboutName: 'Maltipoo lifespan and health',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-lifespan-health" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Lifespan & health</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo lifespan and common health issues</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        The honest health picture: how long they live, the short watch list, and exactly what
+        gets checked before a puppy leaves our shop.
+      </p>
+      <a href={whatsappLink('Hi! Could you share the health records process for your Maltipoo puppies?')} class="btn-cta">Ask about health checks</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="What is the Maltipoo lifespan?">
+    Maltipoos commonly live 12 to 15 years, putting the maltipoo life expectancy among the
+    longer-lived small dogs. The conditions worth watching are patella luxation, dental
+    disease and tear-duct issues; the vaccination schedule in Singapore runs weeks 6, 8 and
+    12 with an annual booster from Year 1.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="Why small crosses live long" id="longevity">
+    <p>
+      Small dogs age slower than large ones as a class, and how long do maltipoos live
+      depends mostly on the ordinary things: lean weight, brushed teeth, yearly boosters,
+      and early attention when something changes. Stories of the oldest maltipoo reaching
+      the late teens are common enough to be believable, and they belong to owners who did
+      the boring things consistently.
+    </p>
+    <p>
+      Mixed parentage draws from two breed lines, which broadens the genetic deck. It is not
+      a guarantee, and any seller who sells it as one is selling; day-to-day care outweighs
+      ancestry from the moment the puppy comes home.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Longevity levers"
+      items={[
+        'Lean weight: the single biggest lever',
+        'Dental care: daily, from puppyhood',
+        'Annual booster and check-up, every year',
+        'Early vet visits when something changes',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The conditions worth knowing" id="conditions" reverse>
+    <p>
+      The maltipoo health problems worth knowing fit on one hand, and most maltipoo health issues on the list are manageable. Patella luxation, a kneecap that slips, is the toy-breed classic: a skipping step or a
+      hind-leg hop is the sign, lean weight is the prevention, and vet grading decides if it
+      ever needs more. [VERIFY condition details against a vet source before launch]
+    </p>
+    <p>
+      Dental disease is the one that actually shortens small-dog lives: tiny jaws crowd
+      teeth, plaque wins early, and the oral-care items in the starter kit exist precisely
+      because of it. Third on the list, eye and tear-duct irritation shows loudest on light
+      coats; the <a href="/blog/maltipoo-tear-stains">tear-stain routine</a> handles the
+      cosmetic end, and sudden changes go to the vet.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The watch list"
+      items={[
+        'Patella luxation: watch the skip-step',
+        'Dental crowding: brush from day one',
+        'Eyes and tear ducts: changes go to the vet',
+        'All manageable; none breed-disqualifying',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The Singapore schedule, exactly" id="schedule" tinted>
+    <p>
+      The puppy vaccination schedule Singapore vets run is weeks 6, 8 and 12 for core jabs,
+      deworming at every visit, and an optional fourth jab at week 16 if the vet advises it.
+      Puppies go home about a week after the second jab, at around week nine, and the annual
+      booster starts from Year 1. Sterilisation is usually advised from about seven months,
+      which also drops the licence fee, as the
+      <a href="/maltipoo-price-singapore">price guide</a> details.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The schedule"
+      items={[
+        'Week 6: first vaccination + deworming',
+        'Week 8: second vaccination + deworming',
+        'Week 9: home, about a week after the 2nd jab',
+        'Week 12: third vaccination + deworming',
+        'Week 16: optional 4th jab if advised',
+        'Year 1 onward: annual booster',
+        'From ~7 months: sterilisation, per your vet',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="What we actually check, and put in writing" id="checks">
+    <p>
+      You will see "health-tested" on plenty of listings with nothing behind it. Here is our
+      version, itemised: every puppy is vet-checked and microchipped, vaccinations and
+      deworming are done to schedule with records handed to you, and the 5-day bring-back
+      promise is in writing: if your puppy falls sick in the first five days, bring it back
+      to us and we handle the care.
+    </p>
+    <p>
+      A note from the shop floor: whoever you buy from, ask to see the week 6 and week 8
+      records before money moves. A legitimate seller produces them in seconds, and the ones
+      who cannot are the health risk, not the breed. Verify any seller, us included, on the
+      <a href="https://avs.nparks.gov.sg/outreach/resources/public-registry-of-avs-licensed-pet-shops/" rel="noopener" target="_blank">AVS registry</a>;
+      ours is licence {site.license.avsNumber}.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="In writing, every puppy"
+      items={[
+        'Vet-checked and microchipped',
+        'Vaccination + deworming records handed over',
+        '5-day bring-back care if your puppy falls sick',
+        'Seller verifiable on the AVS registry',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Records ready to show"
+    secondaryText="Every available puppy comes with its vaccination paperwork; ask and we send it."
+    secondaryHref="/puppies"
+    secondaryLabel="See available puppies"
+  />
+</BaseLayout>

@@ -1,0 +1,184 @@
+---
+// Core page. Copy authored against briefs/maltipoo-grooming-haircuts.json (2026-07-13).
+// Salon prices attributed to live SERP research (Pawpy Kisses Balestier et al., 2026-07-13).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo Haircuts and Grooming in Singapore | Maltipoo.sg';
+const description =
+  'Maltipoo haircut styles (teddy bear, puppy cut, summer cut) and the grooming routine that survives Singapore humidity, with real salon price ranges.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Grooming & Haircuts', url: '/maltipoo-grooming-haircuts' },
+];
+
+const faqItems = [
+  {
+    q: 'How often does a Maltipoo need grooming?',
+    a: 'A professional groom every four to six weeks, and brushing at home a few times a week between visits. In Singapore humidity, stretching the salon interval is how coats end up matted and shaved short.',
+  },
+  {
+    q: 'Can I groom my Maltipoo at home?',
+    a: 'Maintenance, yes: brushing, face and eye-corner tidying, nail checks, and baths with a full blow-dry. Full haircuts are worth leaving to a professional; the starter kit includes the grooming set for everything in between.',
+  },
+  {
+    q: 'Which haircut is best for Singapore weather?',
+    a: 'The puppy cut or a shorter summer cut are the most humidity-proof. The teddy bear cut works fine too if the brushing routine holds; it carries more coat, so it mats faster when neglected.',
+  },
+  {
+    q: 'How much does Maltipoo grooming cost in Singapore?',
+    a: 'For a toy-sized dog: roughly $50 to $70 for a basic groom (bath, dry, nails, tidy) and $80 to $130 for a full groom with a haircut, with detailed style cuts running up to $200 at boutique salons. Figures from published Singapore salon price lists.',
+  },
+  {
+    q: 'My Maltipoo’s coat is matted. What should I do?',
+    a: 'Do not bath a matted coat; water tightens the knots. Book a groomer for professional de-matting, and if the coat is too far gone, take the short restart cut without guilt; it grows back in a few months with the routine reset.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-grooming-haircuts',
+    title,
+    description,
+    aboutName: 'Maltipoo grooming and haircuts',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-grooming-haircuts" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Grooming</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo grooming and haircut styles</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        The cuts that suit this coat, what Singapore salons actually charge, and the
+        between-grooms routine our humidity insists on.
+      </p>
+      <a href={whatsappLink('Hi! Could you share grooming advice for a Maltipoo puppy?')} class="btn-cta">Ask a grooming question</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="What are the best Maltipoo haircuts?">
+    The most popular maltipoo haircut styles are the teddy bear cut, the puppy cut and a
+    shorter summer cut. In Singapore, plan a professional groom every 4 to 6 weeks ($50 to
+    $70 basic, $80 to $130 full for a toy-sized dog) plus brushing a few times a week to
+    beat humidity matting.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="The three cuts that work here" id="styles">
+    <p>
+      The teddy bear cut maltipoo owners request most is the crowd favourite: coat trimmed to an even plush
+      length with a rounded face, maximum soft-toy effect, and the highest brushing
+      commitment of the three. The puppy cut maltipoo owners default to keeps everything
+      uniformly short and is the easiest to maintain. Maltipoo summer haircuts go shortest of all, trading fluff for airflow, and earn their name in this weather.
+    </p>
+    <p>
+      Whichever maltipoo cut you pick from the maltipoo grooming styles above, one spec is non-negotiable on the grooming brief: eye corners cut
+      fully clear. It is the difference between a stain-free apricot face and a weekly
+      battle, as the <a href="/blog/maltipoo-tear-stains">tear-stain guide</a> explains.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The style menu"
+      items={[
+        'Teddy bear cut: plush + round face, most upkeep',
+        'Puppy cut: uniform short, easiest to keep',
+        'Summer cut: shortest, most humidity-proof',
+        'Every cut: eye corners fully clear',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="What grooming costs in Singapore" id="cost" reverse>
+    <p>
+      Published salon price lists put a toy-sized dog at roughly $50 to $70 for a basic groom
+      (bath, blow-dry, nails, sanitary tidy) and $80 to $130 for a full groom with a haircut;
+      detailed scissored styles run $160 to $200 at boutique salons. Pawpy Kisses, a few
+      doors down Balestier Road from us, publishes exactly this tier for 1 to 5kg dogs.
+    </p>
+    <p>
+      At 2 to 4kg, a Maltipoo sits permanently in that cheapest weight tier, one of the quiet
+      perks of the <a href="/maltipoo-size">toy size</a>. Across a year, expect eight to ten
+      salon visits alongside the home routine.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Salon costs (published SG tiers)"
+      items={[
+        'Basic groom, toy size: $50 to $70',
+        'Full groom with cut: $80 to $130',
+        'Detail scissor styles: to $200',
+        'Cadence: every 4 to 6 weeks',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The between-grooms routine humidity demands" id="routine" tinted>
+    <p>
+      Singapore is hard mode for a Poodle-cross coat. Moisture keeps the coat damp, damp coat
+      knots, and knots become mats within days. The counter-routine: brush to the skin, not
+      just the surface, a few times a week; dry the coat completely after baths and rainy
+      walks (a half-dried Maltipoo is a hot-spot risk); and wipe the eye corners daily.
+    </p>
+    <p>
+      A note from the shop floor: the once-a-month bath advice in overseas guides meets
+      reality here around day nine, when owners tell us the coat smells. Bathe when the dog
+      needs it, dry it properly, and nobody suffers; the maltipoo grooming schedule that
+      works is the one that responds to the coat in front of you.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The weekly reality"
+      items={[
+        'Brush to the skin, few times weekly',
+        'Full blow-dry after every bath and soaking',
+        'Daily 60-second eye-corner wipe',
+        'Bathe when needed, not by the calendar',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The first groom, done right" id="first-groom">
+    <p>
+      Book the first full session only after the vaccination course allows outings, keep it
+      short, and let the groomer prioritise a calm experience over a perfect finish. Clipper
+      fear is real and hard to undo; a first groom that ends happy buys a lifetime of easy
+      salon visits.
+    </p>
+    <p>
+      Between now and then, rehearse at home with the kit's grooming set: touch paws, brush
+      briefly, reward, stop. Ten minutes of rehearsal beats an hour of restraint later.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="First-groom brief"
+      items={[
+        'After the vaccination course completes',
+        'Short session, calm beats perfect',
+        'Rehearse brushing and paw handling at home',
+        'Brief the groomer: teddy face, eyes clear',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Grooming kit included"
+    secondaryText="Every puppy goes home with the 30-item starter kit, grooming set inside."
+    secondaryHref="/maltipoo-price-singapore"
+    secondaryLabel="See what's included"
+  />
+</BaseLayout>

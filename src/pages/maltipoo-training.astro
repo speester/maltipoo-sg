@@ -1,0 +1,181 @@
+---
+// Core page. Copy authored against briefs/maltipoo-training.json (2026-07-13).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Training a Maltipoo Puppy in Singapore | Maltipoo.sg';
+const description =
+  'Training a Maltipoo puppy: toilet training in an HDB flat, quiet-marker work for a vocal breed, alone-time conditioning, and the free first lesson every puppy gets.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Training', url: '/maltipoo-training' },
+];
+
+const faqItems = [
+  {
+    q: 'Are Maltipoos easy to train?',
+    a: 'Yes, among the easiest of the toy breeds: the Poodle side means cues land in days and toilet training in weeks, provided the schedule stays consistent. The breed rewards routine and forgives beginners.',
+  },
+  {
+    q: 'How long does toilet training take?',
+    a: 'Four to twelve weeks is the honest range, driven almost entirely by how consistently the humans run the schedule. Take the puppy to the spot after every meal, nap and play session, reward on target, and skip the scolding; accidents are data, not defiance.',
+  },
+  {
+    q: 'Do I need a clicker?',
+    a: 'No; a consistent marker word ("yes!") in the same tone does the same job. Consistency beats equipment in every part of dog training.',
+  },
+  {
+    q: 'How do I stop puppy biting?',
+    a: 'Redirect to a chew toy the moment teeth touch skin, and end the game if it continues; attention is the reward, so withdrawing it is the lesson. Teething peaks around four months, which is what the chew toys in the starter kit are for.',
+  },
+  {
+    q: 'When should training start?',
+    a: 'Day one at home, in ten-minute sessions. A nine-week-old learns its name, the toilet spot and the beginnings of quiet and alone-time habits in the first fortnight, and those early habits are the cheapest training you will ever do.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-training',
+    title,
+    description,
+    aboutName: 'Maltipoo training',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-training" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Training</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Training a Maltipoo puppy in Singapore</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        Quick learner, two breed-specific priorities most guides miss, and a free first
+        lesson to start you right.
+      </p>
+      <a href={whatsappLink('Hi! Could you tell me about the free training lesson that comes with a puppy?')} class="btn-cta">Ask about the free lesson</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="How to train a Maltipoo?">
+    Maltipoo training moves fast thanks to the Poodle side: toilet training, basic cues and
+    tricks land quickly with positive reinforcement. The two non-negotiables for this breed
+    are early quiet-marker training (it is vocal) and alone-time conditioning from week one
+    (it is attachment-dependent).
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="Toilet training in a flat" id="toilet">
+    <p>
+      Maltipoo potty training runs on schedule, not scolding. Decide the toilet spot before the puppy arrives: pee pad in a fixed corner of the
+      playpen zone, or downstairs on a schedule, but not both at once. The playpen we set up
+      at delivery anchors the whole routine; puppy wakes, eats or finishes play, puppy goes
+      to the spot, reward lands on target.
+    </p>
+    <p>
+      The honest timeline is four to twelve weeks, and the variable is the humans. A
+      schedule kept at 80% consistency trains slowly; kept at 100%, a clever puppy gets it
+      startlingly fast. Scolding teaches hiding, not holding, so skip it entirely.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Toilet training, condensed"
+      items={[
+        'One spot, decided before day one',
+        'After every meal, nap and play: to the spot',
+        'Reward on target, never scold misses',
+        'Honest timeline: 4 to 12 weeks',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Quiet training for a vocal breed" id="quiet" reverse>
+    <p>
+      The <a href="/maltipoo-temperament">temperament guide</a> is upfront: this is an
+      alert-barking breed. So quiet is a trained skill, not a hope. Mark and reward the
+      moment of silence after an alert bark ("quiet", treat), rehearse the door chime on
+      purpose at low stakes, and never shout over barking; to a dog, that is joining in.
+    </p>
+    <p>
+      The payoff is measured in neighbour relations: HDB's courtesy guidance names
+      continuous barking as the line, and a Maltipoo taught quiet in week one never gets
+      near it.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Quiet, step by step"
+      items={[
+        'Reward the silence, not the bark',
+        'Rehearse door chimes deliberately',
+        'Never shout over barking',
+        'Start week one, before habits set',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Alone-time conditioning from week one" id="alone" tinted>
+    <p>
+      This breed's biggest training need is the one nobody posts reels about. Because a
+      Maltipoo is attachment-dependent, being alone must be taught in doses: step out for
+      two minutes and return calmly, then five, then twenty, with the pen holding a chew and
+      the departure kept boring. The pen is the safe place, never the punishment place.
+    </p>
+    <p>
+      A note from the shop floor: the classic mistake is taking leave for the puppy's first
+      fortnight, being home around the clock, then returning to work cold turkey. Condition
+      the absences from day one, even while you are home, and the separation spiral never
+      starts.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Alone-time protocol"
+      items={[
+        'Two minutes first, build in doses',
+        'Departures and returns kept boring',
+        'Pen = safe place, chew inside',
+        'Practise while on leave, not after it',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Your free first lesson" id="lesson">
+    <p>
+      Every puppy from us includes a first lesson with an AVS-certified trainer, usually
+      within the first weeks home. Maltipoo intelligence makes one good session go far: it covers the foundations above, tuned to your flat and routine, and sets the marker habits so everything after gets easier.
+    </p>
+    <p>
+      After that, our WhatsApp thread stays open: training questions, the odd regression
+      during <a href="/blog/maltipoo-adolescence">adolescence</a>, and the reassurance that
+      whatever your puppy just did, we have seen it before.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Included with every puppy"
+      items={[
+        'First lesson, AVS-certified trainer',
+        'Tuned to your home and routine',
+        'Ongoing advice on WhatsApp, no expiry',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Start with the right match"
+    secondaryText="Training is easier when the breed fits the routine. Check yours first."
+    secondaryHref="/#lifestyle-fit"
+    secondaryLabel="Take the routine test"
+  />
+</BaseLayout>

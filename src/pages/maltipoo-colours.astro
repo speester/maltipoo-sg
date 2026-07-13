@@ -1,0 +1,184 @@
+---
+// Core page. Copy authored against briefs/maltipoo-colours.json (2026-07-13).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo Colours in Singapore: Apricot First | Maltipoo.sg';
+const description =
+  'Maltipoo colours explained for Singapore buyers: the apricot spectrum we actually place, white, cream and black in the breed, and why puppy coats lighten with age.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Colours', url: '/maltipoo-colours' },
+];
+
+const faqItems = [
+  {
+    q: 'What colour Maltipoo is most expensive?',
+    a: 'Deeper and rarer apricot shades sit higher within our $3,288 to $5,988 all-in range, and rare solids command premiums market-wide. Colour and expected adult size are the only two price drivers here; the price guide explains both.',
+  },
+  {
+    q: 'Will a white Maltipoo stay white?',
+    a: 'Yes; white is the one shade that does not shift. It is the coloured coats, especially apricot, that lighten as the adult coat arrives. White faces also show tear stains the most, which is a care note rather than a flaw.',
+  },
+  {
+    q: 'Are black Maltipoos rare?',
+    a: 'Rarer than apricot, locally very much so. Many black puppies also silver toward a blue-grey as they mature. [VERIFY colour-fade claim against a breed source] If black matters to you, look at the parents and ask for photos of previous litters grown up.',
+  },
+  {
+    q: 'Can you predict a puppy’s adult colour?',
+    a: 'Within a range, yes: the parents’ adult coats are the best guide, and pigment at the ears and paws hints at where a coat will settle. What no honest seller can promise is an exact shade from an eight-week photo.',
+  },
+  {
+    q: 'Does coat colour affect temperament?',
+    a: 'No. An apricot, white or black Maltipoo runs on the same wiring: devoted, clever, and keen on company. Routine shapes the dog; colour shapes the photos.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-colours',
+    title,
+    description,
+    aboutName: 'Maltipoo colours',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+
+const swatches = [
+  ['Cream apricot', '#f4e3c8'],
+  ['Apricot', '#e8b985'],
+  ['Deep apricot', '#d19158'],
+  ['White', '#faf7f0'],
+  ['Cream', '#f1e7d0'],
+  ['Black', '#2e2b28'],
+  ['Brown', '#7a5236'],
+  ['Apricot & white', '#f7efe2'],
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-colours" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Colours</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo colours in Singapore</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        The breed's full palette, the apricot reality of what actually gets placed here, and
+        the colour-change truth most listings skip.
+      </p>
+      <a href={whatsappLink('Hi! Which Maltipoo colours do you currently have available?')} class="btn-cta">Ask about colours</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="What colours do Maltipoos come in?">
+    Maltipoo colors span apricot, cream, white, black, brown and parti combinations. In
+    Singapore, the overwhelming majority we place are apricot, from pale cream-apricot to
+    deep amber. Puppy coats typically lighten as the adult coat arrives, so the parents
+    predict colour better than any puppy photo.
+  </AnswerCapsule>
+
+  <section class="container-site py-10" id="palette">
+    <h2 class="text-2xl md:text-3xl mb-4">The palette, from our counter</h2>
+    <p class="text-ink-soft max-w-[65ch] mb-6">
+      Swatches beat adjectives, so here are the maltipoo colours Singapore buyers actually meet. The top row is the apricot maltipoo spectrum that fills our
+      gallery most weeks; the bottom row is the rest of the breed's wardrobe, seen here far
+      less often.
+    </p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {swatches.map(([name, hex]) => (
+        <div class="pop p-4 text-center">
+          <div class="rounded-[var(--radius-media)] w-full aspect-square mb-3" style={`background:${hex}`} aria-hidden="true"></div>
+          <p class="font-semibold m-0">{name}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CaptionedBlock heading="The apricot spectrum we actually place" id="apricot">
+    <p>
+      Ask what is available in any given month and the answer will usually be three shades of
+      the same warm family: cream-apricot, classic apricot, and the deep amber that
+      photographs like toffee. Deeper shades sit higher in the
+      <a href="/maltipoo-price-singapore">price range</a> because demand outruns supply, not
+      because the dog underneath differs.
+    </p>
+    <p>
+      A white maltipoo or a cream maltipoo appears now and then, and a black maltipoo or
+      brown maltipoo is a genuine event. If your heart is set on a rarity, tell us early and
+      expect an honest wait rather than a promise.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Local colour reality"
+      items={[
+        'Apricot family: most of what we place',
+        'White and cream: occasional',
+        'Black and brown: rare here, ask early',
+        'Deeper apricot: prices higher, same dog',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Why puppy colour is a moving target" id="clearing" reverse>
+    <p>
+      Poodle-cross coats carry a fading gene breeders call clearing: a rich apricot puppy
+      often matures a shade or two lighter by its first birthday, and some black coats
+      silver toward grey. [VERIFY fade specifics against a breed source] Nothing is wrong
+      with the coat; the listing photo was simply a snapshot of a moving process.
+    </p>
+    <p>
+      A note from the shop floor: the only colour complaints we have ever heard trace back to
+      sellers who promised a shade from a photo. We show you the parents instead, because
+      their adult coats are the finished product the puppy is heading toward.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Colour honesty"
+      items={[
+        'Coats lighten toward year one (clearing)',
+        'Parents show the destination shade',
+        'No honest seller promises an exact tone',
+        'Photos are snapshots, not guarantees',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Colour and daily care" id="care" tinted>
+    <p>
+      Colour changes nothing about the dog and one thing about the routine: light faces show
+      tear staining most, so the daily eye wipe from the
+      <a href="/blog/maltipoo-tear-stains">tear-stain guide</a> matters more for white and
+      cream coats. Grooming cadence, costs and the
+      <a href="/maltipoo-grooming-haircuts">haircut menu</a> are identical across every
+      colour, and so is the temperament.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Care by colour"
+      items={[
+        'Tear stains: visible most on light faces',
+        'Grooming: identical routine, all colours',
+        'Temperament: no colour link, at all',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="See this month's shades"
+    secondaryText="The gallery shows the apricot spectrum currently available or arriving."
+    secondaryHref="/puppies"
+    secondaryLabel="See available puppies"
+  />
+</BaseLayout>

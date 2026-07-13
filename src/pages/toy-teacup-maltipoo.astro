@@ -1,0 +1,172 @@
+---
+// Core page. Copy authored against briefs/toy-teacup-maltipoo.json (2026-07-13).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Toy, Teacup and Mini Maltipoos, Honestly | Maltipoo.sg';
+const description =
+  'Teacup Maltipoo, toy Maltipoo, mini: what the labels mean, what is marketing, the health risks of extreme miniaturisation, and the 2 to 4kg toys we actually place.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Toy & Teacup', url: '/toy-teacup-maltipoo' },
+];
+
+const faqItems = [
+  {
+    q: 'Are teacup Maltipoos real?',
+    a: 'As a marketing label, everywhere; as a registered size class, nowhere. No kennel or breed body defines "teacup", and a teacup maltipoo full grown usually lands right in normal toy territory. It typically means an unusually small puppy sold at a premium, often just a normal toy photographed young.',
+  },
+  {
+    q: 'How small is too small?',
+    a: 'Vets flag adult weights much under 2kg as elevated-risk territory for hypoglycemia, fragile bones and dental crowding. [VERIFY threshold against a vet source] A healthy toy at 2 to 4kg is already among the smallest dogs in any lift lobby.',
+  },
+  {
+    q: 'Why do teacup listings cost so much more?',
+    a: 'Because the word sells. The premium buys a label, not a healthier or more finished dog, and sometimes it buys miniaturisation the puppy pays for later. Our price drivers are colour and size within the healthy toy range, nothing else.',
+  },
+  {
+    q: 'Can a shop guarantee adult size?',
+    a: 'No honest one can. The parents are the best predictor, which is why we keep their sizing on record and show you in person. Anyone guaranteeing an exact adult weight is guessing out loud.',
+  },
+  {
+    q: 'Will a toy Maltipoo fit standard carriers?',
+    a: 'Comfortably. At 2 to 4kg it fits soft carriers approved for MRT and buses and cabin-size airline carriers, one of the practical perks of the true toy size.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/toy-teacup-maltipoo',
+    title,
+    description,
+    aboutName: 'Toy, teacup and mini Maltipoo sizes',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/toy-teacup-maltipoo" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Sizes & labels</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Toy, teacup and mini Maltipoos, honestly explained</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        One of these words describes a dog; one describes a Poodle parent; one describes a
+        price strategy. Sorting them out saves you thousands and the puppy a lot more.
+      </p>
+      <a href={whatsappLink('Hi! Could you explain the sizes of your available Maltipoo puppies?')} class="btn-cta">Ask about real sizes</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="What is the difference between toy, teacup and mini Maltipoos?">
+    Toy and mini describe the Poodle parent: a toy maltipoo finishes 2 to 4kg, a mini
+    maltipoo 4 to 6kg. Teacup is a marketing label with no registered standard anywhere,
+    usually meaning an unusually small puppy at a premium, with health risks attached. We
+    place healthy toys and skip the label.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="What the labels actually map to" id="labels">
+    <p>
+      Toy and mini are real, boring words: they name which Poodle was the parent, and they
+      predict the adult ranges in the <a href="/maltipoo-size">size guide</a>. Teacup maps
+      to nothing. No kennel club, no breed registry, no veterinary body defines it, which is
+      why a "micro teacup maltipoo" import can be marketed here at any weight the seller
+      likes.
+    </p>
+    <p>
+      You will meet the label constantly in the "teacup maltipoo Singapore" search results, teacup maltipoo price threads included, because it converts. That is its entire job.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Label decoder"
+      items={[
+        'Toy: Toy Poodle parent, 2 to 4kg adult',
+        'Mini: Miniature Poodle parent, 4 to 6kg adult',
+        'Teacup: no standard, anywhere, full stop',
+        'Micro teacup: the same word, twice the markup',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The health cost of extreme small" id="health" reverse>
+    <p>
+      Push a toy breed smaller than nature keeps it and predictable bills follow:
+      hypoglycemia crashes in puppies too small to buffer a missed meal, bones that snap
+      from sofa-height jumps, and dental crowding in a jaw with no room to argue. [VERIFY
+      specifics against a vet source before launch] Some of the smallest are simply runts
+      relabelled at a premium.
+    </p>
+    <p>
+      None of this is the puppy's fault, and none of it is visible in the photo. It is why
+      the <a href="/maltipoo-lifespan-health">health guide</a> talks about weight as the
+      first longevity lever, and why our floor is a healthy toy, not the smallest sellable
+      dog.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Below-2kg risk list"
+      items={[
+        'Hypoglycemia from missed meals',
+        'Fragile bones, sofa-jump fractures',
+        'Dental crowding in a tiny jaw',
+        'Runt-relabelling at a premium',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The economics of the label" id="economics" tinted>
+    <p>
+      A note from the shop floor: buyers regularly arrive with a "teacup budget" a thousand
+      dollars above our range, built from listings where the word did the pricing. Within
+      our {`$3,288 to $5,988`} all-in range, the <a href="/maltipoo-price-singapore">price
+      guide</a> is explicit: colour and size within the healthy toy range move the figure,
+      and no word on a tag ever does.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Price sanity check"
+      items={[
+        'Premium for the word teacup: $0 here',
+        'Real drivers: colour, healthy-range size',
+        'A label is not a warranty',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="What we place instead" id="instead">
+    <p>
+      The maltipoo toy size is the sweet spot: healthy toy Maltipoos, 2 to 4kg full grown, parents shown so you can see the finished
+      size standing in front of you. At that weight the dog is already featherweight for any
+      flat, any carrier and any lap; smaller buys risk, not convenience.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Our line"
+      items={[
+        'Healthy toys, 2 to 4kg, parents on record',
+        'No teacup label, on cards or in chat',
+        'Already the smallest dog in most lifts',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="See real toy sizes"
+    secondaryText="The available puppies are all healthy-range toys; ask for the parents' sizing."
+    secondaryHref="/puppies"
+    secondaryLabel="See available puppies"
+  />
+</BaseLayout>
