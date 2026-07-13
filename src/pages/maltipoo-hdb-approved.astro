@@ -1,0 +1,221 @@
+---
+// Core page (maximum-gain). Copy authored against briefs/maltipoo-hdb-approved.json (2026-07-13).
+// Rule facts verbatim from hdb.gov.sg (crawled 2026-07-13, list updated 6 May 2026).
+// Licence-transfer evidence owner-confirmed 2026-07-13.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Are Maltipoos HDB Approved? Yes, By Rule | Maltipoo.sg';
+const description =
+  'Maltipoos are HDB approved by rule: Maltese (item 33), Toy Poodle (item 42) and item 62 approve the cross. The proof from HDB’s own list, plus licence steps, fees and flat rules.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'HDB Guide', url: '/maltipoo-hdb-approved' },
+];
+
+const faqItems = [
+  {
+    q: 'Is a Maltipoo an HDB approved breed?',
+    a: 'Yes, by rule rather than by grace. HDB’s approved list names the Maltese at item 33 and the Toy and Miniature Poodle at item 42, and item 62 approves a cross of any two breeds in items 1 to 61. A Maltipoo is exactly that cross, so it qualifies outright.',
+  },
+  {
+    q: 'Which crossbreeds are HDB approved?',
+    a: 'Any cross of two breeds that both appear in items 1 to 61 of the HDB list. That covers the Maltipoo (Maltese x Toy Poodle) and equivalents like the Cavapoo (Cavalier King Charles Spaniel x Poodle). A cross involving a breed NOT on the list does not inherit approval.',
+  },
+  {
+    q: 'Can I keep two Maltipoos in an HDB flat?',
+    a: 'No. HDB allows one dog from the approved list per flat, and flat owners found breaching the rule can be fined up to $4,000. If your household wants two dogs, that usually means one registered at another eligible address, or private property.',
+  },
+  {
+    q: 'Can I keep a Maltipoo and cats together in a flat?',
+    a: 'Yes. Since 1 September 2024, HDB allows up to two licensed cats as well as one dog of an approved breed in the same flat. Both species need their own AVS licences.',
+  },
+  {
+    q: 'Do condos follow the same approved list?',
+    a: 'No, the list is an HDB rule. Condominiums set their own by-laws through the MCST, and most allow small dogs like a 2 to 4kg Maltipoo, but check your estate’s rules before buying rather than after.',
+  },
+  {
+    q: 'What licence does my Maltipoo need, and when?',
+    a: 'Every dog in Singapore must hold an AVS licence through the PALS system, HDB flat or not. We complete the paperwork with you at purchase, and your first year costs $13.50 because a nine-week-old puppy is under the five-month fee threshold.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-hdb-approved',
+    title,
+    description,
+    aboutName: 'HDB approval for Maltipoos',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-hdb-approved" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">HDB guide</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Are Maltipoos HDB approved?</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        Plenty of listings stamp "HDB Approved!" on a photo. Here is the actual rule, from
+        HDB's own list, plus everything that comes with the yes.
+      </p>
+      <a href={whatsappLink('Hi! I live in an HDB flat and would like to ask about Maltipoo puppies.')} class="btn-cta">Ask about HDB-ready puppies</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Is a Maltipoo HDB approved?">
+    Yes, by rule. HDB's approved-breeds list names the Maltese at item 33 and the Toy and
+    Miniature Poodle at item 42, and item 62 approves "a cross of any 2 breeds in items 1 to
+    61", which is exactly what a Maltipoo is. You may keep one dog from the approved list per
+    flat, and every dog needs an AVS licence.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="The proof, from HDB's own list" id="proof">
+    <p>
+      Open HDB's
+      <a href="https://www.hdb.gov.sg/managing-my-home/home-ownership/keeping-pets" rel="noopener" target="_blank">Guidelines on Keeping Pets</a>
+      and count down the approved list. Item 33 is the Maltese. Item 42 is the Poodle, toy or
+      miniature. Then item 62 closes the question: "Cross of any 2 breeds in items 1 to 61."
+    </p>
+    <p>
+      A Maltipoo is a Maltese crossed with a Toy or Miniature Poodle, both named on the list,
+      so the cross is approved by the list itself, not by a seller's badge. The page was last
+      updated in May 2026, and it is the only source that matters on this question.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The three-line proof"
+      items={[
+        'Item 33: Maltese, named on the HDB list',
+        'Item 42: Poodle (Toy or Miniature), named',
+        'Item 62: cross of any 2 breeds in items 1 to 61',
+        'Maltese x Toy Poodle = Maltipoo = approved',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Why some sites still call crossbreeds a grey area" id="grey-area" reverse>
+    <p>
+      You will find breed guides claiming crossbreeds are "not officially HDB-approved under
+      the standard list." Read item 62 again; the list approves crosses explicitly. The grey
+      area framing survives because few writers scroll past item 61, and because "check with
+      HDB" is a safer sentence than a citation.
+    </p>
+    <p>
+      We can add operational proof to the paper one. When a shop transfers an AVS dog licence
+      to a customer, the system flags any breed that needs separate HDB approval for a flat.
+      Across {site.maltipoosPlaced} Maltipoo placements, many into HDB homes, that flag has
+      never appeared for a Maltipoo. A note from the shop floor: the transfer screen is the
+      moment a wrong breed claim would surface, and it never has.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Rule + reality"
+      items={[
+        'The rule: item 62 approves the cross',
+        'The reality: 100+ licence transfers, zero flags',
+        'The badge on a listing proves neither',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The rules that come with the yes" id="rules" tinted>
+    <p>
+      HDB approval is a package, not a blank cheque. One dog from the approved list per flat,
+      with fines up to $4,000 for breaches. Every dog must be licensed with AVS through PALS,
+      per the
+      <a href="https://avs.nparks.gov.sg/pets/licensing-a-pet/information-on-dog-and-cat-licences/licensing-requirements/" rel="noopener" target="_blank">licensing requirements</a>:
+      $13.50 a year under five months, $81 a year unsterilised after that, and $13.50 a year or
+      a one-time $35 lifetime licence once sterilised.
+    </p>
+    <p>
+      The rule HDB spells out beyond paperwork is consideration: care for your dog so it does
+      not bark continuously, and keep it inside the flat. With a vocal, people-attached breed
+      like the Maltipoo, that means teaching quiet and settled-alone habits from week one,
+      which is exactly what the included trainer lesson starts on.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="HDB dog rules, complete"
+      items={[
+        'One approved-list dog per flat',
+        'Fine up to $4,000 for breaches',
+        'AVS licence mandatory (PALS)',
+        'Fees: $13.50 under 5 months; $81 unsterilised; $35 lifetime sterilised',
+        'Up to 2 licensed cats may share the flat',
+        'No continuous barking; dog stays within the flat',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Why a toy Maltipoo fits flat life beyond the rulebook" id="flat-life">
+    <p>
+      Approval says a Maltipoo may live in a flat; a 2 to 4kg frame says it lives there
+      comfortably. Fifteen to twenty minutes of morning walk before the heat, indoor play in
+      the evening, and a lap for the hours between covers its needs, and the featherweight
+      build makes lifts, void decks and carriers easy.
+    </p>
+    <p>
+      The honest caveat is company, not space. A Maltipoo wants someone around through the day,
+      so run the <a href="/#lifestyle-fit">routine check</a> before you fall for a face. If
+      your flat is empty from 8am to 6pm, we will point you to a more independent breed and
+      mean it.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Flat-fit, honestly"
+      items={[
+        'Space: featherweight, any flat size works',
+        'Exercise: short walks, indoor play',
+        'Noise: vocal breed, train quiet early',
+        'Company: wants someone home most days',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="How we handle licensing when you buy" id="licensing" reverse>
+    <p>
+      At purchase we complete the AVS licence paperwork with you, so your Maltipoo goes home
+      already licensed to your name and address. The first year costs $13.50, because a
+      nine-week-old puppy sits under the five-month threshold, and the fee is folded into the
+      <a href="/maltipoo-price-singapore">all-in price</a> workflow rather than left as
+      homework.
+    </p>
+    <p>
+      First dog in the household? Singapore asks first-time owners to complete the free online
+      <a href="https://avs.nparks.gov.sg/pets/licensing-a-pet/applying-for-dog-and-cat-licences/pet-ownership-course/" rel="noopener" target="_blank">AVS Pet Ownership Course</a>
+      before licensing. We point you to it during purchase so it never delays the homecoming.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Licensing, handled"
+      items={[
+        'Paperwork completed with you at purchase',
+        'First licence: $13.50 for the year',
+        'Course link provided for first-timers',
+        'Renewal reminders from us, not fines from AVS',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="The yes is settled"
+    secondaryText="See the apricot toy Maltipoos currently available, all HDB-ready by rule."
+    secondaryHref="/puppies"
+    secondaryLabel="See available puppies"
+  />
+</BaseLayout>
