@@ -38,11 +38,9 @@ See [.claude/docs/SCHEMA.md](.claude/docs/SCHEMA.md). Organization = Maltipoo.sg
 
 ## Design
 
-Before ANY design/restyle work, invoke `premium-design-standard` via the Skill tool (re-invoke fresh each time). Hard constraints — must NOT read as:
-- curioustails.sg Claymorphism (no pastel cream/peach/coral, no Fredoka/Nunito), or
-- cavapoopuppy.sg Bluebell Sky (no sky-blue #EAF3FE, royal #3D6BFF, sunshine #FFC53D, Grandstander/Outfit, hard-offset "sunny-pop" shadows).
+Before ANY design/restyle work, invoke `premium-design-standard` via the Skill tool (re-invoke fresh each time).
 
-New design-system.md is written fresh at Checkpoint 3. New kie.ai consistency string: `maltipoo-sg-<hex1>-<hex2>-<lighting>-v1`.
+**Portfolio design policy (owner decision 2026-07-13): shared bones, distinct skin.** Component architecture/layout/motion may be shared with cavapoopuppy.sg; palette + fonts + imagery must be this site's own. Forbidden skins: curioustails.sg cream/peach/coral + Fredoka/Nunito; cavapoopuppy.sg sky-blue #EAF3FE / #3D6BFF / #FFC53D + Grandstander/Outfit. design-system.md written at Checkpoint 3. kie.ai consistency string: `maltipoo-sg-<hex1>-<hex2>-<lighting>-v1`. Zero copy reuse stays the hard rule.
 
 ## Development
 
