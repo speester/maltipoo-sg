@@ -1,0 +1,231 @@
+---
+// Core page. Copy authored against briefs/maltipoo-price-singapore.json (2026-07-13).
+// Price facts: config/business-context.md canonical. Market figures attributed, never ours.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
+
+const title = 'Maltipoo Price Singapore: From $3,288 All-In | Maltipoo.sg';
+const description =
+  'The real Maltipoo price in Singapore: $3,288 to $5,988 all-in at our AVS licensed shop, what moves the price, what is included, and yearly costs from licence to grooming.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Price Guide', url: '/maltipoo-price-singapore' },
+];
+
+const faqItems = [
+  {
+    q: 'Why is the Maltipoo dog price a range and not one number?',
+    a: 'Because colour and adult size genuinely move the price of Maltipoo puppies. A deeper or rarer apricot shade and a smaller expected adult size sit higher in the $3,288 to $5,988 range; a classic apricot toy sits lower. WhatsApp us and you get the exact all-in figure for each available puppy, same day.',
+  },
+  {
+    q: 'How much deposit reserves a puppy?',
+    a: 'Reservations run on a simple deposit and balance structure, with the balance settled at collection and nothing added on top. Message us for the current deposit amount for the puppy you are eyeing, since it scales with the price. [VERIFY exact deposit policy wording with owner]',
+  },
+  {
+    q: 'Why is the teacup Maltipoo price so much higher, and the mini Maltipoo price Singapore sellers quote so varied?',
+    a: 'Teacup is a marketing label, not a registered size, and the premium often buys extreme miniaturisation with real health risks. Mini quotes vary because the label is loose too. We place toy Maltipoos of around 2 to 4kg and skip the label entirely; a healthy toy is small enough for any Singapore flat.',
+  },
+  {
+    q: 'How much is the dog licence?',
+    a: 'The AVS dog licence is $13.50 a year for a puppy under five months, which covers your first licence since puppies go home at around nine weeks. From five months an unsterilised dog is $81 a year; once sterilised it is $13.50 a year or a one-time $35 lifetime licence.',
+  },
+  {
+    q: 'I found a cheaper Maltipoo online. What am I missing?',
+    a: 'Usually one of three things: extras not yet added (vaccinations, microchip, kit), an overseas import price before shipping and paperwork, or an unlicensed seller. Check any shop on the AVS public registry first; NParks has fined a buyer $7,000 for purchasing a smuggled dog.',
+  },
+  {
+    q: 'What does a Maltipoo cost per month after purchase?',
+    a: 'Budget roughly $100 to $200 a month across grooming and food. Grooming for a toy-sized dog runs $50 to $70 basic or $80 to $130 full every four to six weeks at Singapore salons, food for a 2 to 4kg dog is modest, and the licence works out to pennies once sterilised. [VERIFY food figure]',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-price-singapore',
+    title,
+    description,
+    aboutName: 'Maltipoo price in Singapore',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  productSchema({
+    name: 'Maltipoo puppy (Singapore)',
+    description: 'Toy Maltipoo puppies from an AVS licensed pet shop in Singapore, $3,288 to $5,988 all-in.',
+  }),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-price-singapore" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Price guide</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">How much does a Maltipoo cost in Singapore</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        Search "maltipoo singapore price" and every result makes you WhatsApp for the number.
+        Here it is published instead: our full range, what is inside it, and what the first
+        year really costs.
+      </p>
+      <a href={whatsappLink('Hi! Could you share current Maltipoo pricing and availability?')} class="btn-cta">Get an exact quote</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="What is the Maltipoo price in Singapore?">
+    A Maltipoo costs {site.pricing.range} all-in at our AVS licensed shop; colour and adult
+    size decide the exact figure. Around the market, quotes run from $2,000-plus promo
+    listings to imported puppies near five figures, usually before extras. All-in here means
+    vaccinations to date, microchip, the 30-item starter kit, delivery with setup, the first
+    training lesson, and licensing.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="What the all-in price includes" id="included">
+    <p>
+      The reason our floor is {site.pricing.from} and not lower is that nothing is sold
+      separately afterwards. The starter kit alone is 30 items itemised at $533: playpen,
+      carrier, bed, grooming set, toilet-training set, food, bowls, oral care and toys.
+    </p>
+    <p>
+      On top of the kit: free home delivery with the playpen assembled in your flat, the first
+      lesson with an AVS-certified trainer, the AVS licence paperwork completed at purchase,
+      and vaccinations already on the 6, 8 and 12 week schedule up to handover.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Inside the all-in price"
+      items={[
+        'Vaccinations to date + deworming + microchip',
+        'Starter kit: 30 items, $533 itemised value',
+        'Free home delivery and playpen setup',
+        'First AVS-certified trainer lesson',
+        'AVS licensing completed at purchase',
+        '5-day bring-back care included',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="What moves a puppy within the range" id="drivers" reverse>
+    <p>
+      Two things, honestly, set the price of Maltipoo puppies here: colour and expected adult
+      size. Deeper and rarer apricot shades price higher than pale cream-apricot, and a
+      smaller expected adult frame prices higher than a larger toy. That is the entire
+      formula; a Maltipoo puppy price never carries a premium for a fancier word on the tag.
+    </p>
+    <p>
+      A note from the shop floor: when a listing elsewhere says "teacup" with a four-digit
+      premium attached, you are usually paying for the label, and sometimes for miniaturisation
+      the puppy's health will pay for later. We place toy Maltipoos of 2 to 4kg and stop there.
+      <!-- TODO: link /toy-teacup-maltipoo once built -->
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Price drivers, ranked"
+      items={[
+        'Coat shade: deep or rare apricot sits higher',
+        'Adult size: smaller toy frames sit higher',
+        'That is the whole list',
+        'No charge for labels like teacup, ever',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The market around us, honestly" id="market" tinted>
+    <p>
+      Compare freely; we publish so you can. Promo listings at licensed shops run around
+      $2,688 to $3,288 nett (OnlyPaws, at the time of checking), boutique sellers list minis at
+      $4,600 to $5,800 (Wag a Tail), and Korean import sites quote USD $2,769 to $9,985 with
+      shipping folded in and paperwork on you. Most of those figures are before extras like
+      kits, delivery, or training.
+    </p>
+    <p>
+      Below all of that sit the "Maltipoo under $500" listings, and those are how buyers end up
+      with smuggled, unvaccinated puppies; NParks has fined a buyer $7,000 for exactly that
+      purchase. Whatever you compare, check the seller on the
+      <a href="https://avs.nparks.gov.sg/outreach/resources/public-registry-of-avs-licensed-pet-shops/" rel="noopener" target="_blank">AVS public registry</a>
+      first; ours is licence {site.license.avsNumber}.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Market snapshot (attributed)"
+      items={[
+        'Licensed shop promos: ~$2,688 to $3,288 nett',
+        'Boutique minis: $4,600 to $5,800',
+        'Korean imports: USD $2,769 to $9,985',
+        'Us: $3,288 to $5,988, all-in, published',
+        'Under $500: walk away',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The first year, itemised" id="first-year">
+    <p>
+      The purchase is the big number; the first year is smaller than most buyers expect. Your
+      first AVS dog licence costs $13.50, because a nine-week-old puppy is under the five-month
+      threshold. From five months an unsterilised dog is $81 a year, and once sterilised (vets
+      usually advise from around seven months) it drops back to $13.50 a year or a one-time $35
+      lifetime licence; the
+      <a href="https://avs.nparks.gov.sg/pets/licensing-a-pet/information-on-dog-and-cat-licences/licensing-requirements/" rel="noopener" target="_blank">AVS licensing requirements</a>
+      page carries the fine print.
+    </p>
+    <p>
+      Grooming is the recurring line: $50 to $70 for a basic groom or $80 to $130 for a full
+      one on a toy-sized dog, every four to six weeks. Food for a 2 to 4kg dog is a small bag
+      that lasts, the annual booster starts from Year 1, and the starter kit means your setup
+      costs on day one are zero.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Year one, beyond the purchase"
+      items={[
+        'Licence: $13.50 (first year, under 5 months)',
+        'Grooming: $50 to $130 per session, 8 to 10 sessions',
+        'Sterilisation from ~7 months, then $35 lifetime licence option',
+        'Annual booster from Year 1',
+        'Setup gear: $0, the kit covers it',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Is a Maltipoo high maintenance?" id="maintenance" reverse>
+    <p>
+      In two ways, yes, and we would rather you know now. The coat needs brushing between
+      grooms and a salon visit every four to six weeks, or it mats in our humidity. And the dog
+      needs company: a Maltipoo is attachment-dependent and suits homes where someone is around
+      through the day, which is the honest test on
+      <a href="/#lifestyle-fit">the routine check</a>.
+    </p>
+    <p>
+      In the ways people fear, no. Exercise is fifteen to twenty minutes before the heat plus
+      indoor play, a 2 to 4kg dog eats little, and the daily upkeep beyond the coat is a
+      <a href="/blog/maltipoo-tear-stains">60-second eye wipe</a>. High maintenance coat, low
+      maintenance everything else, high return on company.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Maintenance, honestly"
+      items={[
+        'Coat: yes, brushing + groom every 4 to 6 weeks',
+        'Company: yes, wants someone home',
+        'Exercise: no, short walks suit it',
+        'Food and space: no, featherweight needs',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="See who is available"
+    secondaryText="Current apricot toy Maltipoos, with exact all-in quotes one message away."
+    secondaryHref="/puppies"
+    secondaryLabel="See available puppies"
+  />
+</BaseLayout>
