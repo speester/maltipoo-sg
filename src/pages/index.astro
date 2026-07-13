@@ -1,0 +1,294 @@
+---
+// Money page — CHECKPOINT 3 SAMPLE. Copy below is PLACEHOLDER (drawn from
+// config/business-context.md facts) and will be replaced by content-writer
+// against briefs/home.json before this page is called finished.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import StatStrip from '../components/StatStrip.astro';
+import ListingGrid from '../components/ListingGrid.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import CloudDivider from '../components/CloudDivider.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
+import { availablePups } from '../data/puppies';
+
+const title = 'Maltipoo Singapore | Toy Maltipoo Puppies | Maltipoo.sg';
+const description =
+  'Toy Maltipoo puppies in Singapore from $3,288 all-in, by AVS licensed Curious Tails (AS24J00046). Starter kit, delivery, first training lesson and licensing included. WhatsApp us.';
+
+const faqItems = [
+  {
+    q: 'How much does a Maltipoo cost in Singapore?',
+    a: 'Maltipoo puppies at Maltipoo.sg are $3,288 to $5,988 all-in, depending on colour and adult size. That covers the 30-item starter kit, home delivery with playpen setup, the first training lesson, and the AVS licensing paperwork done at purchase.',
+  },
+  {
+    q: 'Are Maltipoos HDB approved?',
+    a: 'Yes, by rule. HDB approves the Maltese (item 33), the Toy and Miniature Poodle (item 42), and any cross of two approved breeds (item 62), which is exactly what a Maltipoo is. Across 100+ placements, licence transfers to HDB homes have never been flagged either.',
+  },
+  {
+    q: 'When can my Maltipoo puppy come home?',
+    a: 'Around week nine, about a week after the second vaccination. Core jabs run at weeks 6, 8 and 12 with deworming at each visit. If your home is not ready yet, we board your puppy free for up to a month after deposit, vaccinations continuing on schedule.',
+  },
+  {
+    q: 'Can a Maltipoo be left alone while we are at work?',
+    a: 'Honestly, this is not the breed for an empty weekday home. Maltipoos are attachment-dependent and want daytime company. They thrive with retirees, WFH owners, and households with a helper or grandparent at home. If everyone is out 8am to 6pm, a Cavapoo suits better.',
+  },
+  {
+    q: 'How big does a toy Maltipoo get?',
+    a: 'The Maltipoos we place are toy-sized, finishing around 2 to 4kg full grown. That featherweight build is part of the appeal: lap-sized for the sofa, carrier-friendly for the MRT, and comfortable in any flat.',
+  },
+  {
+    q: 'How do I check a pet shop is AVS licensed?',
+    a: 'Look the shop up on the AVS public registry of licensed pet shops on the NParks site. Curious Tails, the shop behind Maltipoo.sg, holds AVS licence AS24J00046. Verify it there before visiting us or anyone else.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/',
+    title,
+    description,
+    aboutName: 'Maltipoo puppies in Singapore',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema([{ name: 'Home', url: '/' }]),
+  productSchema({
+    name: 'Maltipoo puppy (Singapore)',
+    description: 'Toy Maltipoo puppies from an AVS licensed pet shop in Singapore, $3,288 to $5,988 all-in.',
+  }),
+  faqSchema(faqItems),
+];
+
+const coatSwatches = [
+  ['Cream apricot', '#f4e3c8'],
+  ['Apricot', '#e8b985'],
+  ['Deep apricot', '#d19158'],
+  ['Apricot & white', '#f7efe2'],
+];
+---
+
+<BaseLayout title={title} description={description} path="/" schemas={schemas}>
+  <Hero
+    heading="The featherweight companion for homes with company"
+    lede="Toy Maltipoo puppies, 2 to 4kg full grown, placed by an AVS licensed shop that asks about your routine before showing you a puppy. Vaccinated on the 6, 8 and 12 week schedule, licensed at purchase, delivered with the full 30-item starter kit. From $3,288, all-in."
+    ctaMessage="Hi! I would like to ask about Maltipoo puppies."
+    secondaryLabel="See available puppies"
+    secondaryHref="#recent"
+  />
+
+  <section class="container-site pt-2">
+    <p class="text-ink-soft max-w-[65ch] m-0">
+      Availability moves week to week. WhatsApp us to confirm a puppy, then book a viewing at
+      the Balestier shop.
+    </p>
+  </section>
+  <ListingGrid heading="Available Maltipoo puppies for sale" items={availablePups} mode="available" id="recent" />
+
+  <AnswerCapsule question="What is a Maltipoo?" id="what-is-a-maltipoo">
+    A Maltipoo is a small companion cross between a Maltese and a Toy or Miniature Poodle. Ours
+    finish toy-sized at roughly 2 to 4kg, with a soft low-shedding coat, most often apricot. It
+    inherits the Maltese devotion to its people and the Poodle's quick mind, which makes it a
+    devoted lap dog for homes where someone is usually around.
+  </AnswerCapsule>
+
+  <StatStrip
+    stats={[
+      { value: site.maltipoosPlaced, label: 'Maltipoos placed in Singapore' },
+      { value: site.reviews.rating, label: `Google rating (${site.reviews.count} reviews)` },
+      { value: site.pricing.from, label: 'All-in, nothing hidden' },
+      { value: 'AVS', label: `Licence ${site.license.avsNumber}` },
+    ]}
+  />
+
+  <CaptionedBlock heading="A velcro dog, and proud of it" id="why-maltipoo">
+    <p>
+      Some breeds tolerate your company. A Maltipoo insists on it. It follows you from room to
+      room, naps against your leg, and treats your lap as assigned seating. For the right home,
+      that devotion is exactly the point.
+    </p>
+    <p>
+      The right home is one with company through the day: retirees, people who work from home,
+      families with a helper or a grandparent around. That is who we place Maltipoos with, and
+      why those placements stay happy.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Maltipoo at a glance"
+      items={[
+        'Maltese × Toy or Miniature Poodle cross',
+        'Toy-sized: 2 to 4kg for most of ours',
+        'Low-shedding coat, apricot most common here',
+        'Deeply people-attached; wants daytime company',
+        'Featherweight and carrier-friendly',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CloudDivider fill="var(--color-tint-200)" against="var(--color-base)" />
+  <div style="background: var(--color-tint-200);">
+    <CaptionedBlock heading="The one question we ask before showing you a puppy" id="lifestyle-fit">
+      <p>
+        Who is home between 8am and 6pm? Everything else, colour, coat, even budget, matters
+        less than that answer.
+      </p>
+      <p>
+        If someone is around most of the day, a Maltipoo will be the happiest dog in the block.
+        If the flat empties out every weekday, we will say so plainly and point you to a more
+        independent breed instead; our sister shop places Cavapoos for exactly that routine.
+        Talking a buyer out of the wrong dog costs us a sale and earns us a review, and we have
+        made that trade many times.
+      </p>
+      <FactsCard
+        slot="side"
+        heading="Which routine are you?"
+        items={[
+          'Someone home most of the day: the Maltipoo sweet spot',
+          'WFH with meetings: yes, with a settled pen routine',
+          'Both out 8am to 6pm daily: consider a Cavapoo instead',
+          'Away morning to night: we will advise against a puppy for now',
+        ]}
+      />
+    </CaptionedBlock>
+  </div>
+  <CloudDivider fill="var(--color-tint-200)" against="var(--color-base)" flip />
+
+  <CaptionedBlock heading="What every Maltipoo goes home with" id="included" reverse>
+    <p>
+      All-in means an itemised list, not a slogan. The starter kit runs to 30 items worth over
+      $500: playpen, carrier, bed, grooming set, toilet-training set, food, bowls, oral care and
+      toys. We deliver it free, set the playpen up in your home, and show you how everything
+      works before we leave.
+    </p>
+    <p>
+      The first lesson with an AVS-certified trainer is included, and the dog licence paperwork
+      is completed with you at purchase.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Included with every puppy"
+      items={[
+        'Starter kit: 30 items, over $500 in value',
+        'Free home delivery and playpen setup',
+        'First lesson with an AVS-certified trainer',
+        'AVS licensing completed at purchase',
+        'Free boarding up to 1 month after deposit',
+        '5-day bring-back care if your puppy falls sick',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <section class="container-site py-10" id="price">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 p-8 md:p-12 grid md:grid-cols-[1.4fr_1fr] gap-8 items-center">
+      <div>
+        <p class="eyebrow mb-2">Transparent pricing</p>
+        <h2 class="text-2xl md:text-3xl mb-4">Maltipoo price in Singapore: {site.pricing.fromLine}</h2>
+        <p class="text-ink-soft mb-4 max-w-[60ch]">
+          Our all-in price for a Maltipoo puppy is {site.pricing.range}; the exact figure depends
+          on colour and adult size. Deposit, then balance, and nothing added at collection. Most
+          sellers in Singapore do not publish prices at all, so we would rather you compare with
+          real numbers in front of you.
+        </p>
+        <p class="text-ink-soft mb-6 max-w-[60ch]">
+          The full <a href="/maltipoo-price-singapore">price guide</a> breaks down what moves a
+          puppy within the range, plus licence fees and yearly running costs.
+        </p>
+        <a href={whatsappLink('Hi! Could you share current Maltipoo pricing and availability?')} class="btn-cta">Ask about pricing</a>
+      </div>
+      <div class="pop p-6">
+        <p class="text-sm font-semibold text-ink-soft m-0 mb-1">Maltipoo puppies</p>
+        <p class="text-3xl font-bold text-primary m-0 mb-3" style="font-family: var(--font-display);">{site.pricing.range}</p>
+        <p class="text-sm text-ink-soft m-0">
+          all-in, including the starter kit, delivery and setup, first training lesson, and
+          licensing.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Is a Maltipoo HDB approved?" id="hdb">
+    Yes, and not just in practice: HDB's approved list names the Maltese at item 33 and the Toy
+    and Miniature Poodle at item 42, and item 62 approves a cross of any two approved breeds.
+    A Maltipoo qualifies by rule. Our licence transfers to HDB homes, across
+    {site.maltipoosPlaced} placements, back it up. One dog per flat, AVS licence required; the
+    <a href="/maltipoo-hdb-approved">full HDB guide</a> walks through it.
+  </AnswerCapsule>
+
+  <section class="container-site py-10" id="colours">
+    <p class="eyebrow mb-2">Coats and colours</p>
+    <h2 class="text-2xl md:text-3xl mb-4">Apricot, mostly: what we actually place</h2>
+    <p class="text-ink-soft max-w-[65ch] mb-6">
+      Maltipoos come in white, cream, apricot and the occasional black, but what comes through
+      our shop is overwhelmingly apricot, from pale cream-apricot to deep amber. Puppy coats
+      usually lighten as they mature, so we show you the parents' colouring rather than promise
+      a shade.
+    </p>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {coatSwatches.map(([name, hex]) => (
+        <div class="pop p-4 text-center">
+          <div class="rounded-[var(--radius-media)] w-full aspect-square mb-3" style={`background:${hex}`} aria-hidden="true"></div>
+          <p class="font-semibold m-0">{name}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CaptionedBlock heading="Buying safely: verify us, and anyone else, in 60 seconds" id="verify" tinted>
+    <p>
+      Every legitimate pet shop in Singapore is listed on the
+      <a href="https://avs.nparks.gov.sg/outreach/resources/public-registry-of-avs-licensed-pet-shops/" rel="noopener" target="_blank">AVS public registry of licensed pet shops</a>.
+      Curious Tails, the shop behind this site, holds licence {site.license.avsNumber}; check it
+      before you visit, and check any other seller the same way.
+    </p>
+    <p>
+      Puppies sold outside licensed channels are commonly smuggled without veterinary care, and
+      buying one is itself an offence; NParks has fined a buyer $7,000. Licensed shop, published
+      pricing, paperwork at purchase: the boring route is the safe one.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Your 60-second check"
+      items={[
+        'Search the AVS registry for the shop name',
+        'Match the licence number: ours is AS24J00046',
+        'Visit the physical shop, ours is at Balestier',
+        'Expect vaccination records for weeks 6 and 8',
+        'Walk away from meet-in-carpark deals',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <section class="container-site py-10" id="reviews">
+    <div class="pop p-8 md:p-10 grid md:grid-cols-[1fr_auto] gap-6 items-center">
+      <div>
+        <p class="eyebrow mb-2">From a Maltipoo family</p>
+        <blockquote class="m-0 text-lg text-ink leading-relaxed">
+          "We'd been comparing breeders for weeks, and Curious Tails in Balestier stood head and
+          shoulders above the rest. Everything from the health records to the paperwork was
+          handled seamlessly. The $500+ starter pack was such a generous surprise and got us set
+          up right away. We couldn't be more pleased, an easy five stars."
+        </blockquote>
+        <p class="text-sm text-ink-soft mt-3 mb-0">Karen Joy, Google review, after bringing home her Maltipoo</p>
+      </div>
+      <div class="text-center px-6">
+        <p class="text-4xl font-bold text-primary m-0" style="font-family: var(--font-display);">{site.reviews.rating}</p>
+        <p class="text-sm text-ink-soft m-0">{site.reviews.count} Google reviews</p>
+      </div>
+    </div>
+  </section>
+
+  <FAQ items={faqItems} />
+
+  <section class="container-site pb-4">
+    <p class="text-ink-soft max-w-[65ch] m-0">
+      The shop sits at 2 Balestier Road, a short walk from Novena MRT, with paid parking behind
+      the block. Come meet the puppies on a weekend morning and take your time; honest advice
+      costs nothing here.
+    </p>
+  </section>
+
+  <CtaClose />
+</BaseLayout>

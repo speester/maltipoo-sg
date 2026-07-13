@@ -1,0 +1,122 @@
+---
+import { site } from '../data/site';
+import { organizationSchema, personSchema, websiteSchema } from '../lib/schema';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  ogImage?: string;
+  schemas?: object[];
+  noindex?: boolean;
+}
+
+const { title, description, path, ogImage, schemas = [], noindex = false } = Astro.props;
+const canonical = `${site.domain}${path}`;
+const ogImageUrl = ogImage ? `${site.domain}${ogImage}` : undefined;
+const allSchemas = [organizationSchema(), personSchema(), websiteSchema(), ...schemas];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Quicksand:wght@400;500;600;700&display=swap"
+    />
+
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {allSchemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-surface focus:px-4 focus:py-2 focus:rounded-full"
+    >
+      Skip to main content
+    </a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <StickyMobileCTA />
+
+    <script>
+      // Motion layer — GSAP reveals, button squish, card tilt.
+      // Gated: skips entirely under prefers-reduced-motion; content stays visible without JS.
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      if (!reduced) {
+        (async () => {
+          const { gsap } = await import('gsap');
+          const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+          gsap.registerPlugin(ScrollTrigger);
+
+          // Batched stagger reveal for card-like elements
+          const targets = document.querySelectorAll('.pop, main section h2');
+          gsap.set(targets, { y: 24, opacity: 0 });
+          ScrollTrigger.batch(targets, {
+            start: 'top 88%',
+            once: true,
+            onEnter: (batch) =>
+              gsap.to(batch, { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: 'power3.out' }),
+          });
+          // Button squish
+          document.querySelectorAll('.btn-cta, .btn-primary, .btn-wa, .btn-outline').forEach((btn) => {
+            btn.addEventListener('pointerdown', () => gsap.to(btn, { scale: 0.94, duration: 0.1 }));
+            btn.addEventListener('pointerup', () =>
+              gsap.to(btn, { scale: 1, duration: 0.35, ease: 'back.out(2.5)' })
+            );
+            btn.addEventListener('pointerleave', () => gsap.to(btn, { scale: 1, duration: 0.2 }));
+          });
+
+          // Cursor tilt on hero/feature cards (desktop only). Bake in any static CSS rotation.
+          if (finePointer) {
+            document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+              const styleRotate = getComputedStyle(card).rotate;
+              const base = styleRotate && styleRotate !== 'none' ? parseFloat(styleRotate) : 0;
+              gsap.set(card, { rotation: base, rotate: 0, transformPerspective: 700 });
+              card.addEventListener('pointermove', (e) => {
+                const r = card.getBoundingClientRect();
+                const px = (e.clientX - r.left) / r.width - 0.5;
+                const py = (e.clientY - r.top) / r.height - 0.5;
+                gsap.to(card, {
+                  rotationY: px * 8,
+                  rotationX: -py * 8,
+                  rotation: base,
+                  duration: 0.4,
+                  ease: 'power2.out',
+                });
+              });
+              card.addEventListener('pointerleave', () => {
+                gsap.to(card, { rotationY: 0, rotationX: 0, rotation: base, duration: 0.6, ease: 'power3.out' });
+              });
+            });
+          }
+        })();
+      }
+    </script>
+  </body>
+</html>

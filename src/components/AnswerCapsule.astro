@@ -1,0 +1,16 @@
+---
+// Question-phrased heading + 30–60 word self-contained answer.
+// Required within the first 30% of every page (AI-search rule).
+interface Props {
+  question: string;
+  id?: string;
+}
+const { question, id } = Astro.props;
+---
+
+<section class="container-site py-6" id={id}>
+  <div class="pop p-6 md:p-8 border-l-8 border-primary">
+    <h2 class="text-xl md:text-2xl mb-3">{question}</h2>
+    <p class="text-ink-soft max-w-[65ch] m-0"><slot /></p>
+  </div>
+</section>

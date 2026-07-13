@@ -1,0 +1,67 @@
+---
+// Puppy showcase cards, 3 per row on desktop. Two modes:
+//  - "available": puppies for sale (badge "Available", for-sale CTA).
+//  - "placed": recently placed showcase.
+// Cards carry NO names by design; enquiries reference colour + age.
+// Card is a plain container; the WhatsApp button is the ONLY interactive element.
+import { whatsappLink } from '../data/site';
+
+export interface Listing {
+  color: string;
+  gender: 'Male' | 'Female';
+  ageLabel: string;
+  coat?: string;
+  hdb?: boolean;
+  imageSrc?: string;
+  imageAlt?: string;
+}
+
+interface Props {
+  heading?: string;
+  items: Listing[];
+  mode?: 'available' | 'placed';
+  id?: string;
+}
+const { heading, items, mode = 'available', id = 'puppies' } = Astro.props;
+const badge = mode === 'available' ? 'Available' : 'Recently placed';
+---
+
+<section class="container-site py-10" id={id}>
+  {heading && <h2 class="text-2xl md:text-3xl mb-6">{heading}</h2>}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    {items.map((pup) => (
+      <div class="pop pop-hover p-4 flex flex-col">
+        <div class="relative rounded-[var(--radius-media)] overflow-hidden bg-tint-200 aspect-[4/3]">
+          {pup.imageSrc ? (
+            <img src={pup.imageSrc} alt={pup.imageAlt ?? `${pup.color} Maltipoo puppy for sale in Singapore`} width="400" height="300" loading="lazy" class="w-full h-full object-cover" />
+          ) : (
+            <div class="w-full h-full flex items-center justify-center" aria-hidden="true">
+              <svg class="w-14 h-14 text-tint-300" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+            </div>
+          )}
+          <span class="absolute top-3 left-3 pill pill-mint">{badge}</span>
+        </div>
+        <h3 class="text-lg mt-3 mb-2 px-1">{pup.color} Maltipoo puppy</h3>
+        <div class="flex flex-wrap gap-1.5 px-1 mb-4">
+          <span class:list={['pill', pup.gender === 'Male' ? 'pill-tint' : 'pill-blush']}>
+            {pup.gender === 'Male' ? '♂' : '♀'} {pup.gender}
+          </span>
+          <span class="pill pill-butter">{pup.ageLabel}</span>
+          {pup.coat && <span class="pill pill-tint">{pup.coat}</span>}
+          {pup.hdb && <span class="pill pill-mint">HDB ✓</span>}
+        </div>
+        {mode === 'available' ? (
+          <a href={whatsappLink(`Hi! Is the ${pup.color} Maltipoo puppy (${pup.gender.toLowerCase()}, ${pup.ageLabel}) still available? Could you share photos and the all-in price?`)} class="btn-wa mt-auto text-sm !py-2.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z" /></svg>
+            Ask about this puppy
+          </a>
+        ) : (
+          <a href={whatsappLink(`Hi! I saw the ${pup.color} Maltipoo on Maltipoo.sg. Is a similar puppy available?`)} class="btn-wa mt-auto text-sm !py-2.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z" /></svg>
+            Ask about a similar puppy
+          </a>
+        )}
+      </div>
+    ))}
+  </div>
+</section>

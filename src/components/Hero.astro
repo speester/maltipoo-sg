@@ -1,0 +1,95 @@
+---
+import { site, whatsappLink } from '../data/site';
+import Breadcrumb from './Breadcrumb.astro';
+
+interface Props {
+  eyebrow?: string;
+  heading: string;
+  lede: string;
+  ctaLabel?: string;
+  ctaMessage?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+  crumbs?: { name: string; url: string }[];
+}
+
+const {
+  eyebrow = 'By Curious Tails · AVS licensed',
+  heading,
+  lede,
+  ctaLabel = 'WhatsApp us',
+  ctaMessage,
+  secondaryLabel,
+  secondaryHref,
+  crumbs,
+} = Astro.props;
+---
+
+<section class="container-site pt-4 pb-10">
+  <div
+    class="hero-panel rounded-[var(--radius-panel)] px-6 py-12 md:px-12 md:py-16 relative overflow-hidden"
+  >
+    <!-- decorative layer -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <svg class="absolute -top-10 -right-10 w-56 h-56 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+      <svg class="absolute bottom-8 left-[46%] w-10 h-10 text-primary/15 rotate-12" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+      <svg class="absolute top-10 left-[55%] w-8 h-8 text-primary/10 -rotate-12" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+      <svg class="absolute -bottom-14 -left-14 w-64 h-64 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+    </div>
+
+    <div class="relative">
+      {crumbs && <Breadcrumb items={crumbs} bare class="mb-6" />}
+      <div class="grid md:grid-cols-[1.25fr_1fr] gap-10 items-center">
+        <div>
+          <p class="eyebrow mb-3 flex items-center gap-2">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z" /></svg>
+            {eyebrow}
+          </p>
+          <h1 class="text-[clamp(2.3rem,5vw,3.6rem)] font-extrabold mb-5" style="font-weight: 800;">{heading}</h1>
+          <p class="text-ink-soft text-lg max-w-[46ch] mb-7">{lede}</p>
+          <div class="flex flex-wrap gap-3 items-center">
+            <a href={whatsappLink(ctaMessage)} class="btn-cta !text-base !px-7 !py-3.5">{ctaLabel}</a>
+            {secondaryLabel && secondaryHref && (
+              <a href={secondaryHref} class="btn-outline !bg-white/60">{secondaryLabel}</a>
+            )}
+          </div>
+          <div class="flex flex-wrap items-center gap-2 mt-7">
+            <span class="pill pill-tint !text-[0.78rem] !py-1.5 !px-3">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.7 8 11 4.6-1.3 8-6 8-11V5l-8-3Z" /></svg>
+              AVS licence {site.license.avsNumber}
+            </span>
+            <span class="pill pill-butter !text-[0.78rem] !py-1.5 !px-3">★ {site.reviews.rating} · {site.reviews.count} Google reviews</span>
+            <span class="pill pill-mint !text-[0.78rem] !py-1.5 !px-3">{site.maltipoosPlaced} Maltipoos placed</span>
+          </div>
+        </div>
+
+        <div class="hidden md:block relative">
+          <div data-tilt class="pop p-3 rotate-2 relative">
+            <slot name="visual">
+              <div class="rounded-[var(--radius-media)] bg-gradient-to-br from-tint-200 to-surface aspect-[4/3] flex items-center justify-center" aria-hidden="true">
+                <svg class="w-24 h-24 text-tint-300" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+              </div>
+            </slot>
+          </div>
+          <!-- price sticker: unrotated (rule: never rotate legible text) -->
+          <div class="absolute -bottom-4 -left-6 pop !rounded-2xl px-4 py-2.5 !shadow-[0_4px_0_var(--color-tint-300)]">
+            <p class="m-0 text-[0.7rem] font-semibold text-ink-soft leading-none">Maltipoo puppies</p>
+            <p class="m-0 text-lg font-bold text-primary" style="font-family: var(--font-display);">{site.pricing.fromLine}</p>
+          </div>
+          <svg class="absolute -top-5 -right-4 w-12 h-12 text-cta rotate-12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="m12 2 2.4 5.2 5.6.6-4.2 3.9 1.2 5.6L12 14.5 7 17.3l1.2-5.6L4 7.8l5.6-.6L12 2Z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-panel {
+    background:
+      radial-gradient(120% 90% at 85% 10%, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 45%),
+      radial-gradient(100% 100% at 10% 100%, rgba(61, 107, 255, 0.1) 0%, rgba(61, 107, 255, 0) 50%),
+      var(--color-tint-200);
+  }
+</style>

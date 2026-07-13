@@ -1,0 +1,36 @@
+---
+// Two-column content block. When there is no image, the caller MUST pass a
+// slot="side" (facts card / checklist) — never leave the gutter empty (bug checklist #2).
+interface Props {
+  heading: string;
+  tinted?: boolean;
+  imageSrc?: string;
+  imageAlt?: string;
+  reverse?: boolean;
+  id?: string;
+}
+const { heading, tinted = false, imageSrc, imageAlt = '', reverse = false, id } = Astro.props;
+---
+
+<section class="container-site py-10" id={id}>
+  <div
+    class:list={[
+      'grid md:grid-cols-2 gap-8 items-center rounded-[var(--radius-panel)] p-6 md:p-10',
+      tinted && 'bg-tint-200',
+    ]}
+  >
+    <div class:list={[reverse && 'md:order-2']}>
+      <h2 class="text-2xl md:text-3xl mb-4">{heading}</h2>
+      <div class="text-ink-soft max-w-[65ch] space-y-4">
+        <slot />
+      </div>
+    </div>
+    <div class:list={[reverse && 'md:order-1']}>
+      {imageSrc ? (
+        <img src={imageSrc} alt={imageAlt} width="560" height="420" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
+      ) : (
+        <slot name="side" />
+      )}
+    </div>
+  </div>
+</section>

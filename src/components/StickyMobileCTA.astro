@@ -1,0 +1,15 @@
+---
+import { whatsappLink } from '../data/site';
+---
+
+<div
+  class="fixed bottom-0 inset-x-0 sm:hidden p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-base/95 backdrop-blur-sm"
+  style="z-index: var(--z-sticky);"
+>
+  <a href={whatsappLink('Hi! I would like to ask about Maltipoo puppies.')} class="btn-wa w-full">
+    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.1c-.2.6-1.2 1.2-1.7 1.2-.4.1-1 .1-1.6-.1a13 13 0 0 1-5.8-5.1c-.6-1-.9-2-.9-2.6 0-.7.4-1.3.7-1.6.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .6l-.4.6c-.2.2-.3.4-.1.7.5.9 1.9 2.5 3.6 3.2.3.1.5.1.7-.1l.7-.9c.2-.3.4-.2.7-.1l1.9.9c.3.2.5.3.6.4 0 .2 0 .5-.2.8Z" />
+    </svg>
+    WhatsApp us
+  </a>
+</div>

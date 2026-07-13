@@ -1,0 +1,18 @@
+---
+// Verified proof numbers only — values come from src/data/site.ts, never literals.
+interface Props {
+  stats: { value: string; label: string }[];
+}
+const { stats } = Astro.props;
+---
+
+<section class="container-site py-6">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    {stats.map((s) => (
+      <div class="pop p-5 text-center">
+        <p class="text-2xl md:text-3xl font-bold text-primary m-0" style="font-family: var(--font-display);">{s.value}</p>
+        <p class="text-sm text-ink-soft m-0 mt-1">{s.label}</p>
+      </div>
+    ))}
+  </div>
+</section>

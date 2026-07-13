@@ -1,0 +1,121 @@
+---
+// Blog post — CHECKPOINT 3 SAMPLE. Copy is PLACEHOLDER; blog-writer rewrites
+// against briefs/maltipoo-tear-stains.json before this page is called finished.
+// Evidence base: r/Maltipoo tear-stain thread (30+ comments), research.json UGC notes.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Maltipoo Tear Stains: What Works in Singapore | Maltipoo.sg';
+const description =
+  'Why Maltipoos stain under the eyes, the daily wipe routine that prevents it, what humid weather changes, and when tearing needs a vet rather than a groomer.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Tear Stains', url: '/blog/maltipoo-tear-stains' },
+];
+
+const faqItems = [
+  {
+    q: 'Why does my Maltipoo have rusty streaks under its eyes?',
+    a: 'Tears carry porphyrins, iron-rich pigments that oxidise reddish-brown where fur stays damp. Light apricot and white coats show them clearly. Steady mild staining on a bright-eyed dog is cosmetic; a sudden increase with squinting or rubbing is a vet matter.',
+  },
+  {
+    q: 'What actually removes Maltipoo tear stains?',
+    a: 'Time plus prevention. Wipe the eye corners daily with a plain damp cotton pad, keep hair trimmed clear of the eyes at every groom, and let stained fur grow out. Products that promise to bleach stains away near the eyes are not worth the risk.',
+  },
+  {
+    q: 'Do supplements or special water stop tear staining?',
+    a: 'Owner communities swap plenty of theories, from distilled water to additive-free food. Some dogs do stain less after a diet change, so test one variable at a time for a month. Be skeptical of anything promising overnight whitening, and never use products meant for coats near the eyes.',
+  },
+  {
+    q: 'Does Singapore weather make tear stains worse?',
+    a: 'Humidity slows drying, and damp fur is where porphyrins settle, so tropical climates do make staining more visible on light coats. The fix is the same routine done more consistently: daily wiping, eyes trimmed clear, and a proper blow-dry after baths.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-tear-stains',
+    title,
+    description,
+    aboutName: 'Maltipoo tear stains',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-tear-stains" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Face care</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo tear stains: what works in Singapore</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question="How do I stop my Maltipoo's tear stains?">
+      Prevention beats removal: wipe the eye corners with a damp cotton pad once a day, have the
+      groomer cut hair fully clear of the eyes every session, and dry the face properly after
+      baths. Existing stains grow out over a few weeks once the routine holds; sudden heavy
+      tearing means a vet visit, not a new product.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Why light coats stain, especially here</h2>
+          <p>
+            The streaks are porphyrins, pigments carried in tears, oxidising on fur that never
+            quite dries. An apricot or white Maltipoo face shows every bit of it. Singapore's
+            humidity keeps that fur damp longer than a dry climate would, which is why owners
+            here fight stains harder than the overseas care guides suggest.
+          </p>
+          <h2 class="text-2xl text-ink">The routine that beats the products</h2>
+          <p>
+            One damp cotton pad, eye corners only, once a day, after the morning walk. At the
+            groomer, ask for the eye corners to be cut completely clear every session. Wash food
+            and water bowls daily, and prefer ceramic or steel over plastic. That unglamorous
+            list outperforms every whitening product owners ask us about, and it costs nothing.
+          </p>
+          <h2 class="text-2xl text-ink">When staining is a symptom instead</h2>
+          <p>
+            Change is the tell. Tearing that suddenly gets heavier, squinting, pawing at the
+            face, or discharge turning thick means irritation, a blocked duct or an infection,
+            and those are vet visits. Steady mild staining on a happy, bright-eyed dog is a
+            photography problem, not a health one.
+          </p>
+        </div>
+        <FactsCard
+          heading="The daily 60 seconds"
+          items={[
+            'Damp cotton pad on the eye corners, daily',
+            'Eyes trimmed fully clear at every groom',
+            'Ceramic or steel bowls, washed daily',
+            'Blow-dry the face properly after baths',
+            'Sudden change or squinting: vet, not wipes',
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading="Meet our apricot Maltipoos"
+      secondaryText="Toy-sized, vaccinated on schedule, and placed with homes that suit them."
+      secondaryHref="/"
+      secondaryLabel="See available puppies"
+    />
+  </article>
+</BaseLayout>

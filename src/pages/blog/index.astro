@@ -1,0 +1,57 @@
+---
+// Blog index. Posts are added to this list as they are built (never link unbuilt routes).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { webPageSchema, breadcrumbSchema } from '../../lib/schema';
+
+const title = 'Maltipoo Care Guides and Owner Answers | Maltipoo.sg';
+const description =
+  'Practical Maltipoo guides for Singapore homes: tear stains, barking, grooming in humidity, HDB living and more, written from 100+ real placements.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+];
+
+const posts = [
+  {
+    href: '/blog/maltipoo-tear-stains',
+    tag: 'Face care',
+    title: 'Maltipoo tear stains: what works in Singapore',
+    blurb: 'Why light coats stain in our humidity, the daily wipe that prevents it, and when tearing needs a vet.',
+  },
+];
+
+const schemas = [
+  webPageSchema({ path: '/blog', title, description, aboutName: 'Maltipoo care guides', datePublished: '2026-07-13' }),
+  breadcrumbSchema(crumbs),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Owner guides</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo answers, from the shop floor</h1>
+      <p class="text-ink-soft m-0 max-w-[60ch]">
+        The questions real owners ask us, answered for Singapore homes.
+      </p>
+    </div>
+  </section>
+
+  <section class="container-site py-10">
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      {posts.map((post) => (
+        <a href={post.href} class="pop pop-hover p-6 no-underline flex flex-col">
+          <span class="pill pill-tint mb-3 self-start">{post.tag}</span>
+          <h2 class="text-xl m-0 mb-2">{post.title}</h2>
+          <p class="text-ink-soft text-sm m-0">{post.blurb}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <CtaClose />
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+import { site, whatsappLink } from '../data/site';
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-20 bg-ink text-white">
+  <div class="container-site py-12 grid gap-10 md:grid-cols-3">
+    <div>
+      <p class="font-bold text-xl mb-2" style="font-family: var(--font-display);">Maltipoo.sg</p>
+      <p class="text-white/80 text-sm mb-4">{site.positioning}</p>
+      <p class="text-white/80 text-sm">
+        {site.footerDisclosure} ·
+        <a href={site.license.registryUrl} class="underline text-white/90" rel="noopener" target="_blank">verify on the AVS registry</a>
+      </p>
+    </div>
+    <div>
+      <p class="font-semibold mb-3">Visit us</p>
+      <address class="not-italic text-white/80 text-sm leading-relaxed">
+        {site.address.full}<br />
+        {site.hours}<br />
+        <a href={whatsappLink()} class="underline text-white/90">WhatsApp {site.phoneDisplay}</a><br />
+        <a href={`mailto:${site.email}`} class="underline text-white/90">{site.email}</a>
+      </address>
+    </div>
+    <div>
+      <p class="font-semibold mb-3">Guides</p>
+      <ul class="text-sm text-white/80 space-y-2 list-none p-0 m-0">
+        <li><a href="/maltipoo-price-singapore" class="underline">Maltipoo price in Singapore</a></li>
+        <li><a href="/maltipoo-hdb-approved" class="underline">Maltipoos and HDB living</a></li>
+        <li><a href="/maltipoo-size" class="underline">Full-grown size guide</a></li>
+        <li><a href="/compare-maltipoo" class="underline">Compare small breeds</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/15">
+    <div class="container-site py-4 flex flex-wrap gap-2 justify-between text-xs text-white/60">
+      <span>© {year} {site.parent.name} · ACRA {site.license.acraNumber}</span>
+      <span>
+        <a href={site.social.instagram} class="underline" rel="noopener" target="_blank">Instagram</a> ·
+        <a href={site.social.facebook} class="underline" rel="noopener" target="_blank">Facebook</a>
+      </span>
+    </div>
+  </div>
+</footer>

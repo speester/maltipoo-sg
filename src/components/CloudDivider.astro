@@ -1,0 +1,34 @@
+---
+// Cloud-scallop seam between two sections.
+// Seam-bug fix baked in (never remove): container bg = FILL color, the "against"
+// side is drawn as an explicit overshooting path, and -my-px overlaps both
+// neighbours so no sub-pixel gap can expose the page background (bug checklist #4).
+//
+// Usage: place directly between section A (color = `fill`) and section B
+// (color = `against`). By default the clouds bulge downward from `against` into
+// `fill`; pass flip to bulge the other way.
+interface Props {
+  fill: string; // bg of the section BELOW the divider (or above when flipped)
+  against?: string; // the other neighbour's actual rendered bg (default: page base)
+  flip?: boolean;
+}
+const { fill, against = 'var(--color-base)', flip = false } = Astro.props;
+
+// One continuous scallop path: solid block from the top, bottom edge is a row of
+// cloud bumps. Overshoots 10px on every side.
+const d =
+  'M-10 -10 H1210 V28 ' +
+  'Q1155 55 1090 28 Q1025 55 960 28 Q895 55 830 28 Q765 55 700 28 ' +
+  'Q635 55 570 28 Q505 55 440 28 Q375 55 310 28 Q245 55 180 28 ' +
+  'Q115 55 50 28 Q-5 50 -10 30 Z';
+---
+
+<div
+  class="relative -my-px leading-[0] select-none"
+  style={`background: ${fill}; ${flip ? 'transform: scaleY(-1);' : ''}`}
+  aria-hidden="true"
+>
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none" class="block w-full h-[40px] md:h-[56px]">
+    <path d={d} fill={against} />
+  </svg>
+</div>

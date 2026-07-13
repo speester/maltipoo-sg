@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cavapoopuppy.sg/sitemap-index.xml
