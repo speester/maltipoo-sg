@@ -1,0 +1,177 @@
+---
+// Comparison page. Copy authored against briefs/maltipoo-vs-cockapoo.json (2026-07-13).
+// HDB asymmetry: Cocker Spaniel is NOT on the named list; flagged [VERIFY] per ground truth.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo vs Cockapoo: Lap Dog or Adventure Dog | Maltipoo.sg';
+const description =
+  'Maltipoo vs Cockapoo for Singapore homes: featherweight lap companion vs sportier spaniel cross. Size, energy, HDB status asymmetry and the routine verdict.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare Breeds', url: '/compare-maltipoo' },
+  { name: 'Maltipoo vs Cockapoo', url: '/maltipoo-vs-cockapoo' },
+];
+
+const faqItems = [
+  {
+    q: 'Is a Cockapoo HDB approved?',
+    a: 'Not automatically, and this surprises buyers. HDB’s item 62 approves crosses of two listed breeds, but the Cocker Spaniel is not on the named list, so a Cockapoo does not inherit approval the way a Maltipoo does. Verify the current position with AVS or HDB before committing to a flat placement. [VERIFY]',
+  },
+  {
+    q: 'Maltipoo vs Cavapoo vs Cockapoo in one line each?',
+    a: 'Searched as cavapoo vs maltipoo vs cockapoo or maltipoo vs cockapoo vs cavapoo, the answer is the same. Maltipoo: the 2 to 4kg lap dog for homes with daytime company. Cavapoo: the balanced middle, more independent, suits working couples. Cockapoo: the sportiest and usually largest, for households that want real daily walks.',
+  },
+  {
+    q: 'Which needs more grooming?',
+    a: 'Similar coat types, so similar routines; the Cockapoo simply has more coat area and often costs a size tier more at the salon. Both want brushing between four-to-six-week grooms.',
+  },
+  {
+    q: 'Which barks more?',
+    a: 'Different triggers. The Maltipoo alert-barks and gets louder when lonely; the Cockapoo tends to vocalise when under-exercised. Meet the need, lose the noise, in both cases.',
+  },
+  {
+    q: 'Do their sizes overlap?',
+    a: 'Rarely. A toy Maltipoo finishes 2 to 4kg while most Cockapoos land 5 to 11kg depending on the Poodle parent. If a listing offers a "toy cockapoo" at Maltipoo weight, ask hard questions.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-vs-cockapoo',
+    title,
+    description,
+    aboutName: 'Maltipoo vs Cockapoo comparison',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-vs-cockapoo" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Comparison</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo vs Cockapoo</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        Two Poodle crosses, two different lives: one built for the sofa, one for the park
+        connector. Plus an HDB wrinkle most listings skip.
+      </p>
+      <a href={whatsappLink('Hi! Could you help me decide between a Maltipoo and a Cockapoo?')} class="btn-cta">Ask which fits you</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Maltipoo or Cockapoo: what is the difference?">
+    The difference between Maltipoo and Cockapoo is mostly kilograms and kilometres. A Cockapoo is the sportier spaniel cross: usually 5 to 11kg, energetic, built for
+    households that want real daily walks. A Maltipoo is the 2 to 4kg lap companion for
+    homes with daytime company. One HDB wrinkle: the Maltipoo qualifies cleanly under rule
+    62, while the Cocker Spaniel is not on HDB's named list, so a Cockapoo's flat status
+    needs checking rather than assuming.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="Energy is the real gap" id="energy">
+    <p>
+      The cockapoo vs maltipoo choice is a calendar question twice over. The Cockapoo brings
+      working-spaniel energy: it wants a proper walk or park-connector session daily and
+      repays it with a happy, athletic sidekick. Skip the exercise and the energy converts to
+      mischief.
+    </p>
+    <p>
+      The Maltipoo spends that same energy budget on you. Fifteen to twenty minutes before
+      the heat, indoor play, then lap duty, per the
+      <a href="/maltipoo-temperament">temperament guide</a>. Its demanding currency is
+      company, not kilometres.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Energy budgets"
+      items={[
+        'Cockapoo: real daily walks, athletic play',
+        'Maltipoo: short walks, company-first',
+        'Both: clever Poodle minds, easy training',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Size and space" id="size" reverse>
+    <p>
+      Most Cockapoos finish 5 to 11kg depending on the Poodle parent; a toy Maltipoo finishes
+      2 to 4kg, per the <a href="/maltipoo-size">size guide</a>. Both live comfortably in a
+      flat, but the maths beyond the front door differ: the Maltipoo rides a carrier onto the
+      MRT, sits in the lowest grooming tier, and shares a sofa cushion; the Cockapoo needs
+      the bigger carrier, the bigger groom bill, and the actual walk.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Size maths"
+      items={[
+        'Maltipoo toy: 2 to 4kg full grown',
+        'Cockapoo: 5 to 11kg, parent-dependent',
+        'Carrier, grooming tier, food: all scale with kg',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The HDB asymmetry nobody mentions" id="hdb" tinted>
+    <p>
+      Here the two crosses part ways on paper. HDB's
+      <a href="https://www.hdb.gov.sg/managing-my-home/home-ownership/keeping-pets" rel="noopener" target="_blank">approved list</a>
+      covers a cross of any two breeds in items 1 to 61 (rule 62). The Maltese and Toy Poodle
+      are both named, so the Maltipoo qualifies outright. The Cocker Spaniel is not on the
+      named list, so a Cockapoo does not inherit approval the same way; its flat status needs
+      verifying with AVS or HDB case by case. [VERIFY current treatment before relying on it]
+    </p>
+    <p>
+      If you live in an HDB flat and want zero paperwork ambiguity, that asymmetry alone may
+      settle this page.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Paper status"
+      items={[
+        'Maltipoo: approved by rule 62, clean yes',
+        'Cockapoo: Cocker not on the named list, verify first',
+        'Condo/landed: house rules, not HDB list',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Who should pick which" id="verdict">
+    <p>
+      Pick the Cockapoo if your household genuinely walks: park connectors on weekday
+      evenings, longer weekend outings, and someone who enjoys an athletic dog. Pick the
+      Maltipoo if the honest picture is a lived-in flat, short strolls, and a dog whose job
+      is presence. Between them sits the Cavapoo, covered in the
+      <a href="/maltipoo-vs-cavapoo">Maltipoo vs Cavapoo comparison</a>.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The one-line verdict"
+      items={[
+        'Adventure household: Cockapoo',
+        'Company household: Maltipoo',
+        'Working couple, middle path: Cavapoo',
+        'HDB certainty: Maltipoo, by rule',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Compare more breeds"
+    secondaryText="Cavapoo, Maltese, Toy Poodle, Bichon and Shih Tzu, all against the Maltipoo."
+    secondaryHref="/compare-maltipoo"
+    secondaryLabel="See all comparisons"
+  />
+</BaseLayout>

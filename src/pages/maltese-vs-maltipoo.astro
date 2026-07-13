@@ -1,0 +1,178 @@
+---
+// Comparison page. Copy authored against briefs/maltese-vs-maltipoo.json (2026-07-13).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltese vs Maltipoo: What the Poodle Changes | Maltipoo.sg';
+const description =
+  'Maltese vs Maltipoo for Singapore homes: what the Poodle cross changes in coat, trainability and care. Both HDB-listed; the honest differences from a shop placing both.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare Breeds', url: '/compare-maltipoo' },
+  { name: 'Maltese vs Maltipoo', url: '/maltese-vs-maltipoo' },
+];
+
+const faqItems = [
+  {
+    q: 'Do Maltese shed more than Maltipoos?',
+    a: 'Both are low-shedding by small-dog standards. The Maltese drops fine silky strands you will find on dark clothes; the Maltipoo’s curl traps loose hair in the coat instead, which means less on the sofa but more brushing to prevent mats. Pick your chore.',
+  },
+  {
+    q: 'Which is easier to train?',
+    a: 'The Maltipoo, and it is noticeable. The Toy Poodle side speeds up toilet training and cue learning, which matters most for first-time owners. A Maltese trains fine too, just with more patience.',
+  },
+  {
+    q: 'Is there a price difference?',
+    a: 'Our Maltipoos run $3,288 to $5,988 all-in. Maltese are placed by our parent brand Curious Tails, and pricing differs by litter; WhatsApp us and we will quote both honestly. [VERIFY Maltese range before publishing a figure]',
+  },
+  {
+    q: 'Which lives longer?',
+    a: 'Both sit in the long-lived small-dog class, commonly cited around 12 to 15 years. [VERIFY against a vet source] Care, weight and dental habits matter more than the breed choice here.',
+  },
+  {
+    q: 'Which is better for allergy-sensitive homes?',
+    a: 'The Maltipoo’s curlier coat has the slight edge, but no dog is truly hypoallergenic. Meet the actual puppy in person before deciding; reactions are individual.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltese-vs-maltipoo',
+    title,
+    description,
+    aboutName: 'Maltese vs Maltipoo comparison',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltese-vs-maltipoo" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Comparison</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltese vs Maltipoo: what does the Poodle change?</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        One is the parent, one is the cross, and our parent brand places both. Here is what
+        actually changes when a Toy Poodle joins the family tree.
+      </p>
+      <a href={whatsappLink('Hi! Could you help me decide between a Maltese and a Maltipoo?')} class="btn-cta">Ask which fits you</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Maltipoo or Maltese: what is the difference?">
+    The difference between Maltese and Maltipoo comes down to coat and mind. A Maltese is the pure breed: straight silky white coat and classic lap-dog devotion. A Maltipoo, a Maltese Poodle mix, adds a Toy Poodle parent, which brings a curlier low-shedding coat in more
+    colours (apricot, here), a quicker training mind, and the same wants-company nature. Both
+    are HDB-listed; coat style and trainability are the practical deciders.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="The coat: silky curtain vs teddy curl" id="coat">
+    <p>
+      The maltese vs maltipoo decision (or maltipoo vs maltese, depending which face you saw first) usually gets made at the coat. The Maltese wears a
+      straight, silky, always-white coat that mats into strings without near-daily brushing,
+      or lives in a practical short cut. The Maltipoo wears the Poodle-influenced wave-to-curl
+      that traps shed hair (good) and traps humidity tangles (the trade), in the apricot
+      spectrum we mostly place.
+    </p>
+    <p>
+      Tear stains are a shared reality; they simply show loudest on a white Maltese face. The
+      daily eye-wipe routine from the <a href="/blog/maltipoo-tear-stains">tear-stain guide</a>
+      applies to both.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Coat, side by side"
+      items={[
+        'Maltese: straight, silky, white, daily brushing',
+        'Maltipoo: wavy-curly, low-shed, apricot here',
+        'Both: tear stains, groom every 4 to 6 weeks',
+        'Whose chore do you prefer: brushing or de-matting',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Temperament: same heart, quicker mind" id="temperament" reverse>
+    <p>
+      The heart is unchanged: the Maltese is the original velcro lap dog, and the maltipoo
+      mixed with Maltese devotion keeps every bit of it, including the alert vocal streak and
+      the need for daytime company covered in the
+      <a href="/maltipoo-temperament">temperament guide</a>.
+    </p>
+    <p>
+      The mind is where the Poodle shows. Toilet training and basic cues land faster with a
+      Maltipoo, which is the single most practical difference for a first-time owner. Neither
+      breed suits an empty weekday flat; that question outranks this whole page.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Temperament delta"
+      items={[
+        'Devotion: identical, both velcro',
+        'Vocality: similar, both alert-barkers',
+        'Training speed: Maltipoo noticeably faster',
+        'Company needs: both high, no difference',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="HDB and the practical stuff" id="hdb" tinted>
+    <p>
+      No asymmetry here: the Maltese is named at item 33 of the
+      <a href="https://www.hdb.gov.sg/managing-my-home/home-ownership/keeping-pets" rel="noopener" target="_blank">HDB approved list</a>,
+      and the Maltipoo qualifies through item 62 as a cross of two approved breeds. Both
+      finish toy-sized (see the <a href="/maltipoo-size">size guide</a>), ride carriers
+      easily, and sit in the same grooming price tier.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Practical parity"
+      items={[
+        'HDB: Maltese item 33, Maltipoo via item 62',
+        'Size: both toy class, 2 to 4kg territory',
+        'Grooming tier: same, by weight',
+        'Licence: same AVS rules and fees',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Who should pick which" id="verdict">
+    <p>
+      Pick the Maltese if the classic silky white look matters to you and near-daily brushing
+      sounds like bonding rather than a chore. Pick the Maltipoo if you want the same devotion
+      with an easier-training mind, a lower-shedding coat, and the apricot teddy look.
+    </p>
+    <p>
+      We have no side to take: our parent brand Curious Tails places Maltese, and this shop
+      places Maltipoos. Tell us your preference and routine on WhatsApp ({site.phoneDisplay})
+      and you will get an honest answer either way.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The one-line verdict"
+      items={[
+        'Classic white + brushing ritual: Maltese',
+        'Faster training + teddy apricot: Maltipoo',
+        'Empty weekday flat: honestly, neither',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Compare more breeds"
+    secondaryText="Cavapoo, Toy Poodle, Bichon, Shih Tzu and Cockapoo, all against the Maltipoo."
+    secondaryHref="/compare-maltipoo"
+    secondaryLabel="See all comparisons"
+  />
+</BaseLayout>

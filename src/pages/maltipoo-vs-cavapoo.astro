@@ -1,0 +1,182 @@
+---
+// Comparison page. Copy authored against briefs/maltipoo-vs-cavapoo.json (2026-07-13).
+// HARD RULE: verdicts mirror cavapoopuppy.sg's published comparison exactly.
+// Cross-link to cavapoopuppy.sg/cavapoo-vs-maltipoo added at launch (both repos).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo vs Cavapoo: Which Fits Your Home | Maltipoo.sg';
+const description =
+  'Maltipoo vs Cavapoo for Singapore homes: the honest split. Maltipoos want daytime company; Cavapoos handle working households. Size, coat, price and the routine test.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare Breeds', url: '/compare-maltipoo' },
+  { name: 'Maltipoo vs Cavapoo', url: '/maltipoo-vs-cavapoo' },
+];
+
+const faqItems = [
+  {
+    q: 'Which barks more, a Maltipoo or a Cavapoo?',
+    a: 'The Maltipoo, honestly. It inherits the Maltese alert streak and gets louder when lonely. A Cavapoo is quieter on average and more forgiving of an empty flat. With daytime company and early quiet training, a Maltipoo stays neighbour-friendly.',
+  },
+  {
+    q: 'Which is calmer?',
+    a: 'It depends when you look. A Cavapoo is more even-keeled when alone. A Maltipoo with company is one of the calmest lap dogs there is; a Maltipoo without company is not. That single sentence is most of this comparison.',
+  },
+  {
+    q: 'What about a Cockapoo as a third option?',
+    a: 'Whether you searched cavapoo vs maltipoo vs cockapoo or the reverse, the triangle is simple: a Cockapoo is the sportier, usually larger cousin of the pair, better for households that want longer walks. It suits active homes rather than lap-dog homes; the cockapoo comparison covers it properly.',
+  },
+  {
+    q: 'Is there a price difference between Maltipoo and Cavapoo?',
+    a: 'Not at our shops: both run $3,288 to $5,988 all-in with the same starter kit, delivery, training lesson and licensing included. Which removes the last excuse to choose on anything except fit.',
+  },
+  {
+    q: 'Are both HDB approved?',
+    a: 'Yes, both by the same rule. HDB’s list approves a cross of any two approved breeds (item 62); the Maltese, Toy Poodle and Cavalier King Charles Spaniel are all named on the list.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-vs-cavapoo',
+    title,
+    description,
+    aboutName: 'Maltipoo vs Cavapoo comparison',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-vs-cavapoo" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Comparison</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo vs Cavapoo for Singapore homes</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        Our parent business places both breeds, so we have no reason to spin this one. The
+        difference is real, and it is about your calendar, not the dogs.
+      </p>
+      <a href={whatsappLink('Hi! Could you help me decide between a Maltipoo and a Cavapoo for my routine?')} class="btn-cta">Ask which fits you</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Maltipoo or Cavapoo: which should you choose?">
+    Choose a Maltipoo if someone is home most of the day: it is smaller (2 to 4kg), more
+    affectionate, and more attachment-dependent. Choose a Cavapoo if the household is out
+    working: it is more independent, slightly larger, and settles alone better. Both are
+    low-shedding, HDB-approved crosses at {site.pricing.range} all-in here, so fit decides,
+    not price.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="Same family, different wiring" id="wiring">
+    <p>
+      Both are Poodle crosses with quick minds and low-shedding coats, and the difference
+      between Maltipoo and Cavapoo sits in the other parent. The Maltese brings devotion with
+      an alert, vocal streak: a dog that wants to be ON you and says so. The Cavalier brings
+      an easygoing, portable calm that tolerates an empty flat far better.
+    </p>
+    <p>
+      The "which is better maltipoo or cavapoo" question has no universal answer, only a routine answer: neither wiring is better; each is better FOR someone. The
+      <a href="/maltipoo-temperament">Maltipoo temperament guide</a> describes the velcro
+      version in full, including the barking honesty most comparisons skip.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The wiring in one card"
+      items={[
+        'Maltipoo: devoted, vocal, wants daytime company',
+        'Cavapoo: easygoing, quieter, more independent',
+        'Both: clever, low-shedding, flat-sized',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Size, coat and colours, side by side" id="specs" reverse>
+    <p>
+      The maltipoo vs cavapoo size gap is small but real: our toy Maltipoos finish 2 to 4kg,
+      toy Cavapoos more like 3 to 5kg with minis larger, per the
+      <a href="/maltipoo-size">size guide</a>. Coats on both run wavy to curly and
+      low-shedding; colours diverge, with Maltipoos here overwhelmingly apricot and Cavapoos
+      spanning blenheim, ruby, apricot and black.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Specs, kg-first"
+      items={[
+        'Maltipoo toy: 2 to 4kg full grown',
+        'Cavapoo toy: 3 to 5kg, minis to 10kg',
+        'Coats: both wavy-to-curly, low-shedding',
+        'Colours: apricot vs blenheim/ruby spectrum',
+        'HDB: both approved by rule 62',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Price: identical here, so fit decides" id="price" tinted>
+    <p>
+      At our shops the cavapoo vs maltipoo price question has a boring answer: both breeds run
+      the same {site.pricing.range} all-in, same starter kit, same delivery and setup, same
+      trainer lesson, same licensing at purchase. The
+      <a href="/maltipoo-price-singapore">price guide</a> breaks the range down.
+    </p>
+    <p>
+      We publish that on purpose. When price cannot break the tie, the only question left is
+      the right one: who is home between 8am and 6pm?
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The decision, reduced"
+      items={[
+        'Price: identical range, both breeds',
+        'HDB: identical, both approved',
+        'Coat care: near-identical',
+        'Remaining variable: your daytime routine',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The mismatch we keep seeing" id="mismatch">
+    <p>
+      The single most common mismatch in our placement history: a couple out from 8am to 6pm,
+      set on a Maltipoo because of the face. Maltipoos want far more daytime company, so we
+      explain the wiring and point them to a Cavapoo, and the sale walks across to our sister
+      shop instead of into a bad year.
+    </p>
+    <p>
+      It runs the other way too: retirees offered a Cavapoo elsewhere when what they wanted
+      was a shadow on the sofa all day, which is Maltipoo work. Tell us your routine on
+      WhatsApp ({site.phoneDisplay}) and you will get the honest routing, whichever direction
+      it points.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Honest routing"
+      items={[
+        'Empty weekday flat: Cavapoo, at our sister shop',
+        'Someone home most days: Maltipoo, here',
+        'Either way: same parent business, same aftercare',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Compare more breeds"
+    secondaryText="Maltese, Toy Poodle, Bichon, Shih Tzu and Cockapoo, all against the Maltipoo."
+    secondaryHref="/compare-maltipoo"
+    secondaryLabel="See all comparisons"
+  />
+</BaseLayout>

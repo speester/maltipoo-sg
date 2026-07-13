@@ -1,0 +1,154 @@
+---
+// Comparison hub (owner spec 2026-07-13: 3x2 card grid of 6 comparisons).
+// Copy authored against briefs/compare-maltipoo.json.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site } from '../data/site';
+import { webPageSchema, breadcrumbSchema } from '../lib/schema';
+
+const title = 'Compare the Maltipoo With 6 Popular Breeds | Maltipoo.sg';
+const description =
+  'Maltipoo compared with the Maltese, Cavapoo, Toy Poodle, Bichon Frise, Shih Tzu and Cockapoo: one-line verdicts, HDB status and the routine test, for Singapore homes.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare Breeds', url: '/compare-maltipoo' },
+];
+
+const comparisons = [
+  {
+    href: '/maltese-vs-maltipoo',
+    name: 'Maltese',
+    tag: 'The parent breed',
+    verdict: 'Same devoted heart; the Maltipoo adds a quicker training mind and a low-shed apricot coat. Pick by coat ritual.',
+    hdb: 'HDB: named, item 33',
+  },
+  {
+    href: '/maltipoo-vs-cavapoo',
+    name: 'Cavapoo',
+    tag: 'The sister cross',
+    verdict: 'The working-couple dog. More independent, settles alone better; the Maltipoo wins homes with daytime company.',
+    hdb: 'HDB: approved, rule 62',
+  },
+  {
+    href: '/maltipoo-vs-poodle',
+    name: 'Toy Poodle',
+    tag: 'The scholar',
+    verdict: 'Sharper mind, more athletic, more independent. The Maltipoo is the same look with a softer, clingier heart.',
+    hdb: 'HDB: named, item 42',
+  },
+  {
+    href: '/maltipoo-vs-bichon-frise',
+    name: 'Bichon Frise',
+    tag: 'The powder puff',
+    verdict: 'Sturdier crowd-pleaser for busy, kid-filled homes; bigger coat workload. The Maltipoo is the lighter one-person shadow.',
+    hdb: 'HDB: named, item 4',
+  },
+  {
+    href: '/maltipoo-vs-shih-tzu',
+    name: 'Shih Tzu',
+    tag: 'The classic',
+    verdict: 'More independent and fine alone, but flat-faced and heat-sensitive. The Maltipoo trains faster and cools easier.',
+    hdb: 'HDB: named, item 48',
+  },
+  {
+    href: '/maltipoo-vs-cockapoo',
+    name: 'Cockapoo',
+    tag: 'The athlete',
+    verdict: 'The sporty, larger cross for walking households. The Maltipoo is the lap dog, and the only one with a clean HDB yes.',
+    hdb: 'HDB: verify case by case',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/compare-maltipoo',
+    title,
+    description,
+    aboutName: 'Maltipoo breed comparisons',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Maltipoo breed comparisons',
+    itemListElement: comparisons.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: `Maltipoo vs ${c.name}`,
+      url: `${site.domain}${c.href}`,
+    })),
+  },
+];
+---
+
+<BaseLayout title={title} description={description} path="/compare-maltipoo" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Compare breeds</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo compared with six popular breeds</h1>
+      <p class="text-ink-soft max-w-[52ch] m-0">
+        Looking for dogs similar to Maltipoo, or trying to compare small breeds Singapore families actually keep? This maltipoo comparison hub runs every breed through one honest framework, so the verdicts add up instead of contradicting each other.
+      </p>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Which small breed suits your home?">
+    If you searched breeds like Maltipoo, or the broader "which small dog Singapore" question, start here: who is home between 8am and 6pm? Homes with daytime company suit
+    the Maltipoo; often-empty flats suit a more independent breed like the Cavapoo or Shih
+    Tzu; walking households suit the Cockapoo. The six cards below give the one-line verdict,
+    and each links the full comparison.
+  </AnswerCapsule>
+
+  <section class="container-site py-10" id="comparisons">
+    <h2 class="text-2xl md:text-3xl mb-6">The six verdicts</h2>
+    <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      {comparisons.map((c) => (
+        <a href={c.href} class="pop pop-hover p-6 no-underline flex flex-col">
+          <span class="pill pill-tint mb-3 self-start">{c.tag}</span>
+          <h3 class="text-xl m-0 mb-2">Maltipoo vs {c.name}</h3>
+          <p class="text-ink-soft text-sm m-0 mb-4">{c.verdict}</p>
+          <span class="pill pill-mint mt-auto self-start">{c.hdb}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <CaptionedBlock heading="The framework behind every verdict" id="framework" tinted>
+    <p>
+      We match by routine first: who is home, and when. Then living space, then experience
+      level, then energy preference, and only then the breed. It is the same
+      Lifestyle-First method we use at the shop counter, where recommending against our own
+      puppy is sometimes the right answer.
+    </p>
+    <p>
+      The Maltipoo's own case, made honestly, lives in the
+      <a href="/maltipoo-temperament">temperament guide</a>: a devoted, clever velcro dog for
+      homes with company, and the wrong choice for an empty weekday flat.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Lifestyle-First Matching"
+      items={[
+        '1. Daily routine: who is home, when',
+        '2. Living space: HDB, condo, landed',
+        '3. Experience: first dog or returning owner',
+        '4. Energy: lap dog or active companion',
+        '5. Then, and only then, the breed',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CtaClose
+    secondaryHeading="Undecided between two?"
+    secondaryText="Tell us your routine on WhatsApp and we will make the call with you, honestly."
+    secondaryHref="/#lifestyle-fit"
+    secondaryLabel="Take the routine test"
+  />
+</BaseLayout>

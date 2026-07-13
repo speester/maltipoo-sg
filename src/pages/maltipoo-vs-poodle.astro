@@ -1,0 +1,175 @@
+---
+// Comparison page. Copy authored against briefs/maltipoo-vs-poodle.json (2026-07-13).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo vs Toy Poodle: The Honest Trade | Maltipoo.sg';
+const description =
+  'Maltipoo vs Toy Poodle for Singapore flats: athletic biddable purebred vs softer velcro cross. Coat, energy, barking and HDB status compared honestly.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare Breeds', url: '/compare-maltipoo' },
+  { name: 'Maltipoo vs Poodle', url: '/maltipoo-vs-poodle' },
+];
+
+const faqItems = [
+  {
+    q: 'Which is smarter, a Maltipoo or a Toy Poodle?',
+    a: 'The Toy Poodle, by a nose; it is one of the sharpest breeds there is. The Maltipoo inherits enough of that mind to train quickly, and for a first-time owner the difference in practice is small.',
+  },
+  {
+    q: 'Is grooming the same for both?',
+    a: 'Same salon price tier by weight, different forgiveness. The Poodle’s tight curl mats fast when brushing slips; the Maltipoo’s looser wave gives you a day or two of grace. In our humidity, neither coat tolerates neglect.',
+  },
+  {
+    q: 'Which barks more?',
+    a: 'They are close: both are alert-barkers, and in both, loneliness is the loudest trigger. Early quiet training and daytime company matter more than the breed choice.',
+  },
+  {
+    q: 'Can I get a Toy Poodle from you?',
+    a: 'This shop specialises in Maltipoos; our parent brand Curious Tails handles other breeds. WhatsApp us and we route you to whichever side fits, honestly. [VERIFY current parent-brand lineup]',
+  },
+  {
+    q: 'Which is better for allergy-sensitive homes?',
+    a: 'The Poodle, marginally, thanks to the tighter curl. But no dog is truly hypoallergenic, so meet the puppy in person before committing either way.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-vs-poodle',
+    title,
+    description,
+    aboutName: 'Maltipoo vs Toy Poodle comparison',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-vs-poodle" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Comparison</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo vs Toy Poodle</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        One of Singapore's most-owned breeds against its own cross. The trade is real:
+        athleticism and edge for softness and lap time.
+      </p>
+      <a href={whatsappLink('Hi! Could you help me decide between a Maltipoo and a Toy Poodle?')} class="btn-cta">Ask which fits you</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Maltipoo or Toy Poodle: what is the difference?">
+    The difference between Maltipoo and Toy Poodle is a fair trade. A Toy Poodle is the athletic scholar: tightly curled coat, the sharpest training mind in
+    the small-dog class, and more independence. A Maltipoo trades some of that athleticism
+    for softer, heavier-on-the-lap devotion and a looser coat. Both are HDB-approved and sit
+    in the 2 to 5kg range; pick by energy and attachment, not looks.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="Mind and energy: scholar vs shadow" id="mind">
+    <p>
+      The maltipoo vs toy poodle gap is widest here. A Toy Poodle wants a job: longer walks,
+      trick sessions, puzzle toys, and it repays the effort with obedience that looks like
+      showing off. It also holds its own alone better than most toy breeds.
+    </p>
+    <p>
+      The Maltipoo keeps enough Poodle mind to train fast, then spends the rest of the day
+      being a shadow. Its job is you, as the
+      <a href="/maltipoo-temperament">temperament guide</a> spells out, and it needs daytime
+      company more than it needs a fifth walk.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Energy and mind"
+      items={[
+        'Toy Poodle: needs jobs, walks, puzzles',
+        'Maltipoo: 15 to 20 minute walks, lap-first',
+        'Both: quick learners, easy toilet training',
+        'Alone tolerance: Poodle higher, honestly',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Coat: tight curl vs soft wave" id="coat" reverse>
+    <p>
+      Both coats are low-shedding and both arrive in apricot, which is why the breeds get
+      mistaken for each other around Balestier. The Poodle's tight curl demands a strict
+      brushing cadence or it mats hard; the Maltipoo's looser wave is a touch more forgiving,
+      though Singapore humidity forgives neither. Same grooming price tier by weight, per the
+      <a href="/maltipoo-size">size guide</a> maths.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Coat care, honestly"
+      items={[
+        'Poodle: tight curl, strict brushing schedule',
+        'Maltipoo: soft wave, slightly forgiving',
+        'Both: groom every 4 to 6 weeks here',
+        'Both: apricot common, low-shedding',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Flats, barking and HDB" id="hdb" tinted>
+    <p>
+      No paperwork drama on either side: the Toy and Miniature Poodle is named at item 42 of
+      the
+      <a href="https://www.hdb.gov.sg/managing-my-home/home-ownership/keeping-pets" rel="noopener" target="_blank">HDB approved list</a>,
+      and the Maltipoo qualifies via item 62. Both alert-bark at corridor sounds; in both, an
+      empty flat is the real volume knob.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Flat facts"
+      items={[
+        'HDB: Poodle item 42, Maltipoo via item 62',
+        'Size: both toy class for flats',
+        'Barking: similar, loneliness-driven',
+        'Licence: same AVS rules for both',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Who should pick which" id="verdict">
+    <p>
+      Pick the Toy Poodle if you enjoy training as a hobby, want a small dog that hikes above
+      its weight, and are away moderate hours. Pick the Maltipoo if what you actually want is
+      the Poodle look with a softer, clingier temperament, because that is literally what the
+      cross is.
+    </p>
+    <p>
+      Owners often tell us their maltipoo looks more like Poodle than Maltese; that is the curl talking, and it is why the toy poodle vs maltipoo confusion is so common at the park. A note from the shop floor: half the buyers who arrive asking for a Toy Poodle describe
+      their ideal dog and describe a Maltipoo. Describe yours on WhatsApp
+      ({site.phoneDisplay}) and we will tell you which one you just described.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The one-line verdict"
+      items={[
+        'Trainer-type, active owner: Toy Poodle',
+        'Company-rich lap home: Maltipoo',
+        'Want poodle looks, softer heart: Maltipoo',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Compare more breeds"
+    secondaryText="Cavapoo, Maltese, Bichon, Shih Tzu and Cockapoo, all against the Maltipoo."
+    secondaryHref="/compare-maltipoo"
+    secondaryLabel="See all comparisons"
+  />
+</BaseLayout>

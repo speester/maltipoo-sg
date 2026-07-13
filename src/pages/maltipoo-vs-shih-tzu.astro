@@ -1,0 +1,176 @@
+---
+// Comparison page. Copy authored against briefs/maltipoo-vs-shih-tzu.json (2026-07-13).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo vs Shih Tzu in Singapore Heat | Maltipoo.sg';
+const description =
+  'Maltipoo vs Shih Tzu for Singapore homes: the flat-face heat question, coat workloads, independence vs velcro devotion, and HDB status for both.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare Breeds', url: '/compare-maltipoo' },
+  { name: 'Maltipoo vs Shih Tzu', url: '/maltipoo-vs-shih-tzu' },
+];
+
+const faqItems = [
+  {
+    q: 'Is a Shih Tzu safe in Singapore heat?',
+    a: 'Yes, with sensible care: early walks, shade, water, air-conditioned rest. Its flat face makes panting less efficient, so it needs more heat caution than a longer-nosed dog. [VERIFY brachycephalic heat guidance against a vet source] The Maltipoo’s longer muzzle copes more easily.',
+  },
+  {
+    q: 'Which handles being alone better?',
+    a: 'The Shih Tzu, clearly. It is famously self-possessed and will nap through your absence with dignity. The Maltipoo is attachment-dependent and wants company through the day; an often-empty flat suits the Shih Tzu far better of the two.',
+  },
+  {
+    q: 'Which is easier to train?',
+    a: 'The Maltipoo, thanks to the Poodle side; toilet training in particular lands faster. The Shih Tzu is intelligent but independent-minded, which reads as stubborn in week one.',
+  },
+  {
+    q: 'Malshi vs Maltipoo: what is the difference?',
+    a: 'A Maltese crossed with a Shih Tzu, a different mix from the Maltipoo (Maltese x Toy Poodle). As a cross of two HDB-listed breeds it also qualifies under item 62.',
+  },
+  {
+    q: 'Are both HDB approved?',
+    a: 'Yes: the Shih Tzu is named at item 48 of HDB’s approved list, and the Maltipoo qualifies through item 62.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-vs-shih-tzu',
+    title,
+    description,
+    aboutName: 'Maltipoo vs Shih Tzu comparison',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-vs-shih-tzu" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Comparison</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo vs Shih Tzu</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        One of Singapore's long-time favourites against the apricot newcomer, starting with
+        the question our climate makes unavoidable.
+      </p>
+      <a href={whatsappLink('Hi! Could you help me decide between a Maltipoo and a Shih Tzu?')} class="btn-cta">Ask which fits you</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Maltipoo or Shih Tzu: what is the difference?">
+    The difference between Maltipoo and Shih Tzu starts at the muzzle. A Shih Tzu is the regal, more independent classic: 4 to 7kg, a long double coat or a
+    practical puppy cut, and a flat face that makes it more heat-sensitive in Singapore. A
+    Maltipoo is lighter (2 to 4kg), longer-nosed, clingier and quicker to train. Both are
+    HDB-listed; heat tolerance and independence are the honest deciders.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="The heat question first" id="heat">
+    <p>
+      In this climate the shih tzu vs maltipoo comparison starts at the muzzle. The Shih
+      Tzu's flat face makes panting, its main cooling system, less efficient, so hot midday
+      walks and stuffy rooms carry more risk and its exercise clock lives at dawn and dusk.
+      [VERIFY brachycephalic heat guidance against a vet source before launch]
+    </p>
+    <p>
+      The Maltipoo's longer Poodle-side muzzle cools more conventionally. It still prefers
+      the shaded, early routine every small dog here does, but the margin for a delayed walk
+      is wider.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Heat, honestly"
+      items={[
+        'Shih Tzu: flat-faced, stricter heat caution',
+        'Maltipoo: longer muzzle, wider margin',
+        'Both: walk early, shade, water, aircon rest',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Temperament: regal vs velcro" id="temperament" reverse>
+    <p>
+      The Shih Tzu was bred to decorate palaces and knows it: affectionate on its own
+      schedule, self-possessed, and genuinely fine napping through your workday. The Maltipoo
+      is the opposite pole, the velcro dog of the
+      <a href="/maltipoo-temperament">temperament guide</a>, devoted, vocal about loneliness,
+      and happiest with company through the day.
+    </p>
+    <p>
+      That makes this the rare comparison where the honest routing runs against us: if your
+      flat is empty from 8am to 6pm, the Shih Tzu is the better-suited dog of these two, and
+      we will say so.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Character split"
+      items={[
+        'Shih Tzu: independent, dignified, ok alone',
+        'Maltipoo: velcro, vocal, needs company',
+        'Training speed: Maltipoo clearly faster',
+        'Empty weekday flat: Shih Tzu wins this one',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Coat and grooming" id="coat" tinted>
+    <p>
+      The Shih Tzu's floor-length show coat is a daily project, which is why most Singapore
+      Shih Tzus live in a standing puppy cut; budget the same four-to-six-week salon cadence
+      either way. The Maltipoo's teddy coat runs the routine covered in the size and
+      grooming guides: brushes between visits, mats punished by humidity, tear stains on
+      light faces for both breeds.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Coat care"
+      items={[
+        'Shih Tzu: long coat or standing puppy cut',
+        'Maltipoo: teddy cut, few brushes a week',
+        'Both: 4 to 6 week salon cadence',
+        'Both: tear stains on light faces',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Who should pick which" id="verdict">
+    <p>
+      Pick the Shih Tzu if you want a composed classic that tolerates your absences and you
+      can run a heat-smart routine. Pick the Maltipoo if someone is home most of the day and
+      you want a lighter (see the <a href="/maltipoo-size">size guide</a>), faster-training
+      shadow. On HDB paperwork they tie: item 48 for the Shih Tzu on the
+      <a href="https://www.hdb.gov.sg/managing-my-home/home-ownership/keeping-pets" rel="noopener" target="_blank">approved list</a>,
+      item 62 for the Maltipoo.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The one-line verdict"
+      items={[
+        'Out often, want composure: Shih Tzu',
+        'Home often, want a shadow: Maltipoo',
+        'Midday-walk-only households: neither, honestly',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Compare more breeds"
+    secondaryText="Cavapoo, Maltese, Toy Poodle, Bichon and Cockapoo, all against the Maltipoo."
+    secondaryHref="/compare-maltipoo"
+    secondaryLabel="See all comparisons"
+  />
+</BaseLayout>

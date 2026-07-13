@@ -1,0 +1,169 @@
+---
+// Comparison page. Copy authored against briefs/maltipoo-vs-bichon-frise.json (2026-07-13).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo vs Bichon Frise: Powder Puff or Velcro | Maltipoo.sg';
+const description =
+  'Maltipoo vs Bichon Frise for Singapore homes: sturdier merry powder-puff vs featherweight velcro lap dog. Coat workload, size and HDB status compared.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Compare Breeds', url: '/compare-maltipoo' },
+  { name: 'Maltipoo vs Bichon Frise', url: '/maltipoo-vs-bichon-frise' },
+];
+
+const faqItems = [
+  {
+    q: 'Which sheds less, a Maltipoo or a Bichon Frise?',
+    a: 'Both are famously low-shedding. The difference is upkeep: the Bichon’s dense double coat needs serious daily brushing to stay that way, while the Maltipoo’s single-cross coat asks for a few sessions a week.',
+  },
+  {
+    q: 'Is Bichon grooming more expensive?',
+    a: 'Often one tier up, because salons price by weight and coat density and the Bichon carries more of both. Budget the fuller end of the $80 to $130 full-groom range and more frequent visits to keep the powder-puff shape.',
+  },
+  {
+    q: 'Which is better with young children?',
+    a: 'The Bichon, structurally: at 5 to 8kg it is sturdier under enthusiastic hugs. A 2 to 4kg Maltipoo does fine with supervised, gentle kids, but it is the more fragile of the two.',
+  },
+  {
+    q: 'Which barks more?',
+    a: 'The Maltipoo, slightly; its Maltese alert streak runs louder than the Bichon’s merry sociability. Both settle with early quiet training and enough company.',
+  },
+  {
+    q: 'Are both HDB approved?',
+    a: 'Yes. The Bichon Frise is named at item 4 of HDB’s approved list, and the Maltipoo qualifies through item 62 as a cross of two approved breeds.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-vs-bichon-frise',
+    title,
+    description,
+    aboutName: 'Maltipoo vs Bichon Frise comparison',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-vs-bichon-frise" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Comparison</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo vs Bichon Frise</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        The merry powder puff against the featherweight shadow. Similar looks from across the
+        void deck, very different daily lives.
+      </p>
+      <a href={whatsappLink('Hi! Could you help me decide between a Maltipoo and a Bichon Frise?')} class="btn-cta">Ask which fits you</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="Maltipoo or Bichon Frise: what is the difference?">
+    The difference between Maltipoo and Bichon Frise is size and coat workload. A Bichon Frise is the sturdier, merrier extrovert: 5 to 8kg, a white powder-puff double
+    coat, and sociable with everyone it meets. A Maltipoo is the featherweight velcro dog: 2
+    to 4kg, an apricot low-shedding coat, bonded hardest to its own people. Both are
+    HDB-listed; coat workload and size are the practical deciders.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="Size and sturdiness" id="size">
+    <p>
+      The bichon frise vs maltipoo size gap changes household maths. At 5 to 8kg the Bichon
+      is robust enough for a home full of visiting grandchildren; at 2 to 4kg the toy
+      Maltipoo needs the hugging supervised, as the <a href="/maltipoo-size">size guide</a>
+      spells out, and in exchange rides carriers, laps and MRT journeys effortlessly.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Size maths"
+      items={[
+        'Bichon: 5 to 8kg, sturdier with kids',
+        'Maltipoo: 2 to 4kg, featherweight and portable',
+        'Both: flat-sized, short-walk breeds',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The coat workload gap" id="coat" reverse>
+    <p>
+      Both coats read "fluffy white-ish cloud" from a distance; up close the workload
+      differs. The Bichon's dense double coat is what makes the powder-puff silhouette, and
+      it demands genuine daily brushing plus frequent professional shaping. The Maltipoo's
+      single-cross coat wants a few brushes a week and the standard four-to-six-week groom.
+    </p>
+    <p>
+      Tear stains visit both; the whiter the face, the louder they read. The
+      <a href="/blog/maltipoo-tear-stains">daily wipe routine</a> is the answer in either
+      case.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Coat, honestly"
+      items={[
+        'Bichon: double coat, daily brushing, frequent shaping',
+        'Maltipoo: lighter routine, few brushes a week',
+        'Both: low-shedding, tear-stain prone',
+        'Grooming budget: Bichon usually a tier up',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Temperament: merry vs devoted" id="temperament" tinted>
+    <p>
+      A Bichon loves the whole world: guests, neighbours, the delivery rider. A Maltipoo
+      loves the world politely and its own people ferociously, per the
+      <a href="/maltipoo-temperament">temperament guide</a>. Both want company; the Bichon
+      copes a little better when the flat empties, the Maltipoo repays presence more
+      intensely.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Character split"
+      items={[
+        'Bichon: sociable extrovert, crowd-pleaser',
+        'Maltipoo: devoted velcro, favourite-person dog',
+        'Alone tolerance: Bichon slightly higher',
+        'Both: happiest in homes with company',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Who should pick which" id="verdict">
+    <p>
+      Pick the Bichon for a busy, social, kid-filled household that can fund and enjoy the
+      coat ritual. Pick the Maltipoo for a quieter home that wants one small shadow on the
+      sofa and a lighter grooming load. On paperwork they tie: Bichon at item 4 of the
+      <a href="https://www.hdb.gov.sg/managing-my-home/home-ownership/keeping-pets" rel="noopener" target="_blank">HDB approved list</a>,
+      Maltipoo via item 62.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The one-line verdict"
+      items={[
+        'Social household, kids, coat budget: Bichon',
+        'Lap-first home, lighter coat work: Maltipoo',
+        'HDB: both approved, no tiebreaker there',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Compare more breeds"
+    secondaryText="Cavapoo, Maltese, Toy Poodle, Shih Tzu and Cockapoo, all against the Maltipoo."
+    secondaryHref="/compare-maltipoo"
+    secondaryLabel="See all comparisons"
+  />
+</BaseLayout>
