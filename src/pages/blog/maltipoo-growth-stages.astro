@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/13-maltipoo-size-adult-puppy.webp';
 
 const title = 'Maltipoo Growth From Puppy to Adult | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Adult Maltipoo beside a Maltipoo puppy showing the growth difference" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">Weeks 9 to 16: the sponge phase</h2>
           <p>
             Your puppy arrives at nine weeks with the vaccination course mid-stream and a brain wide open: this is when toilet routines, alone-time conditioning, handling practice and gentle socialisation write themselves in almost effortlessly. Physically it is all wobble and nap, eighteen-plus hours of sleep against short eruptions of play.

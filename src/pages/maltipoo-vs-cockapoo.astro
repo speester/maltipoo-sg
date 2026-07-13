@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/20-small-breeds-lineup.webp';
 
 const title = 'Maltipoo vs Cockapoo: Lap Dog or Adventure Dog | Maltipoo.sg';
 const description =
@@ -78,6 +79,17 @@ const schemas = [
     62, while the Cocker Spaniel is not on HDB's named list, so a Cockapoo's flat status
     needs checking rather than assuming.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Apricot Maltipoo in a lineup of small companion breeds"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="Energy is the real gap" id="energy">
     <p>

@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/28-maltipoo-crate-den.webp';
 
 const title = 'Where Should Your Maltipoo Sleep? | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Maltipoo asleep inside its open crate den at night" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">The first weeks: bedroom, but contained</h2>
           <p>
             A nine-week-old sleeping alone for the first time settles fastest hearing you breathe, which is why the pen or crate starts in the bedroom. Contained matters as much as close: a loose puppy in a dark flat is a toilet accident and a chewed cable waiting to happen.

@@ -9,6 +9,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/20-small-breeds-lineup.webp';
 
 const title = 'Maltipoo vs Shih Tzu in Singapore Heat | Maltipoo.sg';
 const description =
@@ -76,6 +77,17 @@ const schemas = [
     Maltipoo is lighter (2 to 4kg), longer-nosed, clingier and quicker to train. Both are
     HDB-listed; heat tolerance and independence are the honest deciders.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Maltipoo sitting beside a Shih Tzu among other small breeds"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="The heat question first" id="heat">
     <p>

@@ -15,6 +15,7 @@ import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
 import { availablePups } from '../data/puppies';
+import heroImg from '../assets/site/1-maltipoo-puppy-hero-singapore.webp';
 
 const title = 'Maltipoo Singapore | Toy Maltipoo Puppies | Maltipoo.sg';
 const description =
@@ -79,14 +80,25 @@ const coatSwatches = [
 ];
 ---
 
-<BaseLayout title={title} description={description} path="/" schemas={schemas}>
+<BaseLayout title={title} description={description} path="/" schemas={schemas} ogImage="/assets/home/og-home.jpg">
   <Hero
     heading="Maltipoo puppies in Singapore, matched to homes with company"
     lede="Toy Maltipoos, 2 to 4kg full grown, from the AVS licensed shop that asks about your routine before showing you a puppy. Every Maltipoo goes home vaccinated on the 6, 8 and 12 week schedule, licensed at purchase, and set up with the full 30-item starter kit. From $3,288, all-in."
     ctaMessage="Hi! I would like to ask about Maltipoo puppies."
     secondaryLabel="See available puppies"
     secondaryHref="#recent"
-  />
+  >
+    <img
+      slot="visual"
+      src={heroImg.src}
+      width={heroImg.width}
+      height={heroImg.height}
+      alt="Apricot toy Maltipoo puppy sitting on a sage green sofa in a bright Singapore living room"
+      loading="eager"
+      fetchpriority="high"
+      class="rounded-[var(--radius-media)] w-full h-auto"
+    />
+  </Hero>
 
   <section class="container-site pt-2">
     <p class="text-ink-soft max-w-[65ch] m-0">

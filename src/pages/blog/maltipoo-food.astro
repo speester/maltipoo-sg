@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/31-maltipoo-eating-bowl.webp';
 
 const title = 'What to Feed a Maltipoo Puppy | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Maltipoo puppy eating from a steel bowl at a feeding station" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">The what and the how much</h2>
           <p>
             Small-breed formulas exist for real reasons: kibble sized for a tiny mouth and calorie density for a fast metabolism. Follow the bag's weight chart as a starting point, then feed the dog in front of you; ribs easily felt under a light fat cover is the target, and the vet confirms trajectory at booster visits.

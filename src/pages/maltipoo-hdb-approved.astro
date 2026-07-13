@@ -11,6 +11,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/12-maltipoo-hdb-living-room.webp';
 
 const title = 'Are Maltipoos HDB Approved? Yes, By Rule | Maltipoo.sg';
 const description =
@@ -84,6 +85,17 @@ const schemas = [
     is. You may keep one dog per flat from the approved list, and every dog needs an AVS
     licence.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Apricot Maltipoo resting in a playpen corner of an HDB flat living room"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="The proof, from HDB's own list" id="proof">
     <p>

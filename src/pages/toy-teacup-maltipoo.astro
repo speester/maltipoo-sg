@@ -9,6 +9,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/14-maltipoo-toy-hands.webp';
 
 const title = 'Toy, Teacup and Mini Maltipoos, Honestly | Maltipoo.sg';
 const description =
@@ -75,6 +76,17 @@ const schemas = [
     usually meaning an unusually small puppy at a premium, with health risks attached. We
     place healthy toys and skip the label.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Tiny toy Maltipoo puppy held gently in two hands showing its small size"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="What the labels actually map to" id="labels">
     <p>

@@ -9,6 +9,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/19-maltipoo-training-sit.webp';
 
 const title = 'Training a Maltipoo Puppy in Singapore | Maltipoo.sg';
 const description =
@@ -75,6 +76,17 @@ const schemas = [
     are early quiet-marker training (it is vocal) and alone-time conditioning from week one
     (it is attachment-dependent).
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Maltipoo puppy learning to sit for a treat during training"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="Toilet training in a flat" id="toilet">
     <p>

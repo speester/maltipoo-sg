@@ -11,6 +11,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/21-maltipoo-vs-cavapoo.webp';
 
 const title = 'Maltipoo vs Cavapoo: Which Fits Your Home | Maltipoo.sg';
 const description =
@@ -79,6 +80,17 @@ const schemas = [
     low-shedding, HDB-approved crosses at {site.pricing.range} all-in here, so fit decides,
     not price.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Apricot Maltipoo beside a blenheim Cavapoo on a sofa"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="Same family, different wiring" id="wiring">
     <p>
@@ -156,7 +168,9 @@ const schemas = [
     </p>
     <p>
       It runs the other way too: retirees offered a Cavapoo elsewhere when what they wanted
-      was a shadow on the sofa all day, which is Maltipoo work. Tell us your routine on
+      was a shadow on the sofa all day, which is Maltipoo work. Our sister site's
+      <a href="https://cavapoopuppy.sg/cavapoo-vs-maltipoo" rel="noopener">Cavapoo side of this comparison</a>
+      tells the same story from the other sofa. Tell us your routine on
       WhatsApp ({site.phoneDisplay}) and you will get the honest routing, whichever direction
       it points.
     </p>

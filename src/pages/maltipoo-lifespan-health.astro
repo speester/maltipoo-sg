@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/18-maltipoo-health-vaccination.webp';
 
 const title = 'Maltipoo Lifespan and Health in Singapore | Maltipoo.sg';
 const description =
@@ -76,6 +77,17 @@ const schemas = [
     disease and tear-duct issues; the vaccination schedule in Singapore runs weeks 6, 8 and
     12 with an annual booster from Year 1.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Maltipoo puppy at a vet visit with its vaccination booklet"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="Why small crosses live long" id="longevity">
     <p>

@@ -9,6 +9,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/20-small-breeds-lineup.webp';
 
 const title = 'Maltipoo vs Bichon Frise: Powder Puff or Velcro | Maltipoo.sg';
 const description =
@@ -76,6 +77,17 @@ const schemas = [
     to 4kg, an apricot low-shedding coat, bonded hardest to its own people. Both are
     HDB-listed; coat workload and size are the practical deciders.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Maltipoo sitting beside a white Bichon Frise among other small breeds"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="Size and sturdiness" id="size">
     <p>

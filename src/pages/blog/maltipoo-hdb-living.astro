@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/12-maltipoo-hdb-living-room.webp';
 
 const title = 'Living With a Maltipoo in an HDB Flat | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Apricot Maltipoo at home in its playpen corner of an HDB flat" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">The space question, retired</h2>
           <p>
             A toy Maltipoo occupies one sofa cushion, one pen corner and whatever lap is available; a 2-room flexi has more room than it needs. The setup that works: pen in a low-traffic corner away from direct afternoon sun, water in every zone the dog uses, and the toilet spot decided before homecoming per the potty-training guide.

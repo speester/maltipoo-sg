@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/19-maltipoo-training-sit.webp';
 
 const title = 'Surviving Maltipoo Adolescence | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Adolescent Maltipoo practising a sit during a training session" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">What changes, and when</h2>
           <p>
             Somewhere around six months the puppy that came when called develops selective hearing, and the confident explorer suddenly startles at a bin it has passed fifty times. Fear periods, boundary testing and energy spikes arrive in waves through roughly the eighteenth month, earlier and milder in toy breeds than large ones.

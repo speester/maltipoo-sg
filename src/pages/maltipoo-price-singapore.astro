@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
+import featuredImg from '../assets/site/23-maltipoo-starter-kit.webp';
 
 const title = 'Maltipoo Price Singapore: From $3,288 All-In | Maltipoo.sg';
 const description =
@@ -86,6 +87,17 @@ const schemas = [
     vaccinations to date, microchip, the 30-item starter kit, delivery with setup, the first
     training lesson, and licensing.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Puppy starter kit flatlay with playpen, bed, bowls, toys and grooming set"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="What the all-in price includes" id="included">
     <p>

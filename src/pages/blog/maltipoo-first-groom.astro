@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/30-maltipoo-salon-first-groom.webp';
 
 const title = "Your Maltipoo's First Grooming, Done Right | Maltipoo.sg";
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Calm Maltipoo puppy on a grooming table at its first salon visit" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">Why the first visit matters so much</h2>
           <p>
             Owner forums are full of the same horror story: a first groom booked as a full three-hour style, a puppy discovering clippers, dryers and strangers simultaneously, and a groomer calling mid-session because the dog is terrified. That fear, installed once, takes months to undo.

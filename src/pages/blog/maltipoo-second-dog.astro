@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/35-two-maltipoos-meeting.webp';
 
 const title = 'Adding a Maltipoo to a Home With Pets | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Two Maltipoos greeting each other politely on a light floor" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">Puppy meets resident dog</h2>
           <p>
             The r/Maltipoo archives are full of week-one panic posts about an older dog growling at the new puppy, and almost all of them resolve the same way: normally, with time. First meeting happens on neutral ground (a quiet corridor of park, not the resident dog's sofa), both leashed, sniffing rationed, everything brief and boring.

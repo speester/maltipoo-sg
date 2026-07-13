@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/24-maltipoo-coat-closeup.webp';
 
 const title = 'Are Maltipoos Hypoallergenic? Do They Shed? | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Close-up of an apricot Maltipoo’s soft low-shedding wavy coat" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">What low-shedding actually means</h2>
           <p>
             A Maltipoo's Poodle-influenced coat grows continuously and traps loose hair in the curl instead of releasing it onto your sofa. You will find little hair around the flat, which is what listings compress into the word non-shedding. The hair still exists; it comes out in your brush instead of your air.

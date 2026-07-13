@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/33-maltipoo-carrier-travel.webp';
 
 const title = 'Getting Around Singapore With a Maltipoo | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Maltipoo peeking out of a travel carrier bag" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">The public transport reality</h2>
           <p>
             The standing rule on trains and public buses is assistance dogs only; pet dogs, even zipped into carriers, are not permitted under the current conditions of carriage. [VERIFY against LTA/SMRT publications before relying on this] Plan around it rather than testing it; the fine print is not on your side.

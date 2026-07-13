@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { webPageSchema, breadcrumbSchema } from '../../lib/schema';
+import heroImg from '../../assets/site/36-maltipoo-portrait-classic.webp';
 
 const title = 'Maltipoo Care Guides and Owner Answers | Maltipoo.sg';
 const description =
@@ -50,14 +51,25 @@ const schemas = [
 
 <BaseLayout title={title} description={description} path="/blog" schemas={schemas}>
   <section class="container-site pt-4">
-    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
-      <Breadcrumb items={crumbs} bare class="mb-5" />
-      <p class="eyebrow mb-2">Owner guides</p>
-      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo answers, from the shop floor</h1>
-      <p class="text-ink-soft m-0 max-w-[60ch]">
-        The questions real owners ask us, answered for Singapore homes: 25 guides from 100+
-        placements.
-      </p>
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 grid md:grid-cols-[1.6fr_1fr] gap-8 items-center">
+      <div>
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Owner guides</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo answers, from the shop floor</h1>
+        <p class="text-ink-soft m-0 max-w-[60ch]">
+          The questions real owners ask us, answered for Singapore homes: 25 guides from 100+
+          placements.
+        </p>
+      </div>
+      <img
+        src={heroImg.src}
+        width={heroImg.width}
+        height={heroImg.height}
+        alt="Classic portrait of an apricot Maltipoo with a soft teddy face"
+        loading="eager"
+        fetchpriority="high"
+        class="rounded-[var(--radius-media)] w-full h-auto hidden md:block shadow-[var(--shadow-pop)]"
+      />
     </div>
   </section>
 

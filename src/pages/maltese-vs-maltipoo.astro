@@ -9,6 +9,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/20-small-breeds-lineup.webp';
 
 const title = 'Maltese vs Maltipoo: What the Poodle Changes | Maltipoo.sg';
 const description =
@@ -75,6 +76,17 @@ const schemas = [
     colours (apricot, here), a quicker training mind, and the same wants-company nature. Both
     are HDB-listed; coat style and trainability are the practical deciders.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Maltipoo sitting beside a white Maltese among other small breeds"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="The coat: silky curtain vs teddy curl" id="coat">
     <p>

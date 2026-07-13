@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/34-maltipoo-grandma-sofa.webp';
 
 const title = 'Daycare, Sitters and Helpers for Your Maltipoo | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Maltipoo sitting with a grandmother on a sofa in a multi-generation home" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">The options menu, honestly ranked</h2>
           <p>
             Best is resident company: a helper, a grandparent, or a household schedule where someone WFHs most days. The dog integrates into a living flat, which is the environment this breed was matched for; the with-kids guide describes the multi-generation pattern at its best.

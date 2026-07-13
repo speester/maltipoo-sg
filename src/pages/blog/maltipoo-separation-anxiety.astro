@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/26-maltipoo-pen-waiting.webp';
 
 const title = 'Maltipoo Separation Anxiety, Prevented Early | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Maltipoo waiting quietly in its playpen with a chew toy" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">What it looks like, early and late</h2>
           <p>
             Early signs are small: whining that starts before you reach the door, a puppy that shadows you to the bathroom and cries at the gap, pacing when you pick up keys. Full-blown cases escalate to hours of barking, destroyed pens, and toileting regressions that owners mistake for training failure.

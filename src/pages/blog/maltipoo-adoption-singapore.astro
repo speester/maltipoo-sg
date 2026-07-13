@@ -9,6 +9,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/36-maltipoo-portrait-classic.webp';
 
 const title = 'Adopting vs Buying a Maltipoo in Singapore | Maltipoo.sg';
 const description =
@@ -70,6 +71,7 @@ const schemas = [
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
         <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Portrait of an apricot Maltipoo looking for its home" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">Where adoptable Maltipoos actually appear</h2>
           <p>
             Toy crosses are the fastest-rehomed dogs in the system, so shelter listings are rare and brief: SPCA Singapore, SOSD, Causes for Animals and Voices for Animals occasionally carry one, usually a surrendered adult rather than a puppy. Private rehoming happens quietly in community groups, often after an owner's circumstances change; the Facebook threads of families who lost an older dog and want the same breed again are where supply and demand actually meet.

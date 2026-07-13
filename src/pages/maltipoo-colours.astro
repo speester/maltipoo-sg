@@ -9,6 +9,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/16-maltipoo-colours-group.webp';
 
 const title = 'Maltipoo Colours in Singapore: Apricot First | Maltipoo.sg';
 const description =
@@ -86,6 +87,17 @@ const swatches = [
     deep amber. Puppy coats typically lighten as the adult coat arrives, so the parents
     predict colour better than any puppy photo.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Three Maltipoos in cream apricot, apricot and deep apricot sitting together"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <section class="container-site py-10" id="palette">
     <h2 class="text-2xl md:text-3xl mb-4">The palette, from our counter</h2>

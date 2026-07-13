@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/17-maltipoo-grooming-brush.webp';
 
 const title = 'Maltipoo Haircuts and Grooming in Singapore | Maltipoo.sg';
 const description =
@@ -76,6 +77,17 @@ const schemas = [
     $70 basic, $80 to $130 full for a toy-sized dog) plus brushing a few times a week to
     beat humidity matting.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Maltipoo being brushed with a slicker brush during grooming"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="The three cuts that work here" id="styles">
     <p>

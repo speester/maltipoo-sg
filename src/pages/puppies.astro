@@ -12,6 +12,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
+import featuredImg from '../assets/site/11-maltipoo-puppies-litter.webp';
 import { availablePups } from '../data/puppies';
 
 const title = 'Available Maltipoo Puppies in Singapore | Maltipoo.sg';
@@ -80,6 +81,17 @@ const schemas = [
     at Balestier by appointment, reserve with a deposit, and take your Maltipoo home from
     about nine weeks old.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Small litter of apricot Maltipoo puppies playing in a playpen"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <ListingGrid heading="Available Maltipoo puppies" items={availablePups} mode="available" />
 

@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/13-maltipoo-size-adult-puppy.webp';
 
 const title = 'Maltipoo Full Grown Size: How Big Do They Get | Maltipoo.sg';
 const description =
@@ -80,6 +81,17 @@ const schemas = [
     6kg. Most reach near-adult size by 8 to 12 months. "Teacup" is a marketing label, not a
     size class.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Adult toy Maltipoo standing next to a Maltipoo puppy showing the size difference"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="The growth timeline, month by month" id="timeline">
     <p>

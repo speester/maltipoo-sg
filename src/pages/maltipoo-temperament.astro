@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/15-maltipoo-temperament-lap.webp';
 
 const title = 'Maltipoo Temperament: The Honest Version | Maltipoo.sg';
 const description =
@@ -80,6 +81,17 @@ const schemas = [
     lacks it. The maltipoo personality suits homes where someone is usually around, and
     struggles in flats that empty out every weekday.
   </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Maltipoo napping on an owner’s lap during a work-from-home afternoon"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
 
   <CaptionedBlock heading="The devotion, described accurately" id="devotion">
     <p>
