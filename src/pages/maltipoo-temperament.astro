@@ -1,0 +1,196 @@
+---
+// Core page. Copy authored against briefs/maltipoo-temperament.json (2026-07-13).
+// Cross-site consistency rule: agrees with cavapoopuppy.sg's published comparisons.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo Temperament: The Honest Version | Maltipoo.sg';
+const description =
+  'Maltipoo temperament, honestly: devoted and clever, but attachment-dependent and vocal. Who this breed suits in Singapore, who it does not, from 100+ real placements.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Temperament', url: '/maltipoo-temperament' },
+];
+
+const faqItems = [
+  {
+    q: 'Is Maltipoo a good family dog?',
+    a: 'For families where someone is home through the day, yes: gentle, playful indoors, and devoted to everyone while usually picking a favourite. The one caution is physical, not temperamental; at 2 to 4kg it is delicate, so toddlers need supervising more than the dog does.',
+  },
+  {
+    q: 'Are Maltipoos smart?',
+    a: 'Yes, and it shows early. The Poodle side makes toilet training and basic cues genuinely quick for first-time owners, which is why the first trainer lesson we include gets results in one session. The flip side of clever is boredom, so rotate toys and teach tricks.',
+  },
+  {
+    q: 'Do Maltipoos bark a lot?',
+    a: 'More than the average small companion breed, honestly. They are alert-barkers, and vocality rises sharply when they are lonely. Early quiet-marker training and enough daytime company keep it to a level HDB neighbours never notice.',
+  },
+  {
+    q: 'Do Maltipoos get along with cats and other dogs?',
+    a: 'Generally yes, with proper introductions; they are companion-bred rather than territorial. Slow first meetings on neutral ground and separate feeding spots settle most multi-pet homes within weeks.',
+  },
+  {
+    q: 'Can a Maltipoo be left alone during work hours?',
+    a: 'Short stretches with a settled pen routine, yes. A full 8am to 6pm empty flat, every weekday, no. That routine belongs to a more independent breed like the Cavapoo, and we will tell you so before you buy, not after.',
+  },
+  {
+    q: 'When do Maltipoo puppies calm down?',
+    a: 'The puppy zoomies mellow through adolescence, roughly six to eighteen months, and the adult that emerges is a lap dog with short bursts of play. Consistent routine through adolescence is what decides how calm the adult is.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-temperament',
+    title,
+    description,
+    aboutName: 'Maltipoo temperament',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-temperament" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Temperament</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">What is a Maltipoo like to live with?</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        Every breed guide says "playful and affectionate." After 100+ placements, we can be
+        more useful than that, including about the parts other sellers skip.
+      </p>
+      <a href={whatsappLink('Hi! Could you tell me honestly if a Maltipoo suits my household?')} class="btn-cta">Ask if it fits your home</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="What is the Maltipoo temperament?">
+    Devoted, clever, and deeply people-attached: a Maltipoo is a velcro lap dog that follows
+    you room to room and wants company through the day, and it will say so vocally when it
+    lacks it. The maltipoo personality suits homes where someone is usually around, and
+    struggles in flats that empty out every weekday.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="The devotion, described accurately" id="devotion">
+    <p>
+      Live with a Maltipoo and you acquire a shadow. It moves when you move, naps against
+      your leg rather than across the room, and usually elects one favourite person while
+      loving the rest of the household on retainer. It reads moods well enough that owners
+      swear it knows a bad day before they do. If you have seen the phrase velcro dog and
+      wondered whether it is marketing, it is not; it is a maltipoo behavior report.
+    </p>
+    <p>
+      Here is the honest cost of that, and the real maltipoo pros and cons in one line: the
+      attachment that makes it wonderful does not switch off when you leave. Of all the
+      maltipoo characteristics people research, this is the one that decides everything. So is
+      Maltipoo a good dog? For the right routine, one of the best we place; that is why we ask
+      about yours before showing you a puppy.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Maltipoo character, condensed"
+      items={[
+        'Velcro-level attachment, favourite-person tendency',
+        'Gentle and playful indoors',
+        'Reads household moods',
+        'The trade: does not enjoy being alone',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Clever, and it shows early" id="clever" reverse>
+    <p>
+      Are Maltipoo smart? The Poodle parent answers that: toilet training lands quickly, basic
+      cues stick in days, and the included first lesson with an AVS-certified trainer usually
+      ends with a sit, a recall, and a very smug puppy.
+    </p>
+    <p>
+      Clever cuts both ways. A quick mind with nothing to do invents jobs, usually loud or
+      chewy ones, so rotate toys, teach tricks, and let it solve small puzzles. Ten minutes of
+      brain work tires a toy dog as much as a walk does.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The clever checklist"
+      items={[
+        'Fast toilet training for first-timers',
+        'Cues stick in days, not weeks',
+        'Needs mental play, not just walks',
+        'First trainer lesson included with every puppy',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The barking question, answered straight" id="barking" tinted>
+    <p>
+      Maltipoos are more vocal than the average small companion breed; that is the Maltese
+      watchdog streak, miniaturised. Expect alert barks at the door chime and corridor
+      footsteps, and expect it to escalate if the dog is lonely. A note from the shop floor:
+      when an owner reports barking problems, the calendar almost always shows an empty flat.
+    </p>
+    <p>
+      The fix is two-part: enough daytime company (the honest requirement), and early
+      quiet-marker training, which the trainer lesson covers. HDB's own
+      <a href="https://www.hdb.gov.sg/managing-my-home/home-ownership/keeping-pets" rel="noopener" target="_blank">considerate-ownership guidance</a>
+      names continuous barking as the courtesy line, and a settled Maltipoo stays well inside
+      it.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Vocality, managed"
+      items={[
+        'Alert-barker by nature, more vocal than average',
+        'Loneliness is the loudest trigger',
+        'Quiet-marker training from week one',
+        'Daytime company keeps neighbours friendly',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Which households it suits, mapped" id="households">
+    <p>
+      From our placement records, the happiest Maltipoo homes are retirees with time and a
+      routine, WFH owners whose meetings happen with a dog on their lap, and families where a
+      helper or grandparent keeps the flat inhabited. Homes with young children work well too,
+      with one caveat from the <a href="/maltipoo-size">size guide</a>: 2 to 4kg is delicate,
+      so the toddlers need training before the puppy does.
+    </p>
+    <p>
+      The household it does not suit is the one that empties from 8am to 6pm. That routine
+      belongs to a more independent breed, and our sister shop places Cavapoos for exactly
+      that life; run the <a href="/#lifestyle-fit">routine check</a> and we will point you
+      honestly either way.
+      <!-- TODO: link /maltipoo-vs-cavapoo once built -->
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The household map"
+      items={[
+        'Retirees: the ideal match',
+        'WFH owners: excellent, pen routine for calls',
+        'Helper or grandparent home: excellent',
+        'Young kids: good, supervise the hugging',
+        'Empty flat 8am to 6pm: choose a Cavapoo instead',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Does it fit your routine?"
+    secondaryText="Two honest minutes on the home page routine check beats a mismatched year."
+    secondaryHref="/#lifestyle-fit"
+    secondaryLabel="Take the routine test"
+  />
+</BaseLayout>
