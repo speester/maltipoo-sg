@@ -22,7 +22,7 @@ Key rules (full detail in RUN-THE-PROJECT.md):
 - WhatsApp: **+65 8220 6408** (`wa.me/6582206408`). **8220 6480 is WRONG/stale.**
 - AVS pet shop licence: **AS24J00046** (trust badges/schema). ACRA `202420075D` is NOT the licence.
 - Address: 2 Balestier Road #01-701, Singapore 320002. Hours: weekdays 12–6pm, weekends 10–6pm.
-- Maltipoo pricing: **[NEEDS OWNER — Checkpoint 1]**. Never publish the cavapoo range ($3,288–$5,988) or the flagship generic range.
+- Maltipoo pricing: **$3,288–$5,988 all-in** (owner confirmed 2026-07-13; genuinely same range as cavapoo) — lead with "From $3,288, all-in". Toy-first, 2–4kg; 100+ placed; apricot colour mix.
 - Vaccinations: weeks 6/8/12 (+optional 16); home ~week 9; annual booster from Year 1.
 
 ## Schema
