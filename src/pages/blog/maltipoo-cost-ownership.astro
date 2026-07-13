@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-cost-ownership.json (2026-07-13).
+// Evidence: licence tiers owner-provided; grooming SERP tiers; links price page
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'The Real Cost of Owning a Maltipoo in Singapore | Maltipoo.sg';
+const description =
+  'Beyond the purchase price: the honest yearly cost of a Maltipoo in Singapore, from the $13.50 licence and grooming cycle to food, boosters and the emergency fund.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Cost of Ownership', url: '/blog/maltipoo-cost-ownership' },
+];
+
+const faqItems = [
+  {
+    q: "What is the monthly cost of a Maltipoo?",
+    a: "Roughly $100 to $200 across grooming and food for most owners, with the grooming cadence the main variable.",
+  },
+  {
+    q: "Is pet insurance worth it in Singapore?",
+    a: "Worth quoting young, when premiums and exclusions are kindest; the honest alternative is a disciplined self-funded buffer. Either beats neither. [VERIFY insurer landscape]",
+  },
+  {
+    q: "Where do owners overspend?",
+    a: "Treat inflation and boutique accessories; a 3kg dog needs less of everything than the shopping apps suggest. Underspending shows up in skipped grooms, which costs more later.",
+  },
+  {
+    q: "Does the toy size really save money?",
+    a: "Meaningfully: smallest grooming tier, smallest food bill, smallest boarding rates. The purchase price is where toy sizes cost more, not the ownership.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-cost-ownership',
+    title,
+    description,
+    aboutName: 'Maltipoo cost of ownership',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-cost-ownership" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Money</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">The real cost of owning a Maltipoo in Singapore</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='What does a Maltipoo cost per year in Singapore?'>
+      After the all-in purchase, budget roughly $1,200 to $2,000 a year: grooming is the biggest line ($50 to $130 per session, 8 to 10 times), food for a 2 to 4kg dog is modest, the licence is $13.50 to $81 by sterilisation status, and the annual booster tops it off. Add an emergency fund, always.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Year one versus every year after</h2>
+          <p>
+            Year one front-loads: the purchase itself ($3,288 to $5,988 all-in here, with setup gear covered by the kit), the $13.50 first licence, sterilisation around month seven, and the tail of the vaccination course. The all-in structure means no surprise line items at collection; the price guide itemises exactly what is inside.
+          </p>
+          <p>
+            From year two the rhythm settles into grooming, food, the annual booster visit, and licence renewal at $13.50 a year, or nothing further if you took the $35 lifetime option after sterilisation.
+          </p>
+          <h2 class="text-2xl text-ink">The recurring lines, honestly sized</h2>
+          <p>
+            Grooming dominates: eight to ten salon sessions at $50 to $130 for a toy-sized dog is $500 to $1,300 a year, and the home-brushing routine is what keeps you at the cheaper end. Food is where the toy size pays you back; a 2 to 4kg dog costs a fraction of a retriever to feed, realistically $30 to $60 a month for quality kibble. [VERIFY food range]
+          </p>
+          <p>
+            The small print that adds up: pee pads if you run the pad system, replacement chews, and the annual booster-plus-checkup visit. None are large; all are recurring.
+          </p>
+          <h2 class="text-2xl text-ink">The fund nobody budgets and everyone needs</h2>
+          <p>
+            The genuinely expensive events are the unplanned ones: a swallowed sock, a bad tooth, a knee that starts skipping. Emergency vet care in Singapore runs from hundreds into four figures, and the choice between insurance and a self-funded buffer is worth making deliberately in month one, not during the emergency.
+          </p>
+          <p>
+            Rule of thumb: either a pet insurance policy quoted while the dog is young, or an untouchable $1,000-plus buffer that grows monthly. The 5-day bring-back covers the first week; the fund covers year nine.
+          </p>
+        </div>
+        <FactsCard
+          heading='The yearly ledger'
+          items={[
+            "Grooming: $500-$1,300 (the big line)",
+            "Food: modest at 2-4kg [VERIFY range]",
+            "Licence: $13.50/yr, or $35 lifetime sterilised",
+            "Annual booster + checkup: yearly fixture",
+            "Emergency fund: start month one"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='The purchase side, itemised'
+      secondaryText='What the all-in price includes, and what moves it.'
+      secondaryHref='/maltipoo-price-singapore'
+      secondaryLabel='Read the price guide'
+    />
+  </article>
+</BaseLayout>

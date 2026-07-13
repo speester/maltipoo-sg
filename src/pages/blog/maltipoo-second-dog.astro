@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-second-dog.json (2026-07-13).
+// Evidence: r/Maltipoo older-dog-plus-puppy thread (30+ comments)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Adding a Maltipoo to a Home With Pets | Maltipoo.sg';
+const description =
+  "Introducing a Maltipoo to a resident dog or cat: the neutral-ground protocol, the two-week rule, HDB's one-dog constraint, and when a second pet helps or hurts.";
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Second Dog', url: '/blog/maltipoo-second-dog' },
+];
+
+const faqItems = [
+  {
+    q: "How long until they get along?",
+    a: "Two to six weeks to peaceful coexistence for most pairs; genuine friendship follows on its own schedule. Rushing the early days is the main way to slow it.",
+  },
+  {
+    q: "My older dog ignores the puppy. Bad sign?",
+    a: "A fine sign: dignified tolerance is a valid endpoint, and many seniors warm up only when the puppy's manners improve.",
+  },
+  {
+    q: "Can I have two Maltipoos in an HDB flat?",
+    a: "Not at one address: the rule is one approved-list dog per flat. Condo and landed households can, and the pair keeps each other company beautifully.",
+  },
+  {
+    q: "Maltipoo and rabbit or bird?",
+    a: "With permanent physical separation as the default, workable; the dog is small but still a dog. Supervised, distanced coexistence is the realistic ceiling.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-second-dog',
+    title,
+    description,
+    aboutName: 'Maltipoo with other pets',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-second-dog" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Multi-pet</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Adding a Maltipoo to a home with pets</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='Do Maltipoos get along with other pets?'>
+      Yes, more easily than most: companion-bred, non-territorial and small enough to threaten nobody. The work is in the introduction: neutral ground for dogs, scent-first weeks for cats, separate resources for everyone, and patience measured in weeks. HDB households remember: one dog per flat, so dog-plus-cat is the legal combo.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Puppy meets resident dog</h2>
+          <p>
+            The r/Maltipoo archives are full of week-one panic posts about an older dog growling at the new puppy, and almost all of them resolve the same way: normally, with time. First meeting happens on neutral ground (a quiet corridor of park, not the resident dog's sofa), both leashed, sniffing rationed, everything brief and boring.
+          </p>
+          <p>
+            At home, the resident dog keeps its bed, bowls and rituals untouched, the puppy operates from its own pen, and shared floor time grows daily under supervision. An older dog teaching a puppy manners with a growl and a stiff walk-away is education, not war; you intervene at snapping, not at grumbling.
+          </p>
+          <h2 class="text-2xl text-ink">Puppy meets resident cat</h2>
+          <p>
+            Cats set the timetable, and the timetable is scent-first: swap bedding between pen and cat territory for days before any visual contact, then meetings through the pen bars with the cat free to leave. The cat's food, water and litter move to dog-free altitude permanently.
+          </p>
+          <p>
+            A toy Maltipoo is one of the safer dog choices for cat households: too small to menace, companion-wired, and usually the one being bossed within the month. The failure mode is chase-play, so reward the puppy for calm around the cat from day one.
+          </p>
+          <h2 class="text-2xl text-ink">Whether to, and the HDB maths</h2>
+          <p>
+            A second pet helps most when the first is confident and the humans want more dog; it helps least as a patch for separation anxiety, where you risk two anxious animals. Fix the alone-time conditioning first, then expand the family for the right reasons.
+          </p>
+          <p>
+            The regulatory maths for flats: HDB allows one approved-list dog per flat, so the legal second pet is a cat (up to two, licensed, since September 2024) rather than a second dog. The HDB guide covers the whole rulebook.
+          </p>
+        </div>
+        <FactsCard
+          heading='Introduction protocol'
+          items={[
+            "Dogs: neutral ground, leashed, brief",
+            "Cats: scent-swap days before eye contact",
+            "Separate bowls, beds and territories",
+            "Growling is education; snapping is intervention",
+            "HDB: one dog, so dog + cat is the combo"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Ask about temperament matches'
+      secondaryText='Tell us about the resident pet; we will point at the puppies with the right energy.'
+      secondaryHref='/puppies'
+      secondaryLabel='See available puppies'
+    />
+  </article>
+</BaseLayout>

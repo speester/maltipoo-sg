@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-separation-anxiety.json (2026-07-13).
+// Evidence: r/Maltipoo crate + destructive-alone threads; positioning topic owned honestly
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Maltipoo Separation Anxiety, Prevented Early | Maltipoo.sg';
+const description =
+  "Maltipoos are attachment-dependent, so separation anxiety is the breed's real risk. How to prevent it from week one, the signs, and the honest routine question underneath.";
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Separation Anxiety', url: '/blog/maltipoo-separation-anxiety' },
+];
+
+const faqItems = [
+  {
+    q: "How long can a Maltipoo be left alone?",
+    a: "A trained adult manages a few hours; a puppy far less. A daily 8am to 6pm empty flat exceeds what this breed copes with, which is why we route those routines to a Cavapoo instead.",
+  },
+  {
+    q: "Does a second dog fix separation anxiety?",
+    a: "Sometimes it halves it, sometimes you get two anxious dogs. Fix the conditioning first; add a companion for the right reasons, not as a patch.",
+  },
+  {
+    q: "Does crate training help?",
+    a: "A properly conditioned pen or crate helps a lot; it becomes the safe den. A crate used as punishment or first introduced on departure day makes everything worse.",
+  },
+  {
+    q: "Are Maltipoos worse than other breeds for this?",
+    a: "Among the more prone, yes; it is the honest cost of the devotion. Homes with daytime company rarely see it at all.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-separation-anxiety',
+    title,
+    description,
+    aboutName: 'Maltipoo separation anxiety',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-separation-anxiety" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Behaviour</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Maltipoo separation anxiety and being left alone</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='Can a Maltipoo be left alone?'>
+      For short, trained stretches, yes; for a full 8am to 6pm workday, honestly no. Maltipoos are attachment-dependent, and separation anxiety is this breed's signature risk. Prevention is alone-time conditioning from week one plus a routine where someone is home most of the day.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">What it looks like, early and late</h2>
+          <p>
+            Early signs are small: whining that starts before you reach the door, a puppy that shadows you to the bathroom and cries at the gap, pacing when you pick up keys. Full-blown cases escalate to hours of barking, destroyed pens, and toileting regressions that owners mistake for training failure.
+          </p>
+          <p>
+            One pattern from owner communities repeats constantly: the dog is fine when anyone is home, even someone asleep in another room, and dissolves only when the flat is truly empty. That is the attachment wiring, and it is exactly why we match this breed to homes with company.
+          </p>
+          <h2 class="text-2xl text-ink">Prevention beats treatment, by a mile</h2>
+          <p>
+            Condition absences from the first week, while they are cheap. Step out for two minutes and return calmly; then five, then twenty, with a chew in the pen and zero fuss at departure or return. The pen must be the safe place, never the punishment place, and dramatic goodbyes are for airports, not hallways.
+          </p>
+          <p>
+            The classic mistake is taking two weeks of leave, being home around the clock, then returning to the office cold turkey. Practise the absences during the leave, on purpose, and the spiral never starts.
+          </p>
+          <h2 class="text-2xl text-ink">If anxiety has already set in</h2>
+          <p>
+            Go back to the smallest absence the dog can tolerate calmly, even thirty seconds, and rebuild the ladder slowly with rewards for calm. Add a filled chew or puzzle at departures so alone-time predicts good things, and burn some energy before you leave.
+          </p>
+          <p>
+            Severe cases, hours of panic, self-injury, or neighbours reporting nonstop distress, deserve a vet or behaviourist conversation rather than another gadget. And if the underlying routine is a permanently empty weekday flat, the kindest fix is structural: daycare, a sitter, or honestly, a more independent breed next time.
+          </p>
+        </div>
+        <FactsCard
+          heading='Alone-time protocol'
+          items={[
+            "Week one: 2-minute absences, build in doses",
+            "Departures and returns kept boring",
+            "Pen = safe place with a chew inside",
+            "Practise during leave, not after it",
+            "Full workday alone: not this breed"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Match the routine first'
+      secondaryText='Separation anxiety is usually a mismatch wearing a medical name. Check yours honestly.'
+      secondaryHref='/#lifestyle-fit'
+      secondaryLabel='Take the routine test'
+    />
+  </article>
+</BaseLayout>

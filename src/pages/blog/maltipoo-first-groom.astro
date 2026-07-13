@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-first-groom.json (2026-07-13).
+// Evidence: r/Maltipoo grooming disaster thread: clipper fear, groomer called 3 hours in
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = "Your Maltipoo's First Grooming, Done Right | Maltipoo.sg";
+const description =
+  'When a Maltipoo puppy can have its first professional groom, the home rehearsal that prevents clipper fear, and how to brief the groomer for a calm first visit.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'First Groom', url: '/blog/maltipoo-first-groom' },
+];
+
+const faqItems = [
+  {
+    q: "Can I fully groom my puppy at home instead?",
+    a: "Maintenance yes, style cuts no; a wiggling toy puppy plus scissors is how ear tips get nicked. Rehearse at home, style at the salon.",
+  },
+  {
+    q: "How much does a first groom cost?",
+    a: "Puppy intro sessions typically price at or below the basic-groom tier, $50 to $70 for a toy dog at published Singapore rates.",
+  },
+  {
+    q: "My puppy already fears the dryer. Now what?",
+    a: "Restart from across the room on cool, pair with treats, and advance a metre at a time over days. Fear undone slowly stays undone.",
+  },
+  {
+    q: "How often after the first groom?",
+    a: "Every four to six weeks, per the grooming guide; the coat and our humidity set the calendar, not the salon's marketing.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-first-groom',
+    title,
+    description,
+    aboutName: 'Maltipoo first grooming',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-first-groom" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Grooming</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Preparing your Maltipoo for its first grooming</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='When can a Maltipoo puppy have its first groom?'>
+      After the vaccination course allows outings, typically from around four months; before that, rehearse at home. Book a short intro session rather than a full style, brief the groomer to prioritise calm over perfect, and the first visit decides how the next fifteen years of salon trips go.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Why the first visit matters so much</h2>
+          <p>
+            Owner forums are full of the same horror story: a first groom booked as a full three-hour style, a puppy discovering clippers, dryers and strangers simultaneously, and a groomer calling mid-session because the dog is terrified. That fear, installed once, takes months to undo.
+          </p>
+          <p>
+            Run it the other way and grooming becomes routine maintenance for life: short first visit, half-finished haircut, happy puppy, generous tip. Calm beats perfect on visit one, every time.
+          </p>
+          <h2 class="text-2xl text-ink">The home rehearsal, weeks before</h2>
+          <p>
+            Everything a salon does can be rehearsed in miniature: touch paws and ears daily and reward, brush for sixty seconds and stop while it is still pleasant, run a beard trimmer near (not on) the puppy so motor noise becomes furniture, introduce the dryer on cool from across the room.
+          </p>
+          <p>
+            The grooming set in the starter kit covers the tools. Ten minutes a day for two weeks buys a puppy that thinks handling is normal, which is most of what a groomer needs from you.
+          </p>
+          <h2 class="text-2xl text-ink">Booking and briefing the groomer</h2>
+          <p>
+            Book off-peak so the salon is quiet, name it as a first groom when booking, and ask for a puppy intro package if offered: bath, dry, face and feet tidy, no full clip. Brief in writing: eye corners fully clear, calm over completion, call me rather than push through fear.
+          </p>
+          <p>
+            Watch how the salon reacts to that brief; the good ones brighten. And stay away during the session; hovering owners make anxious dogs. Collect a slightly scruffy, entirely cheerful puppy and you have won the day.
+          </p>
+        </div>
+        <FactsCard
+          heading='First-groom brief'
+          items={[
+            "Timing: post-vaccinations, ~4 months",
+            "Two weeks of daily home rehearsal first",
+            "Short intro session, not a full style",
+            "Brief: eyes clear, calm over perfect",
+            "Off-peak booking, owner stays away"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='The full grooming playbook'
+      secondaryText='Styles, salon prices and the humidity routine, all in one guide.'
+      secondaryHref='/maltipoo-grooming-haircuts'
+      secondaryLabel='Read the grooming guide'
+    />
+  </article>
+</BaseLayout>

@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-licking.json (2026-07-13).
+// Evidence: exact-match query 10/mo + behaviour cluster
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Why Does My Maltipoo Lick So Much? | Maltipoo.sg';
+const description =
+  "Affection, taste, habit, boredom or itch: how to read a Maltipoo's licking, when it is a love language, and when paw-licking means a vet visit.";
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Licking', url: '/blog/maltipoo-licking' },
+];
+
+const faqItems = [
+  {
+    q: "Is letting my Maltipoo lick my face safe?",
+    a: "Mostly a hygiene judgement call; avoid broken skin and wash after. For babies and immunocompromised family, keep tongues off faces.",
+  },
+  {
+    q: "Why does my Maltipoo lick the sofa?",
+    a: "Usually taste plus habit plus a quiet afternoon. Rotate chews and add a puzzle feeder; if it turns obsessive, treat it like paw-licking and investigate.",
+  },
+  {
+    q: "Do tear stains and licking connect?",
+    a: "Different pigments, same principle: porphyrins in saliva stain light fur the way tears do. Heavy paw staining means the licking has been chronic.",
+  },
+  {
+    q: "Can I train the licking away completely?",
+    a: "You can make it rare by making it unprofitable, and most owners keep a little; it is half the point of a velcro dog.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-licking',
+    title,
+    description,
+    aboutName: 'Maltipoo licking behaviour',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-licking" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Behaviour</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Why does my Maltipoo lick so much?</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='Why does my Maltipoo lick so much?'>
+      Usually affection and taste: you are salty, and licking you is this breed's love language plus a proven way to get attention. Watch the target though; a dog licking YOU is bonding, a dog licking its own paws constantly is itching, and persistent paw-licking in our humid climate deserves a vet look.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The love-language licking</h2>
+          <p>
+            A Maltipoo licks the people it owns: hands, ankles, the odd surprise ear. It is grooming behaviour inherited from puppyhood, it releases feel-good chemistry for the dog, and with a breed this attention-driven it doubles as a reliable button for making you look down and smile.
+          </p>
+          <p>
+            If it is more than you enjoy, do not scold; just make it unprofitable. Stand up, disengage for a few seconds, return when the tongue rests. Attention-seeking behaviours fade when the attention stops arriving.
+          </p>
+          <h2 class="text-2xl text-ink">The self-licking that means something</h2>
+          <p>
+            Constant paw-licking is the one to watch. In Singapore's humidity, moisture trapped between toes invites yeast and irritation, and grass or dust mite allergies show up as itchy feet before anything else. Rusty-pink saliva stains on white paw fur are the tell that it has been going on a while.
+          </p>
+          <p>
+            Dry paws properly after rain walks and baths, check between pads weekly, and if the licking is frequent enough that you notice it, book the vet; itch treated early is cheap, and licked-raw skin is not.
+          </p>
+          <h2 class="text-2xl text-ink">Boredom, anxiety and the licking loop</h2>
+          <p>
+            A clever, under-occupied dog self-soothes, and licking (paws, blankets, sofa corners) is a common loop. If the licking spikes when the flat empties or during boring afternoons, treat the cause: more mental play, alone-time conditioning from the training guide, and a chew that occupies the mouth legally.
+          </p>
+          <p>
+            Sudden obsessive licking of one spot, or of the air, can signal pain or nausea and skips the behaviour queue entirely; that is a vet call.
+          </p>
+        </div>
+        <FactsCard
+          heading='Reading the lick'
+          items={[
+            "Licking you: affection + attention button",
+            "Licking paws constantly: itch, see the vet",
+            "Pink-stained paw fur: it has been a while",
+            "Boredom licking: add mental work",
+            "Sudden obsessive licking: vet, promptly"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Behaviour questions welcome'
+      secondaryText='Send us the weird ones on WhatsApp; we have seen most of them.'
+      secondaryHref='/maltipoo-temperament'
+      secondaryLabel='Read the temperament guide'
+    />
+  </article>
+</BaseLayout>

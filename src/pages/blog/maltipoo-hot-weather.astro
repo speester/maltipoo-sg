@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-hot-weather.json (2026-07-13).
+// Evidence: local set; petmeplease covers humidity thinly (hot spots)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Keeping a Maltipoo Comfortable in Singapore Heat | Maltipoo.sg';
+const description =
+  "Walk timing, pavement checks, coat choices and drying discipline: the hot-weather routine that keeps a Maltipoo comfortable in Singapore's year-round heat.";
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Hot Weather', url: '/blog/maltipoo-hot-weather' },
+];
+
+const faqItems = [
+  {
+    q: "Do Maltipoos handle Singapore heat well?",
+    a: "Better than flat-faced breeds, thanks to a proper muzzle, and worse than street-smart locals; the routine above closes the gap comfortably.",
+  },
+  {
+    q: "Should my Maltipoo wear shoes?",
+    a: "Timing beats footwear: walk when pavements pass the seven-second test and shoes stay unnecessary. Most toy dogs tolerate them badly anyway.",
+  },
+  {
+    q: "Is aircon necessary for a Maltipoo?",
+    a: "A fan and shade suffice most days; aircon is comfort rather than requirement. What is required is water in every room the dog uses.",
+  },
+  {
+    q: "Can we go to the beach or on hikes?",
+    a: "Early morning, absolutely, with shade breaks and water. Skip the noon adventures entirely; this is a dawn-patrol breed in this climate.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-hot-weather',
+    title,
+    description,
+    aboutName: 'Maltipoo hot weather care',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-hot-weather" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Singapore living</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Keeping a Maltipoo comfortable in Singapore heat</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='How do you keep a Maltipoo comfortable in Singapore heat?'>
+      Walk before 9am or after 6pm, run the seven-second pavement test with the back of your hand, keep water everywhere, and dry the coat completely after rain or baths. A Maltipoo handles the tropics better than flat-faced breeds, but 32 degrees at noon is nobody's walking weather.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The walk clock, non-negotiable</h2>
+          <p>
+            Singapore's midday pavement can hit temperatures that burn paw pads in under a minute; the test is holding the back of your hand on the surface for seven seconds, and if you cannot, the dog does not walk on it. Morning before nine and evening after six is the entire safe schedule, which conveniently matches the fifteen-to-twenty minutes a toy Maltipoo actually needs.
+          </p>
+          <p>
+            Shade routes beat exposed park connectors, grass beats tarmac, and a collapsible water bowl earns its pocket space every single trip.
+          </p>
+          <h2 class="text-2xl text-ink">Coat logic: fluff is insulation, not oven</h2>
+          <p>
+            Counter-intuitively, a well-brushed coat insulates against heat as well as cold; the disasters come from matted coats that trap humid air against skin. Keep the brushing routine honest and the four-to-six-week grooms on schedule, and choose the shorter summer cut from the grooming guide if the routine keeps slipping.
+          </p>
+          <p>
+            Never shave to the skin: sunburn and coat regrowth problems trade one issue for two. And after rain walks or baths, dry completely; a damp Maltipoo in tropical humidity is a hot-spot factory.
+          </p>
+          <h2 class="text-2xl text-ink">Heat stress: signs and response</h2>
+          <p>
+            Know the escalation: heavy panting, drooling and glassy tiredness first, then wobbling, vomiting or collapse. A 2 to 4kg dog overheats faster than a large one because there is less thermal mass to buffer, and it cannot tell you it feels wrong.
+          </p>
+          <p>
+            Response is immediate: shade or aircon, cool (not iced) water on belly and paws, a fan, and a vet call if symptoms go past heavy panting. Prevention costs a walk-time adjustment; treatment can cost a great deal more.
+          </p>
+        </div>
+        <FactsCard
+          heading='Heat rules'
+          items={[
+            "Walks: before 9am, after 6pm",
+            "Seven-second pavement test, every time",
+            "Brush the coat; never shave to skin",
+            "Dry completely after rain and baths",
+            "Panting to wobbling: cool down + vet call"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Built for flat life'
+      secondaryText='Short shaded walks and sofa afternoons: exactly the routine this breed wants anyway.'
+      secondaryHref='/blog/maltipoo-hdb-living'
+      secondaryLabel='Read the HDB living guide'
+    />
+  </article>
+</BaseLayout>

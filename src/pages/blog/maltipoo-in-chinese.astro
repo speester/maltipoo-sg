@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-in-chinese.json (2026-07-13).
+// Evidence: 140/mo quirky local query, zero competitor coverage
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'What Is a Maltipoo Called in Chinese? | Maltipoo.sg';
+const description =
+  'The Maltipoo in Chinese: 马尔济斯贵宾犬 or the affectionate 摩天使, how the name breaks down, and the terms to use when searching or chatting with local sellers and groomers.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'In Chinese', url: '/blog/maltipoo-in-chinese' },
+];
+
+const faqItems = [
+  {
+    q: "Is there one official Chinese name?",
+    a: "No single registry name exists for a crossbreed; \u9a6c\u5c14\u6d4e\u65af\u8d35\u5bbe\u72ac is the standard descriptive form, and the variants are register, not error.",
+  },
+  {
+    q: "What do vets in Singapore write?",
+    a: "Usually the English 'Maltipoo' or 'Maltese X Poodle' in the system, with Chinese-speaking staff recognising \u9a6c\u5c14\u6d4e\u65af\u8d35\u5bbe instantly.",
+  },
+  {
+    q: "How do I pronounce \u6469\u5929\u4f7f?",
+    a: "M\u00f3 ti\u0101nsh\u01d0, roughly 'mo tyen-shr'; the last two characters mean angel, which the breed's marketing department did not fight.",
+  },
+  {
+    q: "What is a Cavapoo called in Chinese, while we are here?",
+    a: "\u9a91\u58eb\u8d35\u5bbe\u72ac, the Cavalier-Poodle; the naming logic stacks the same way for every Poodle cross.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-in-chinese',
+    title,
+    description,
+    aboutName: 'Maltipoo name in Chinese',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-in-chinese" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Local knowledge</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">What is a Maltipoo called in Chinese?</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='What is a Maltipoo called in Chinese?'>
+      The descriptive name is 马尔济斯贵宾犬 (Mǎ'ěrjìsī guìbīn quǎn), literally Maltese-Poodle dog, often shortened to 马尔泰贵宾. In Taiwan and in affectionate use you will also meet 摩天使 (mó tiānshǐ, 'Mo angel'). For searching Chinese content, 马尔济斯贵宾 finds the most.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The name, taken apart</h2>
+          <p>
+            Chinese breed names describe rather than transliterate blindly: 马尔济斯 (Mǎ'ěrjìsī) is the Maltese, 贵宾犬 (guìbīn quǎn, literally 'honoured-guest dog') is the Poodle, and stacking them gives 马尔济斯贵宾犬, the Maltese-Poodle. It reads formal because it is; this is the pet-shop-signage version.
+          </p>
+          <p>
+            Grandparents may find the Poodle half familiar already: 贵宾犬 has been the standard term for decades, and a Maltipoo introduced as half 贵宾 gets an approving nod for the clever side of the family.
+          </p>
+          <h2 class="text-2xl text-ink">The cute versions people actually use</h2>
+          <p>
+            Online and in Taiwan-influenced communities the breed picked up 摩天使, 'Mo angel', an affectionate mash of the sound of Mal- with the angelic white-fluff look. Mainland platforms also use 马泰犬 as a compact mash-up. None are wrong; they are registers, from clinic paperwork to Instagram caption.
+          </p>
+          <p>
+            In multi-generation Singapore households this matters practically: the helper may know the dog by one name, grandma by another, and the vet's system by a third. All three point at the same apricot lap dog.
+          </p>
+          <h2 class="text-2xl text-ink">Where the Chinese terms earn their keep</h2>
+          <p>
+            Searching 马尔济斯贵宾 unlocks a large Chinese-language owner ecosystem: grooming tutorials, feeding threads and health discussions that the English search bubble never surfaces. Cross-checking advice across both languages is a quiet superpower for a first-time owner.
+          </p>
+          <p>
+            Locally, the terms help at Chinese-speaking groomers and clinics, and in family group chats where the puppy announcement lands better in the reader's first language. For the record, our shop answers happily in either.
+          </p>
+        </div>
+        <FactsCard
+          heading='The name card'
+          items={[
+            "Formal: \u9a6c\u5c14\u6d4e\u65af\u8d35\u5bbe\u72ac (Maltese-Poodle dog)",
+            "Compact: \u9a6c\u5c14\u6cf0\u8d35\u5bbe / \u9a6c\u6cf0\u72ac",
+            "Affectionate: \u6469\u5929\u4f7f ('Mo angel')",
+            "Poodle = \u8d35\u5bbe\u72ac, Maltese = \u9a6c\u5c14\u6d4e\u65af",
+            "Best search term: \u9a6c\u5c14\u6d4e\u65af\u8d35\u5bbe"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Ask in either language'
+      secondaryText='WhatsApp us in English or Chinese; the answers arrive equally honest.'
+      secondaryHref='/puppies'
+      secondaryLabel='See available puppies'
+    />
+  </article>
+</BaseLayout>

@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-with-kids.json (2026-07-13).
+// Evidence: is good family dog 10/mo; grandparent-home positioning
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Are Maltipoos Good With Kids? | Maltipoo.sg';
+const description =
+  'Maltipoos are gentle with children; the risk runs the other way. The 2 to 4kg fragility rules, best ages, and how multi-generation Singapore households make it work.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'With Kids', url: '/blog/maltipoo-with-kids' },
+];
+
+const faqItems = [
+  {
+    q: "What age of children suits a Maltipoo?",
+    a: "Coachable ages, roughly five and up, do brilliantly. Toddler households work with active supervision; the Bichon Frise comparison covers a sturdier option.",
+  },
+  {
+    q: "Will a Maltipoo be protective of my child?",
+    a: "It will alert-bark at the door and love your child fiercely; expecting guard work from four kilograms is optimistic. What it guards is the sofa seating chart.",
+  },
+  {
+    q: "Can the dog sleep in my child's room?",
+    a: "Once potty trained and settled, fine, if an adult remains the actual caretaker. The novelty-wears-off failure mode is a planning problem, not a dog problem.",
+  },
+  {
+    q: "Maltipoo or Cavapoo for a family?",
+    a: "Depends who is home: with a grandparent or helper around, Maltipoo; both parents out and kids at school, the Cavapoo suits better. The comparison page settles it.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-with-kids',
+    title,
+    description,
+    aboutName: 'Maltipoos and children',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-with-kids" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Family</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Are Maltipoos good with kids?</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='Are Maltipoos good with kids?'>
+      Temperament-wise, yes: gentle, playful and patient. The risk runs the other way; at 2 to 4kg a Maltipoo is delicate, and enthusiastic toddler hugs or a drop from carried height can genuinely injure it. Great with gentle, coached children; supervise the under-fives more than the dog.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The temperament half: an easy yes</h2>
+          <p>
+            A Maltipoo brings zero menace to a household: it is companion-bred, soft-mouthed, and treats children as extra staff. It will join floor games, tolerate costume experiments with dignity, and appoint itself supervisor of homework.
+          </p>
+          <p>
+            The one behavioural note is the usual one for this breed: it bonds hardest where the daytime company is, so in many families the dog is officially the child's and practically grandma's.
+          </p>
+          <h2 class="text-2xl text-ink">The physics half: coach the children</h2>
+          <p>
+            Two to four kilograms is smaller than most house cats, and toddler affection is not calibrated for it. The real injury risks are squeeze-hugs, a drop from carried height, and a tail-grab met with a startled twist. None of it is malice; all of it is physics.
+          </p>
+          <p>
+            House rules that work: dog is patted sitting on the floor, never carried by children under about eight, four-on-the-floor at all times, and the pen is the dog's embassy, off-limits to raids. Young kids are supervised with the dog the way they are supervised with stairs.
+          </p>
+          <h2 class="text-2xl text-ink">The Singapore family pattern that works best</h2>
+          <p>
+            The multi-generation household is quietly this breed's ideal home: children provide the play, a grandparent or helper provides the daytime company, and the dog provides a reason for everyone to gather on the same sofa. It is the exact 'homes with company' pattern we match for.
+          </p>
+          <p>
+            Sturdier alternatives exist for rough-and-tumble young families; the Bichon comparison covers the honest trade. But for households that can coach gentle hands, a Maltipoo and a child grow up beautifully together.
+          </p>
+        </div>
+        <FactsCard
+          heading='Kids + Maltipoo rules'
+          items={[
+            "Temperament: gentle, zero menace",
+            "Fragility: 2-4kg, hugs and drops are the risk",
+            "Floor-level patting, no carrying under ~8",
+            "The pen is the dog's off-limits embassy",
+            "Best pattern: kids play, grandparent provides company"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Bring the kids to meet one'
+      secondaryText='Weekend mornings at Balestier are made for exactly this field trip.'
+      secondaryHref='/puppies'
+      secondaryLabel='See available puppies'
+    />
+  </article>
+</BaseLayout>

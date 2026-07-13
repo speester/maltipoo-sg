@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-sleep.json (2026-07-13).
+// Evidence: r/Maltipoo 'Where does your dog sleep?' 90+ comments
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Where Should Your Maltipoo Sleep? | Maltipoo.sg';
+const description =
+  'Crate in the bedroom, pen in the hall, or your bed? Where Maltipoos should sleep at each age, the potty-trained-first rule, and how much sleep is normal.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Sleep', url: '/blog/maltipoo-sleep' },
+];
+
+const faqItems = [
+  {
+    q: "Can my Maltipoo sleep in my bed?",
+    a: "Once fully potty trained and able to get down safely, yes, if you want it. Add pet steps for a toy dog; the jump from a high bed is a genuine fracture risk at 2 to 4kg.",
+  },
+  {
+    q: "Should the crate leave the bedroom eventually?",
+    a: "Only if you want it to. Some owners migrate the den to the living room after the first months; the skill of settling in it matters more than the postcode.",
+  },
+  {
+    q: "My puppy sleeps all day. Is that normal?",
+    a: "Completely. Eighteen to twenty hours is standard puppy duty; wake-ups for meals, toilet and play are the schedule, not the exception.",
+  },
+  {
+    q: "What bedding works in Singapore heat?",
+    a: "Breathable and washable beats plush: a cooling mat plus a light blanket to burrow covers both moods, and the kit bed handles the rest.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-sleep',
+    title,
+    description,
+    aboutName: 'Maltipoo sleeping arrangements',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-sleep" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Routine</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Where should your Maltipoo sleep?</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='Where should a Maltipoo sleep?'>
+      Start with the crate or pen in your bedroom: close enough to settle a velcro puppy, contained enough to protect the toilet training. Your bed is fine later, as a choice, once the puppy is fully potty trained and big enough to jump down safely; a 2kg puppy and a high bed is a fracture risk.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The first weeks: bedroom, but contained</h2>
+          <p>
+            A nine-week-old sleeping alone for the first time settles fastest hearing you breathe, which is why the pen or crate starts in the bedroom. Contained matters as much as close: a loose puppy in a dark flat is a toilet accident and a chewed cable waiting to happen.
+          </p>
+          <p>
+            Expect one genuine toilet call a night in the early weeks; handle it quietly, no play, straight back to bed. Warm bedding and a heartbeat toy shorten the protests, and three to five consistent nights settle most puppies.
+          </p>
+          <h2 class="text-2xl text-ink">The bed question, answered honestly</h2>
+          <p>
+            Owner polls split roughly evenly between bed, crate and pen, and there is no morally correct answer. The practical rules: the bed comes after potty training is fully reliable, after the puppy can get down safely (a ramp or steps for a toy dog; the jump from a high bed can break small legs), and as your invitation rather than its assumption.
+          </p>
+          <p>
+            One warning specific to this breed: a Maltipoo that sleeps on you every night from day one has never practised being alone, and that bill arrives the first time you travel. Keep the crate skill alive even if the bed wins most nights.
+          </p>
+          <h2 class="text-2xl text-ink">How much sleep is normal</h2>
+          <p>
+            A lot. Puppies sleep 18 to 20 hours a day, adults 12 to 14, and a Maltipoo that naps all afternoon is a Maltipoo, not a medical mystery. What changes with age is where the sleep lands: puppies crash mid-play; adults consolidate into night sleep plus scheduled naps.
+          </p>
+          <p>
+            Guard the day naps in a busy household; an overtired puppy behaves like a toddler at a wedding. The pen makes protected nap space easy, especially with children around.
+          </p>
+        </div>
+        <FactsCard
+          heading='Sleep rules'
+          items={[
+            "Weeks 9-16: pen or crate in your bedroom",
+            "Bed: after potty training, with safe steps down",
+            "Keep the crate skill even if the bed wins",
+            "Puppies sleep 18-20 hours; guard the naps",
+            "Night toilet call: quiet, no play, back to bed"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='First nights, supported'
+      secondaryText='The starter kit bed and pen arrive assembled, and our WhatsApp stays open at 3am, figuratively.'
+      secondaryHref='/blog/maltipoo-first-week-home'
+      secondaryLabel='Read the first-week guide'
+    />
+  </article>
+</BaseLayout>

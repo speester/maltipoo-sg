@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-crate-training.json (2026-07-13).
+// Evidence: r/Maltipoo: crying in crate (20+), crate games threads, 1yo crate + separation anxiety
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Crate Training a Maltipoo Without the Crying | Maltipoo.sg';
+const description =
+  'Crate and pen training a Maltipoo: making the den the favourite place, the first-night crying protocol, and feeding-in-the-crate tricks that work for velcro dogs.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Crate Training', url: '/blog/maltipoo-crate-training' },
+];
+
+const faqItems = [
+  {
+    q: "Crate or playpen for a Maltipoo?",
+    a: "The pen, for most flats: room for a bed plus toilet corner in the early weeks. A crate inside or beside the pen gives the den feeling; the kit pen supports both setups.",
+  },
+  {
+    q: "How long can a puppy stay crated?",
+    a: "Roughly its age in months plus one, in hours, and less for toy bladders. The crate is a bedroom, not a storage unit; daytime confinement beyond that needs the pen-and-pad setup.",
+  },
+  {
+    q: "My one-year-old still cries in the crate. Too late?",
+    a: "Not too late; restart the games phase as if it were week one and rebuild the ladder slowly. Most adult criers were rushed the first time.",
+  },
+  {
+    q: "Should I ignore night crying completely?",
+    a: "Ignore protest, answer plumbing. At nine weeks a 3am whine is usually a genuine toilet call; a lights-just-off wail is negotiation. Learn the difference in the first two nights.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-crate-training',
+    title,
+    description,
+    aboutName: 'Maltipoo crate training',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-crate-training" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Training</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Crate training a Maltipoo without the crying</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='How do you crate train a Maltipoo?'>
+      Make the crate or pen the best room in the flat before ever closing the door: feed meals inside, toss treats in for free wins, and let the puppy wander in and out. Close the door only for seconds at first, build up gradually, and never use the crate as punishment. Velcro breeds need the door-open phase most.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Why the den matters for this breed</h2>
+          <p>
+            A Maltipoo would happily spend its life on your lap, which is exactly why it needs one place that feels safe without you attached. A properly conditioned pen or crate becomes that place: naps happen there by choice, alone-time conditioning has a home base, and grooming or travel days get dramatically easier.
+          </p>
+          <p>
+            The playpen from the starter kit, assembled at delivery, is designed as that base: bed at one end, toilet corner at the other for the early weeks, water always available.
+          </p>
+          <h2 class="text-2xl text-ink">The games phase, before any closed door</h2>
+          <p>
+            Day one through three is pure marketing: toss treats into the crate for free wins, feed every meal a little deeper inside, hide a chew in the bedding for discovery. Door stays open, puppy wanders in and out, and being inside pays better than being outside.
+          </p>
+          <p>
+            Then the door closes for seconds, not minutes, while you sit right there. Open before any fuss starts, stretch the interval gradually, and start stepping away only when the closed door is boring. Rushing this ladder is where the crying comes from.
+          </p>
+          <h2 class="text-2xl text-ink">First nights, honestly</h2>
+          <p>
+            The first nights away from littermates are loud for any puppy and louder for a velcro one. Put the crate or pen in your bedroom initially; your breathing is the settling signal. Warm bedding, a ticking-clock or heartbeat toy, and a late toilet trip buy longer stretches.
+          </p>
+          <p>
+            Whining at 3am usually means a real toilet need at nine weeks old: quiet trip to the spot, zero play, back to bed. Crying the moment the lights go off is protest; wait for the first pause, then reward the silence. Consistency over three to five nights settles most puppies.
+          </p>
+        </div>
+        <FactsCard
+          heading='Crate rules'
+          items={[
+            "Feed meals inside from day one",
+            "Door closes for seconds first, minutes later",
+            "Never punishment, never storage",
+            "First nights: crate in your bedroom",
+            "Reward the silence, not the noise"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='The pen arrives assembled'
+      secondaryText='Free delivery includes playpen setup and a walkthrough of exactly this routine.'
+      secondaryHref='/maltipoo-price-singapore'
+      secondaryLabel="See what's included"
+    />
+  </article>
+</BaseLayout>

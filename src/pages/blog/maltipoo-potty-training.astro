@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-potty-training.json (2026-07-13).
+// Evidence: r/Maltipoo threads: three months to no avail (40+ comments), 9-month struggles
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Potty Training a Maltipoo in Singapore | Maltipoo.sg';
+const description =
+  'Potty training a Maltipoo in an HDB flat: pee pad or downstairs, the schedule that does the real work, and the honest 4 to 12 week timeline from real placements.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Potty Training', url: '/blog/maltipoo-potty-training' },
+];
+
+const faqItems = [
+  {
+    q: "How long does potty training a Maltipoo take?",
+    a: "Four to twelve weeks honestly, driven by human consistency. The fast stories ran perfect schedules; the six-month sagas ran hopeful ones.",
+  },
+  {
+    q: "Pee pad or outdoors: which is better?",
+    a: "Whichever your routine can honour every single time. Pads suit high floors and toy bladders; outdoors builds the walk habit. Pick one and commit.",
+  },
+  {
+    q: "My puppy uses the pad but misses the edge. Fix?",
+    a: "Upgrade to a larger pad or a tray with raised edges, and anchor it so it cannot drift. Edge misses are geometry, not defiance.",
+  },
+  {
+    q: "When can I trust the puppy loose in the flat?",
+    a: "After two to four accident-free weeks, expand territory one room at a time. Freedom granted gradually sticks; freedom granted in one day floods the map with options.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-potty-training',
+    title,
+    description,
+    aboutName: 'Maltipoo potty training',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-potty-training" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Training</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Potty training a Maltipoo in Singapore</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='How do you potty train a Maltipoo?'>
+      Pick one toilet spot before the puppy arrives (pee pad corner or downstairs, not both), take the puppy there after every meal, nap and play session, reward on target, and never scold misses. The honest timeline is 4 to 12 weeks, and consistency of the humans is the whole variable.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The flat decision: pad or pavement</h2>
+          <p>
+            HDB life gives two workable systems. A pee pad in a fixed corner of the playpen zone suits toy bladders, rainy weeks and owners on high floors; the trade is teaching a later transition if you ever want outdoor-only. Downstairs-on-schedule builds the outdoor habit from day one; the trade is more trips and a sprint when the signal comes late.
+          </p>
+          <p>
+            Either works. Both at once fails: a puppy offered two right answers learns that everywhere is negotiable. Choose before homecoming and stay loyal to the choice.
+          </p>
+          <h2 class="text-2xl text-ink">The schedule does the work</h2>
+          <p>
+            Puppies go after waking, after eating, after play, and roughly every hour or two awake at nine weeks old. So the system is mechanical: to the spot at every one of those moments, quiet praise and a treat the second the deed lands on target, and back to life. No target, no drama; carry on and shorten the next interval.
+          </p>
+          <p>
+            Owner forums are full of three-months-and-nothing stories, and nearly all of them share a pattern: the schedule ran at eighty percent. A clever breed trained at eighty percent learns that persistence, not position, gets results. Run a boring hundred percent fortnight and most puppies simply get it.
+          </p>
+          <h2 class="text-2xl text-ink">Misses, regressions and the scold trap</h2>
+          <p>
+            Never scold a miss, and especially never after the fact; you teach hiding, not holding, and a toy dog can hide behind furniture you forgot existed. Clean thoroughly with an enzyme cleaner so the spot stops advertising itself.
+          </p>
+          <p>
+            Expect a regression during adolescence and after any routine change; it is a re-test, not amnesia. Rerun the fortnight protocol and it passes. Persistent accidents in a previously reliable adult are a vet conversation, not a training one.
+          </p>
+        </div>
+        <FactsCard
+          heading='The protocol'
+          items={[
+            "One spot, chosen before day one",
+            "After waking, eating, playing: to the spot",
+            "Reward on target within two seconds",
+            "Misses: clean with enzyme cleaner, zero drama",
+            "Honest timeline: 4 to 12 weeks at 100% consistency"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='The pen does half the work'
+      secondaryText='Every puppy goes home with the playpen set up and the routine explained in person.'
+      secondaryHref='/maltipoo-training'
+      secondaryLabel='Read the full training guide'
+    />
+  </article>
+</BaseLayout>

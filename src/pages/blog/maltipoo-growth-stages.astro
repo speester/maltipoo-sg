@@ -1,0 +1,118 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-growth-stages.json (2026-07-13).
+// Evidence: stop growing 10 + 4/5 months 10 + litter size 10; feeds size page
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Maltipoo Growth From Puppy to Adult | Maltipoo.sg';
+const description =
+  'Maltipoo growth stages from 9-week homecoming to adult: the 3-to-5-month spurt, coat change, adolescence, and when growth actually stops.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Growth Stages', url: '/blog/maltipoo-growth-stages' },
+];
+
+const faqItems = [
+  {
+    q: "When does a Maltipoo stop growing?",
+    a: "Frame by 8 to 12 months; coat and character keep maturing into year two. After the first birthday, size changes should be waistline, not skeleton.",
+  },
+  {
+    q: "How big is a Maltipoo at 4 months?",
+    a: "Roughly half to two-thirds of adult weight for most toys, with the adult outline visible. The parents remain the best final-size predictor.",
+  },
+  {
+    q: "How many puppies in a Maltipoo litter?",
+    a: "Small litters are the norm, commonly two to four for toy mothers, which is part of why availability moves fast here.",
+  },
+  {
+    q: "My 7-month-old seems done growing. Normal?",
+    a: "Very: toys finish early. What follows is filling out slightly and the coat completing; adolescent behaviour has further to run than the skeleton.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-growth-stages',
+    title,
+    description,
+    aboutName: 'Maltipoo growth stages',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-growth-stages" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Development</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Maltipoo growth from puppy to adult</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='What are the Maltipoo growth stages?'>
+      Homecoming at 9 weeks palm-sized; the visible growth spurt from months 3 to 5; near-adult frame by 8 to 12 months; and the adult coat arriving through the first year, often lighter than the puppy fluff. Adolescence overlaps from 6 to 18 months, and the settled adult emerges in year two.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Weeks 9 to 16: the sponge phase</h2>
+          <p>
+            Your puppy arrives at nine weeks with the vaccination course mid-stream and a brain wide open: this is when toilet routines, alone-time conditioning, handling practice and gentle socialisation write themselves in almost effortlessly. Physically it is all wobble and nap, eighteen-plus hours of sleep against short eruptions of play.
+          </p>
+          <p>
+            Growth is steady rather than dramatic yet; the frame is banking for the spurt ahead. Three measured meals a day fuel it, per the feeding guide.
+          </p>
+          <h2 class="text-2xl text-ink">Months 3 to 8: the spurt and the teeth</h2>
+          <p>
+            Months three to five deliver the visible transformation: legs lengthen, the adult outline appears, and a maltipoo 4 months old already previews its grown shape. Teething runs alongside, peaking around month four, with the chew-toy economy from the biting guide in full swing.
+          </p>
+          <p>
+            By month six the frame is most of the way there, meals drop to two a day, and the first hints of adolescence appear right on cue.
+          </p>
+          <h2 class="text-2xl text-ink">Months 8 to 24: coat, hormones, completion</h2>
+          <p>
+            The frame finishes between 8 and 12 months, at 2 to 4kg for the toys we place, and the size guide's parents-over-labels rule is proven right about now. The coat change overlaps: puppy fluff yields to the adult coat, often a shade lighter, and the matting guide's danger-window advice earns its keep.
+          </p>
+          <p>
+            Hormonal adolescence runs 6 to 18 months with its regressions and re-tests, sterilisation typically lands from month seven, and somewhere in the second year the settled adult quietly replaces the teenager. That dog, calm on a lap with opinions about the door chime, is the one you keep for the next dozen-plus years.
+          </p>
+        </div>
+        <FactsCard
+          heading='The timeline'
+          items={[
+            "Week 9: homecoming, palm-sized",
+            "Months 3-5: the visible growth spurt",
+            "Month ~4: teething peak",
+            "Months 8-12: adult frame, coat changing",
+            "Months 6-18: adolescence overlaps",
+            "Year 2: the settled adult arrives"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Watch a stage in person'
+      secondaryText='The gallery usually spans 9 to 12 weeks; come see the sponge phase live.'
+      secondaryHref='/maltipoo-size'
+      secondaryLabel='Read the size guide'
+    />
+  </article>
+</BaseLayout>

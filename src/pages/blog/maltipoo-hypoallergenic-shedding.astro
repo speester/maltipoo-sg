@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-hypoallergenic-shedding.json (2026-07-13).
+// Evidence: competitor absolute claims corrected; kw cluster 60/mo
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Are Maltipoos Hypoallergenic? Do They Shed? | Maltipoo.sg';
+const description =
+  'Maltipoos are low-shedding, not non-shedding, and no dog is truly hypoallergenic. What that means for allergy-sensitive homes in Singapore, and how to test before you buy.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Hypoallergenic & Shedding', url: '/blog/maltipoo-hypoallergenic-shedding' },
+];
+
+const faqItems = [
+  {
+    q: "Do Maltipoos shed at all?",
+    a: "A little, into the coat rather than the room. Brushing and regular grooms remove it; your black shirt stays mostly safe.",
+  },
+  {
+    q: "Is an F1b Maltipoo more hypoallergenic?",
+    a: "A curlier coat sheds even less into the room, but allergen production is individual, not generational. Meet the puppy; do not shop by label.",
+  },
+  {
+    q: "Which is better for allergies, Maltipoo or Poodle?",
+    a: "The Poodle's tighter curl edges it on loose hair, and neither is allergen-free. The comparison page covers the rest of that decision.",
+  },
+  {
+    q: "Can I test before buying?",
+    a: "Yes, and you should: a proper visit with handling, plus an allergist's test if reactions are severe. We would rather lose the sale than place a puppy an allergy will bounce.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-hypoallergenic-shedding',
+    title,
+    description,
+    aboutName: 'Maltipoo hypoallergenic and shedding',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-hypoallergenic-shedding" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Coat & allergies</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Are Maltipoos hypoallergenic, and do they shed?</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='Are Maltipoos hypoallergenic?'>
+      Low-shedding, yes; hypoallergenic, no dog truly is. Allergens live in dander and saliva, not just hair, so even the curliest coat produces some. A Maltipoo sheds very little into the room, which many allergy-sensitive owners tolerate well, and the only reliable test is meeting the actual puppy first.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">What low-shedding actually means</h2>
+          <p>
+            A Maltipoo's Poodle-influenced coat grows continuously and traps loose hair in the curl instead of releasing it onto your sofa. You will find little hair around the flat, which is what listings compress into the word non-shedding. The hair still exists; it comes out in your brush instead of your air.
+          </p>
+          <p>
+            That is also why the coat needs brushing and a groom every four to six weeks. The maintenance is the price of the clean sofa; skip it and the trapped hair becomes mats, as the grooming guide explains.
+          </p>
+          <h2 class="text-2xl text-ink">Why hypoallergenic is a marketing word</h2>
+          <p>
+            Dog allergens are proteins in dander, saliva and urine, produced by every dog of every coat type. Studies comparing allergen levels in homes with so-called hypoallergenic and ordinary breeds have found no reliable difference. [VERIFY citation before launch] Individual dogs vary a lot; breeds guarantee nothing.
+          </p>
+          <p>
+            So when a listing declares a puppy hypoallergenic as a fact, read it as coat marketing. What can honestly be said is that many allergy-sensitive owners live comfortably with low-shedding breeds, and some do not.
+          </p>
+          <h2 class="text-2xl text-ink">The only test that counts</h2>
+          <p>
+            Spend real time with the actual puppy before committing: hold it, let it lick your hand, sit in the room for half an hour. Reactions are individual on both sides of the equation, and twenty minutes at Balestier beats any breed chart.
+          </p>
+          <p>
+            If allergies in your household are severe, talk to your doctor first, consider an allergist's test, and never buy a dog as an experiment; the 5-day bring-back exists for sick puppies, not for discovering allergies you could have tested for.
+          </p>
+        </div>
+        <FactsCard
+          heading='Allergy honesty card'
+          items={[
+            "Low-shedding: true, hair stays in the curl",
+            "Hypoallergenic: no dog, full stop",
+            "Allergens: dander and saliva, not just hair",
+            "Only test: time with the actual puppy",
+            "Severe allergies: doctor first, dog second"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Come do the real test'
+      secondaryText='Half an hour with the actual puppy answers what no breed chart can.'
+      secondaryHref='/puppies'
+      secondaryLabel='See available puppies'
+    />
+  </article>
+</BaseLayout>

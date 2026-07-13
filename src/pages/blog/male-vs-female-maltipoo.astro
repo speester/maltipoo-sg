@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/male-vs-female-maltipoo.json (2026-07-13).
+// Evidence: standard chooser topic; names female 10/mo
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Male or Female Maltipoo? The Small Differences | Maltipoo.sg';
+const description =
+  'Male vs female Maltipoo: the real behavioural differences (smaller than folklore says), marking and season practicalities, sterilisation timing, and how to actually choose.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Male vs Female', url: '/blog/male-vs-female-maltipoo' },
+];
+
+const faqItems = [
+  {
+    q: "Are male Maltipoos more affectionate?",
+    a: "On average, faintly; in practice, the individual puppy decides. Our placement notes on each puppy beat the folklore.",
+  },
+  {
+    q: "Do female Maltipoos cost more?",
+    a: "Market-wide, females often list slightly higher; within our range the drivers stay colour and size, not sex.",
+  },
+  {
+    q: "Is marking guaranteed in males?",
+    a: "No; early sterilisation and clean toilet training prevent it in most. An intact adolescent male may experiment, and the phase manages out.",
+  },
+  {
+    q: "Which is easier for first-time owners?",
+    a: "Genuinely neither. First-timers do best choosing the calm-confident puppy of either sex, which is exactly what we point out at viewings.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/male-vs-female-maltipoo',
+    title,
+    description,
+    aboutName: 'Male vs female Maltipoo differences',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/male-vs-female-maltipoo" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Choosing</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Male or female Maltipoo?</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='Should you choose a male or female Maltipoo?'>
+      Choose the individual puppy, not the chromosome: within this breed the personality overlap dwarfs the average difference. The practical distinctions are pre-sterilisation ones (marking in males, seasons in females), and both fade after sterilisation from around seven months. Meet the litter; pick the temperament.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The folklore versus the overlap</h2>
+          <p>
+            The folk wisdom says males are clingier and goofier, females more independent and quicker to mature, and across thousands of dogs the averages lean faintly that way. But in a breed where every individual is bred for devotion, the overlap swallows the difference: the cuddliest dog we have placed this year was a female, the most dignified a male.
+          </p>
+          <p>
+            Meeting the actual litter beats the theory every time. Watch which puppy chooses you, ask us about each one's observed character, and let sex be the tiebreaker at most.
+          </p>
+          <h2 class="text-2xl text-ink">The practical pre-sterilisation differences</h2>
+          <p>
+            Intact males may start leg-lift marking as adolescence arrives; intact females come into season roughly twice a year, with spotting and unwanted suitor attention for a few weeks. In an HDB flat, both are managed with routine and hygiene rather than drama, and both are temporary decisions rather than lifetime features.
+          </p>
+          <p>
+            Sterilisation from around seven months, per your vet's timing, retires most of it, and drops the AVS licence to $13.50 a year or the one-time $35 lifetime rate, as the price guide notes.
+          </p>
+          <h2 class="text-2xl text-ink">Choosing in practice</h2>
+          <p>
+            Households with a resident dog often find opposite-sex introductions smoothest, which is the one scenario where sex genuinely earns a vote. Otherwise, rank your real preferences: temperament first, colour and size second, sex a distant third.
+          </p>
+          <p>
+            A note from the shop floor: buyers who arrive fixed on one sex and meet the litter usually leave with whichever puppy climbed into their lap first. We consider that the correct outcome.
+          </p>
+        </div>
+        <FactsCard
+          heading='Male vs female card'
+          items={[
+            "Personality: overlap dwarfs the averages",
+            "Males intact: possible marking phase",
+            "Females intact: ~2 seasons a year",
+            "Sterilisation retires both + cuts licence fee",
+            "Pick temperament; let sex tiebreak"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Meet the litter'
+      secondaryText='Temperaments on display beat theory: come see who chooses you.'
+      secondaryHref='/puppies'
+      secondaryLabel='See available puppies'
+    />
+  </article>
+</BaseLayout>

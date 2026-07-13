@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-adolescence.json (2026-07-13).
+// Evidence: r/Maltipoo confidence/nervousness threads; local plan set
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Surviving Maltipoo Adolescence | Maltipoo.sg';
+const description =
+  'Between roughly 6 and 18 months your sweet Maltipoo puppy grows opinions: training regressions, selective hearing and boundary testing. What is normal and how to ride it out.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Adolescence', url: '/blog/maltipoo-adolescence' },
+];
+
+const faqItems = [
+  {
+    q: "When do Maltipoos calm down?",
+    a: "The teenage edges soften through the second year; most owners call their dog settled between 18 months and 2 years. Consistent routine through adolescence decides how calm the adult is.",
+  },
+  {
+    q: "My 8-month-old suddenly fears the lift. Normal?",
+    a: "Classic fear-period behaviour. Do not force it; let the dog observe from a comfortable distance, reward curiosity, and it usually passes within weeks.",
+  },
+  {
+    q: "Should training pause during adolescence?",
+    a: "The opposite: this is when training matters most. Shorter, more rewarding sessions keep the habits alive while the brain renovates.",
+  },
+  {
+    q: "Does sterilisation fix teenage behaviour?",
+    a: "It helps some behaviours in some dogs and is no magic switch. Its certain effects are medical, plus the licence fee drop; timing is your vet's call from about seven months.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-adolescence',
+    title,
+    description,
+    aboutName: 'Maltipoo adolescence',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-adolescence" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Behaviour</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Surviving Maltipoo adolescence</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='What happens during Maltipoo adolescence?'>
+      Between roughly 6 and 18 months, hormones and brain remodelling turn your compliant puppy into a teenager: cues get ignored, fears resurface, and boundaries get tested. It is a phase, not a failure; keep routines identical and reward generously, and the settled adult emerges on the other side.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">What changes, and when</h2>
+          <p>
+            Somewhere around six months the puppy that came when called develops selective hearing, and the confident explorer suddenly startles at a bin it has passed fifty times. Fear periods, boundary testing and energy spikes arrive in waves through roughly the eighteenth month, earlier and milder in toy breeds than large ones.
+          </p>
+          <p>
+            Owners describe it as the dog forgetting everything. It has not; it is re-evaluating whether the rules still apply now that it has opinions. Yours is not broken, and no, you did not ruin it.
+          </p>
+          <h2 class="text-2xl text-ink">What to hold steady</h2>
+          <p>
+            Keep every routine identical: same toilet spot, same pen, same walk timing, same cues in the same tone. Consistency is the message that the rules survived puberty. Reward compliance more generously than you did at four months, because you are now competing against hormones for attention.
+          </p>
+          <p>
+            Do not escalate to punishment when cues fail; regression punished becomes anxiety, and this attachment-heavy breed takes it personally. Shorter, more frequent training sessions beat long frustrating ones.
+          </p>
+          <h2 class="text-2xl text-ink">The parts specific to this breed</h2>
+          <p>
+            Adolescent Maltipoos often get more vocal, so re-run the quiet-marker drills from the training guide as if teaching them fresh. Alone-time tolerance can also dip; rebuild the absence ladder in small steps rather than assuming it is fixed forever.
+          </p>
+          <p>
+            Sterilisation typically lands in this window, from around seven months per most vets, and doubles as the moment your licence fee drops. Many owners report the wildest edges softening in the months after.
+          </p>
+        </div>
+        <FactsCard
+          heading='Adolescence survival card'
+          items={[
+            "Window: roughly 6 to 18 months",
+            "Regression is re-testing, not forgetting",
+            "Keep routines identical, rewards generous",
+            "Re-run quiet and alone-time drills",
+            "Settled adult arrives on the other side"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Ask us mid-crisis'
+      secondaryText='Our WhatsApp thread stays open long after handover, adolescent chaos included.'
+      secondaryHref='/maltipoo-training'
+      secondaryLabel='Revisit the training guide'
+    />
+  </article>
+</BaseLayout>

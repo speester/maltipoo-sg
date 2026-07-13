@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-barking.json (2026-07-13).
+// Evidence: the honest topic; aligns with portfolio comparisons + HDB courtesy rule
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Do Maltipoos Bark a Lot? The Honest Answer | Maltipoo.sg';
+const description =
+  'Yes, Maltipoos bark more than the average small breed. Why they do it, what loneliness has to do with it, and the quiet-training routine that keeps HDB neighbours happy.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Barking', url: '/blog/maltipoo-barking' },
+];
+
+const faqItems = [
+  {
+    q: "Do Maltipoos bark more than Cavapoos?",
+    a: "Yes, on average. The Maltese alert streak runs louder than the Cavalier calm, which is one of the honest differences in our Maltipoo vs Cavapoo comparison.",
+  },
+  {
+    q: "At what age does barking start?",
+    a: "Alert barking usually appears between three and six months as confidence grows. Start quiet-marker training before then, in the first weeks home, and it never becomes a habit.",
+  },
+  {
+    q: "Will a bark collar fix it?",
+    a: "We do not recommend them. They punish the symptom and leave the cause, usually loneliness or under-training, untouched; quiet-marker work plus company fixes both.",
+  },
+  {
+    q: "My Maltipoo barks at nothing. Why?",
+    a: "It is rarely nothing at those ears; corridor sounds you cannot hear are prime suspects. Reward calm after each alert and the episodes shorten on their own.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-barking',
+    title,
+    description,
+    aboutName: 'Maltipoo barking',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-barking" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Behaviour</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Do Maltipoos bark a lot?</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='Do Maltipoos bark a lot?'>
+      Honestly, yes: more than the average small companion breed. Maltipoos are alert-barkers with a Maltese watchdog streak, and the volume rises sharply when they are lonely. With daytime company and quiet-marker training from week one, most settle to a level neighbours never notice.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Why this breed has opinions</h2>
+          <p>
+            The Maltese side of the family spent centuries as a palace alarm system, and the miniature watchdog instinct survived the cross. A Maltipoo announces the door chime, corridor footsteps, and sometimes a plastic bag having a private moment on the balcony. That is alert barking, and it is wiring, not naughtiness.
+          </p>
+          <p>
+            The second driver is the one that matters more: loneliness. This is an attachment-dependent breed, and a Maltipoo left alone through the workday will narrate its distress to the whole floor. When owners report a barking problem, the calendar almost always shows an empty flat.
+          </p>
+          <h2 class="text-2xl text-ink">The quiet routine that actually works</h2>
+          <p>
+            Teach quiet as a skill, not a hope. When an alert bark happens, wait for the first beat of silence, mark it with a calm word and a treat, and repeat until silence becomes the thing that pays. Rehearse the door chime deliberately at low stakes, a few rings a day, until it becomes boring.
+          </p>
+          <p>
+            Never shout over barking; to a dog you have simply joined the chorus. And front-load alone-time conditioning from the first week, in small doses, so the loneliness bark never develops. The training guide covers both drills step by step.
+          </p>
+          <h2 class="text-2xl text-ink">The HDB dimension</h2>
+          <p>
+            HDB's considerate-ownership guidance names continuous barking as the courtesy line for flat-dwelling dogs, which makes quiet training a neighbourly obligation as much as a convenience. A Maltipoo with company and early training sits comfortably inside that line.
+          </p>
+          <p>
+            If your flat is genuinely empty from 8am to 6pm, no amount of drilling fixes the underlying loneliness; that routine wants a more independent breed, and we say so plainly on the comparison pages.
+          </p>
+        </div>
+        <FactsCard
+          heading='Barking, condensed'
+          items={[
+            "Alert-barker by wiring, louder when lonely",
+            "Mark and reward the silence, not the bark",
+            "Rehearse door chimes on purpose",
+            "Empty flats create barkers; company prevents them",
+            "HDB names continuous barking as the line"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Fit check first'
+      secondaryText='Barking problems usually start as routine mismatches. Two honest minutes on the routine test saves both.'
+      secondaryHref='/#lifestyle-fit'
+      secondaryLabel='Take the routine test'
+    />
+  </article>
+</BaseLayout>

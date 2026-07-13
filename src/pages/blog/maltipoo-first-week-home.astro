@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-first-week-home.json (2026-07-13).
+// Evidence: week-9 canonical + r/Maltipoo first-night loneliness threads
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Bringing Your Maltipoo Home at 9 Weeks | Maltipoo.sg';
+const description =
+  'The first week with a Maltipoo puppy: day-one arrival plan, the first-night crying protocol, week-one routines, and what the delivery setup covers.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'First Week', url: '/blog/maltipoo-first-week-home' },
+];
+
+const faqItems = [
+  {
+    q: "Should I take leave for the first week?",
+    a: "A few days helps; a full fortnight of round-the-clock company backfires unless you practise absences during it. Condition the alone-time from day one.",
+  },
+  {
+    q: "When can the puppy meet visitors and other dogs?",
+    a: "Household visitors from week two, calmly; other dogs after the vaccination course completes. Socialisation matters, and so does the immune schedule.",
+  },
+  {
+    q: "How much crying is normal?",
+    a: "A few noisy nights is standard; escalating all-night distress beyond a week is worth a call to us and a look at the separation-anxiety guide.",
+  },
+  {
+    q: "What does the delivery setup include?",
+    a: "Pen assembled where you want it, kit unpacked and explained, feeding schedule and toilet plan walked through in your actual flat, and the first training lesson booked.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-first-week-home',
+    title,
+    description,
+    aboutName: 'Maltipoo first week home',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-first-week-home" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">New owners</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Bringing your Maltipoo home at 9 weeks</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='What should the first week with a Maltipoo look like?'>
+      Quiet, boring and structured, on purpose: a nine-week-old needs the pen zone, the toilet schedule, meals at fixed times and lots of sleep more than it needs visitors and adventures. We deliver with the pen assembled and the routine walked through; your job for week one is consistency and calm.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Day one: less is more</h2>
+          <p>
+            Homecoming day is a whirlwind for a puppy that woke up with littermates: new smells, new humans, no siblings. Bring it straight to the prepared pen zone, offer the toilet spot, and let it explore one room at its own pace. Save the neighbours, relatives and enthusiastic children for week two.
+          </p>
+          <p>
+            Feed the same food at the same times it ate at the shop (the kit ships with it), keep handling gentle and brief, and let sleep happen wherever it lands; a nine-week-old runs on eighteen-plus hours a day.
+          </p>
+          <h2 class="text-2xl text-ink">The first nights, survived</h2>
+          <p>
+            Night one is the loneliest of a puppy's life so far, and the r/Maltipoo archives overflow with 3am guilt. The protocol: pen or crate in your bedroom, warm bedding, a heartbeat toy, final toilet trip at lights-out. Answer genuine toilet whines with a silent trip and straight back to bed; wait out pure protest and reward the first silence.
+          </p>
+          <p>
+            Three to five consistent nights settle most puppies. The mistake that costs weeks is inconsistency: into the bed on night two out of guilt, back to the crate on night three out of regret.
+          </p>
+          <h2 class="text-2xl text-ink">Week one systems, installed early</h2>
+          <p>
+            Start as you mean to continue from day one: the toilet schedule from the potty guide, two-minute alone-time absences from the training guide even while you are home all week, and gentle handling of paws and ears daily so grooming never becomes a battle.
+          </p>
+          <p>
+            Book the vet meet-and-greet for the week-12 vaccination now, note the 5-day bring-back window (any sickness in the first five days comes back to us, in writing), and message the WhatsApp thread with every stupid question; they are all questions we have answered before, happily.
+          </p>
+        </div>
+        <FactsCard
+          heading='Week-one checklist'
+          items={[
+            "Day one: one room, pen zone, quiet",
+            "Nights: crate in bedroom, 3-5 consistent nights",
+            "Same food, same times, from the kit",
+            "Start toilet + alone-time drills on day one",
+            "5-day bring-back window: in writing"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Delivered and set up free'
+      secondaryText='Every puppy arrives with the pen assembled and week one explained in person.'
+      secondaryHref='/maltipoo-price-singapore'
+      secondaryLabel="See what's included"
+    />
+  </article>
+</BaseLayout>

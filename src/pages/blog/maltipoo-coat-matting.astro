@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-coat-matting.json (2026-07-13).
+// Evidence: UGC: smell between baths, brushing cadence vs humidity; feeds grooming page
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Preventing Matting in Maltipoo Coats | Maltipoo.sg';
+const description =
+  'Why Maltipoo coats mat so fast in Singapore humidity, the line-brushing routine that prevents it, the coat-change months, and what to do when mats win.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Coat Matting', url: '/blog/maltipoo-coat-matting' },
+];
+
+const faqItems = [
+  {
+    q: "Which brush does a Maltipoo need?",
+    a: "A slicker for the work and a metal comb for the audit; both ship in the starter kit's grooming set. Bristle brushes are for photographs.",
+  },
+  {
+    q: "How fast can mats form?",
+    a: "In humidity, days: a rain walk plus a skipped session is enough. The friction zones mat first; check them at every session.",
+  },
+  {
+    q: "Does coconut oil help mats?",
+    a: "A proper detangling spray works better and washes out; oils build up in the coat and collect dirt in this climate.",
+  },
+  {
+    q: "Is shaving a matted dog cruel?",
+    a: "The opposite: dematting a felted coat hurts. The short restart cut is the humane reset, and the routine above means never needing it twice.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-coat-matting',
+    title,
+    description,
+    aboutName: 'Maltipoo coat matting',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-coat-matting" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Grooming</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Preventing matting in Maltipoo coats</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question="How do you stop a Maltipoo's coat from matting?">
+      Brush to the skin, not over the surface: line-brushing with a slicker plus a metal comb a few times a week, always on a completely dry coat. Singapore humidity accelerates matting, the 8-to-12-month coat change is the danger window, and a matted coat must never be bathed; water tightens the knots.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">Why this coat mats, and why faster here</h2>
+          <p>
+            The Poodle-cross coat traps shed hair in its curl instead of dropping it, which keeps your sofa clean and turns the coat itself into a felt-making machine. Add tropical humidity keeping everything faintly damp, plus friction zones (collar line, armpits, behind ears, under the harness), and mats assemble themselves midweek.
+          </p>
+          <p>
+            Surface brushing makes it worse in disguise: the top looks groomed while a pelt forms silently at skin level. Every shaved-to-the-skin sad Maltipoo photo online is a surface-brushing story.
+          </p>
+          <h2 class="text-2xl text-ink">The routine that actually prevents it</h2>
+          <p>
+            Line-brushing is the whole secret: part the coat to the skin, brush the layer out with a slicker, move up a centimetre, repeat, then verify with a metal comb; if the comb snags, the brush lied. Ten minutes a few times a week covers a toy-sized coat, concentrated on the friction zones.
+          </p>
+          <p>
+            Two absolute rules: only brush a dry coat (wet brushing snaps hair and tightens tangles), and dry completely after rain and baths per the grooming guide. A spritz of detangling conditioner earns its shelf space in this climate.
+          </p>
+          <h2 class="text-2xl text-ink">The coat change, and when mats win</h2>
+          <p>
+            Somewhere between 8 and 12 months the puppy fluff hands over to the adult coat, and for a few weeks the two textures tangle against each other daily. This is the window that fells even diligent owners; double the brushing frequency and consider a shorter cut through the transition.
+          </p>
+          <p>
+            When mats win anyway: a single small mat yields to a dematting spray, fingers and patience. Felted patches or a matted undercoat go to the groomer, and if the verdict is the short restart cut, take it without guilt; pain-free and scruffy beats tortured and fluffy, and it regrows in months.
+          </p>
+        </div>
+        <FactsCard
+          heading='Anti-mat card'
+          items={[
+            "Line-brush to the skin, few times weekly",
+            "Metal comb is the lie detector",
+            "Only ever brush a dry coat",
+            "Coat change 8-12 months: double everything",
+            "Never bathe a matted coat"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='The full coat playbook'
+      secondaryText='Cuts, salon prices and the humidity routine, in the grooming guide.'
+      secondaryHref='/maltipoo-grooming-haircuts'
+      secondaryLabel='Read the grooming guide'
+    />
+  </article>
+</BaseLayout>

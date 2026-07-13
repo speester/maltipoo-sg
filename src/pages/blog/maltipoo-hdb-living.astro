@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-hdb-living.json (2026-07-13).
+// Evidence: feeds core HDB page; day-to-day angle
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Living With a Maltipoo in an HDB Flat | Maltipoo.sg';
+const description =
+  'The day-to-day of a Maltipoo in an HDB flat: lift and void-deck etiquette, noise courtesy, space setup, and the one-dog rule in practice.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'HDB Living', url: '/blog/maltipoo-hdb-living' },
+];
+
+const faqItems = [
+  {
+    q: "Do neighbours complain about small dogs?",
+    a: "About noise, occasionally; about a quiet dog, essentially never. The barking guide is the insurance policy.",
+  },
+  {
+    q: "Where should the pen go in a small flat?",
+    a: "A low-traffic corner with shade and airflow, visible from where the household sits; a velcro dog wants sight-lines, not solitude.",
+  },
+  {
+    q: "Can my Maltipoo use the corridor as a run?",
+    a: "No; HDB guidance keeps dogs within the flat, and corridors belong to everyone. Short walks downstairs cover the exercise honestly.",
+  },
+  {
+    q: "Is a balcony safe for a toy dog?",
+    a: "With gaps meshed and supervision, as a lounge; never as an unattended run. A 2kg dog and balcony-rail gaps deserve paranoia.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-hdb-living',
+    title,
+    description,
+    aboutName: 'Maltipoo HDB flat living',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-hdb-living" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Singapore living</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Living with a Maltipoo in an HDB flat</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='What is living with a Maltipoo in an HDB flat actually like?'>
+      Easy, by design: a 2 to 4kg dog fits any flat layout, needs only short walks, and rides the lift in a carrier or your arms. The real work is social, not spatial: quiet training for corridor noise, considerate lift manners, and remembering the one-dog rule when the second-puppy itch arrives.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The space question, retired</h2>
+          <p>
+            A toy Maltipoo occupies one sofa cushion, one pen corner and whatever lap is available; a 2-room flexi has more room than it needs. The setup that works: pen in a low-traffic corner away from direct afternoon sun, water in every zone the dog uses, and the toilet spot decided before homecoming per the potty-training guide.
+          </p>
+          <p>
+            What flats actually lack is not space but soundproofing, which is why the noise section below is the real HDB chapter.
+          </p>
+          <h2 class="text-2xl text-ink">Corridor, lift and void-deck manners</h2>
+          <p>
+            The unwritten rules keep the written ones unnecessary: carry or leash short in lifts (some neighbours are anxious around dogs, and a toy dog underfoot in a crowded lift is at risk anyway), skip the void-deck toilet stops, and give clearance to prayer items and children. A cheerful two-kilogram ambassador converts more dog-skeptical neighbours than any argument.
+          </p>
+          <p>
+            HDB's own guidance asks that dogs stay within the flat and not roam corridors, and names continuous barking as the courtesy line; the quiet-marker drills in the training guide are your compliance program.
+          </p>
+          <h2 class="text-2xl text-ink">The rules, lived rather than recited</h2>
+          <p>
+            One dog from the approved list per flat is the standing rule, and the full legal picture, including why the Maltipoo qualifies by rule 62, lives in the HDB guide. In practice the rule surfaces exactly twice: at licensing, which we complete with you at purchase, and the day you consider a second dog, which for HDB means it cannot share your address.
+          </p>
+          <p>
+            Renovation seasons, festival fireworks and corridor repainting are the recurring flat-life stress events; the conditioned pen from the crate guide is the bunker that makes all of them boring.
+          </p>
+        </div>
+        <FactsCard
+          heading='HDB living card'
+          items={[
+            "Space: any flat size works at 2-4kg",
+            "Lifts: carry or short-leash, always",
+            "Noise: quiet training = neighbour peace",
+            "One approved-list dog per flat",
+            "Pen corner: shade, water, calm"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='The paperwork side'
+      secondaryText='Rule 62, licence fees and the one-dog rule, all settled in the HDB guide.'
+      secondaryHref='/maltipoo-hdb-approved'
+      secondaryLabel='Read the HDB guide'
+    />
+  </article>
+</BaseLayout>

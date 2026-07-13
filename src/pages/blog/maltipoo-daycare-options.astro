@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-daycare-options.json (2026-07-13).
+// Evidence: positioning tie-in; zero breed-specific competition
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'Daycare, Sitters and Helpers for Your Maltipoo | Maltipoo.sg';
+const description =
+  "When the flat empties out: honest options for a Maltipoo's daytime company in Singapore, from daycare and sitters to helper handovers and the split-shift trick.";
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Daycare & Sitters', url: '/blog/maltipoo-daycare-options' },
+];
+
+const faqItems = [
+  {
+    q: "How much is dog daycare in Singapore?",
+    a: "Typically tens of dollars per day with package discounts; rates vary by area and inclusions. [VERIFY current range] The trial day tells you more than the price list.",
+  },
+  {
+    q: "Can my helper legally walk the dog?",
+    a: "Of course; the licence names an owner, not a walker. What matters is briefing, willingness and the before-9am heat rule.",
+  },
+  {
+    q: "Is a camera and treat-dispenser enough?",
+    a: "As monitoring, useful; as company, no. A camera shows you the loneliness in HD; it does not fix it.",
+  },
+  {
+    q: "We both WFH but travel monthly. Workable?",
+    a: "Very: that is a company-rich routine with occasional gaps, exactly what boarding, sitters or the free first-month boarding option are for. Plan the gaps before the trips.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-daycare-options',
+    title,
+    description,
+    aboutName: 'Maltipoo daytime care options',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-daycare-options" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Singapore living</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Daycare, sitters and helpers for your Maltipoo</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='What if I cannot be home with my Maltipoo every day?'>
+      Build the company from other sources: dog daycare a few days a week, a midday sitter or dog-walker, a helper or grandparent handover, or a split-shift household schedule. A Maltipoo needs presence, not specifically yours; what it cannot do is a silent flat from 8am to 6pm daily.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The options menu, honestly ranked</h2>
+          <p>
+            Best is resident company: a helper, a grandparent, or a household schedule where someone WFHs most days. The dog integrates into a living flat, which is the environment this breed was matched for; the with-kids guide describes the multi-generation pattern at its best.
+          </p>
+          <p>
+            Next tier is imported company: daycare centres take social dogs for the working day (budget per-day rates and check vaccination requirements), and midday sitters or walkers break the alone-stretch in half. The occasional empty day on top of a trained alone-time foundation is fine; the untrained permanent version is how separation anxiety is built.
+          </p>
+          <h2 class="text-2xl text-ink">Making a helper handover actually work</h2>
+          <p>
+            In many Singapore households the helper becomes the puppy's daytime person, and it works beautifully with three ingredients: the helper's genuine willingness (asked, not assumed), inclusion in the training vocabulary so cues stay consistent, and clear ownership of the routine in writing: feeding times, walk timing before the heat, and the toilet protocol.
+          </p>
+          <p>
+            Include the helper in the delivery-day walkthrough and the free trainer lesson; the person doing the 2pm shift deserves the same briefing as the person paying. The dog, for the record, will adore them; manage your feelings about the favourite-person rankings accordingly.
+          </p>
+          <h2 class="text-2xl text-ink">Daycare due diligence</h2>
+          <p>
+            Vet the daycare like a preschool: vaccination requirements enforced (a good sign, not friction), toy-dog grouping separate from the big-dog scrum, staff ratios named, and a trial half-day before committing. A 3kg velcro dog in a boisterous free-for-all is not enrichment; a calm small-dog room absolutely is.
+          </p>
+          <p>
+            Start with one or two days a week rather than five; most Maltipoos do best with a mixed week of daycare, home company and the odd trained-alone stretch.
+          </p>
+        </div>
+        <FactsCard
+          heading='Daytime company menu'
+          items={[
+            "Resident: helper, grandparent, WFH split",
+            "Imported: daycare days, midday sitter",
+            "Foundation: alone-time training regardless",
+            "Daycare: toy-dog grouping, trial day first",
+            "Silent 8-6 flat daily: not this breed"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Match the routine honestly'
+      secondaryText='Tell us your real week on WhatsApp; we will tell you if it works.'
+      secondaryHref='/#lifestyle-fit'
+      secondaryLabel='Take the routine test'
+    />
+  </article>
+</BaseLayout>

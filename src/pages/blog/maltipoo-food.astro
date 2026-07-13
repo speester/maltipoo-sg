@@ -1,0 +1,117 @@
+---
+// Blog post. Copy authored against briefs/maltipoo-food.json (2026-07-13).
+// Evidence: food cluster 90/mo + r/Maltipoo won't-eat threads (40+ comments)
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const title = 'What to Feed a Maltipoo Puppy | Maltipoo.sg';
+const description =
+  'Feeding a Maltipoo in Singapore: portions for a 2 to 4kg dog, the three-meals-to-two transition, picky-eater fixes, and the foods that are never safe.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: 'Food', url: '/blog/maltipoo-food' },
+];
+
+const faqItems = [
+  {
+    q: "How much food does a Maltipoo eat per day?",
+    a: "Startlingly little: follow the small-breed bag chart for the target adult weight and adjust to body condition. Most owners' first mistake is doubling it out of love.",
+  },
+  {
+    q: "Is home-cooked food better?",
+    a: "Only with a properly balanced recipe, ideally vet-formulated; freestyle chicken-and-rice long term creates deficiencies. Balanced commercial food is the safe default.",
+  },
+  {
+    q: "My Maltipoo suddenly stopped eating. Worried?",
+    a: "One skipped meal with normal energy: watch. A puppy under six months refusing repeatedly, or any lethargy or trembling: vet, same day. Toy breeds run out of fuel fast.",
+  },
+  {
+    q: "What food comes in the starter kit?",
+    a: "The kit ships with the food your puppy is already eating, so the first weeks stay consistent, plus bowls and the feeding schedule we walk through at delivery.",
+  }
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/blog/maltipoo-food',
+    title,
+    description,
+    aboutName: 'Maltipoo food and feeding',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/blog/maltipoo-food" schemas={schemas}>
+  <article>
+    <section class="container-site pt-4">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Feeding</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">What to feed a Maltipoo puppy</h1>
+        <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
+      </div>
+    </section>
+
+    <AnswerCapsule question='What should a Maltipoo eat?'>
+      A quality small-breed kibble sized for tiny jaws: three measured meals a day for a young puppy, tapering to two from around six months. A 2 to 4kg dog eats surprisingly little, which makes overfeeding and treat-inflation the real local hazards. Sudden appetite loss in a toy puppy is a same-day vet call.
+    </AnswerCapsule>
+
+    <section class="container-site py-6">
+      <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
+        <div class="text-ink-soft space-y-5 max-w-[68ch]">
+          <h2 class="text-2xl text-ink">The what and the how much</h2>
+          <p>
+            Small-breed formulas exist for real reasons: kibble sized for a tiny mouth and calorie density for a fast metabolism. Follow the bag's weight chart as a starting point, then feed the dog in front of you; ribs easily felt under a light fat cover is the target, and the vet confirms trajectory at booster visits.
+          </p>
+          <p>
+            Keep the brand the puppy came home on for the first weeks, then transition over seven days if you switch: quarter-new to full-new in gradual steps. Sudden swaps are the leading cause of the dramatic digestive events owners message us about.
+          </p>
+          <h2 class="text-2xl text-ink">The schedule and the picky-eater trap</h2>
+          <p>
+            Three meals a day until roughly six months, then two, at fixed times, with the bowl up after fifteen minutes. Grazing all day trains gourmets. The classic picky-eater spiral in owner threads goes: puppy skips a meal, alarmed human hand-feeds something tastier, puppy learns skipping pays. Break it by holding the boring line for a healthy dog.
+          </p>
+          <p>
+            The exception outranks the rule: a toy-breed PUPPY that refuses food entirely can slide toward hypoglycemia fast. A missed meal with normal energy is a shrug; lethargy, trembling or repeated refusal at under six months is a same-day vet call.
+          </p>
+          <h2 class="text-2xl text-ink">Treats, tables and the never list</h2>
+          <p>
+            At 2 to 4kg, treat calories count triple; keep treats tiny, training-purposed, and under ten percent of the day's food. Singapore table food is a minefield of onion (in nearly everything savoury), garlic, and satay sticks that become throat hazards.
+          </p>
+          <p>
+            The never list: chocolate, grapes and raisins, onion and garlic, xylitol in sugar-free anything, cooked bones, and alcohol. Durian is not toxic but a fat bomb; the answer is no for reasons of both health and car upholstery.
+          </p>
+        </div>
+        <FactsCard
+          heading='Feeding card'
+          items={[
+            "Small-breed kibble, measured meals",
+            "3 meals to 6 months, then 2, fixed times",
+            "Bowl up after 15 minutes; no grazing",
+            "Treats under 10% of daily calories",
+            "Puppy refusing food + lethargy: vet same day"
+          ]}
+        />
+      </div>
+    </section>
+
+    <FAQ items={faqItems} />
+
+    <CtaClose
+      secondaryHeading='Feeding questions, answered live'
+      secondaryText='Portion doubts and picky phases: message us before the spiral starts.'
+      secondaryHref='/maltipoo-price-singapore'
+      secondaryLabel="See what's included"
+    />
+  </article>
+</BaseLayout>
