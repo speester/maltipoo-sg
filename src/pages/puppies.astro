@@ -1,0 +1,121 @@
+---
+// Puppies showcase page (owner standard from build #1). Targets "available maltipoo
+// puppies singapore" intent; framed as live availability, never a stale fixed inventory.
+// Hero image added at Phase E imggen.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import ListingGrid from '../components/ListingGrid.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
+import { availablePups } from '../data/puppies';
+
+const title = 'Available Maltipoo Puppies in Singapore | Maltipoo.sg';
+const description =
+  'Available Maltipoo puppies in Singapore, updated weekly: current apricot litters and ages, all-in pricing from $3,288, and how to reserve and meet them at Balestier.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Puppies', url: '/puppies' },
+];
+
+const faqItems = [
+  {
+    q: 'Why is the gallery not a full inventory with prices?',
+    a: 'Because toy Maltipoo litters are small and reserve quickly, a fixed inventory goes stale within weeks. This gallery shows what we genuinely place; the live answer, with photos and the exact all-in price, comes on WhatsApp the same day you ask.',
+  },
+  {
+    q: 'How do I reserve a Maltipoo puppy?',
+    a: 'WhatsApp +65 8220 6408 with your colour and timing preferences. We confirm live availability, share photos and the exact all-in figure within the $3,288 to $5,988 range, and book a viewing at Balestier. A deposit reserves your puppy, with free boarding up to a month if your home is not ready.',
+  },
+  {
+    q: 'Can I visit without committing to anything?',
+    a: 'Please do. Come during opening hours, sit with the puppies, and ask everything, including whether a Maltipoo suits your routine at all. If it does not, we will say so; that honesty is what our reviews keep mentioning.',
+  },
+  {
+    q: 'How old are puppies when they go home?',
+    a: 'About nine weeks: the week 6 and week 8 vaccinations and deworming are done, and the licence is transferred to you at purchase. The week 12 jab happens with your own vet, and we remind you when it is due.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/puppies',
+    title,
+    description,
+    aboutName: 'Available Maltipoo puppies in Singapore',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  productSchema({
+    name: 'Maltipoo puppy (Singapore)',
+    description: 'Toy Maltipoo puppies from an AVS licensed pet shop, $3,288 to $5,988 all-in.',
+  }),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/puppies" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Puppies</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[22ch]">Available Maltipoo puppies in Singapore</h1>
+      <p class="text-ink-soft max-w-[48ch] mb-5">
+        Toy litters are small and move fast, so the freshest answer is one message away.
+        Below: the apricot Maltipoos we typically have available or arriving, and exactly how
+        reserving works.
+      </p>
+      <a href={whatsappLink('Hi! Which Maltipoo puppies are currently available?')} class="btn-cta">Ask what's available</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="How do I get a Maltipoo puppy from Maltipoo.sg?">
+    WhatsApp {site.phoneDisplay} with your colour and timing preferences; we reply with live
+    availability, photos and the exact all-in price from {site.pricing.from}. Meet the puppy
+    at Balestier by appointment, reserve with a deposit, and take your Maltipoo home from
+    about nine weeks old.
+  </AnswerCapsule>
+
+  <ListingGrid heading="Available Maltipoo puppies" items={availablePups} mode="available" />
+
+  <CaptionedBlock heading="How availability actually works here" id="how" tinted>
+    <p>
+      A toy Maltipoo litter is often two or three puppies, and most are reserved within a
+      couple of weeks of arriving. Rather than pretend a webpage can keep up, we run it live:
+      message us and we reply with what is genuinely here, what arrives soon, and honest
+      timing if your preferred shade of apricot needs a wait.
+    </p>
+    <p>
+      Every available puppy carries the same package: vaccinations on the 6, 8 and 12 week
+      schedule, the 30-item starter kit, delivery and playpen setup, the first training
+      lesson, and licensing completed at purchase, all inside the published
+      {site.pricing.range} all-in range.
+      <!-- TODO: link /maltipoo-price-singapore once built -->
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Reserving, step by step"
+      items={[
+        'WhatsApp your preferences: colour and timing',
+        'Same-day reply with live availability + prices',
+        'Meet the puppy at Balestier by appointment',
+        'Deposit reserves; boarding free up to 1 month',
+        'Home at ~week 9, fully set up by us',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="First, does the breed fit?"
+    secondaryText="A Maltipoo wants company through the day. Check your routine against the honest test on the home page."
+    secondaryHref="/#lifestyle-fit"
+    secondaryLabel="Take the routine test"
+  />
+</BaseLayout>

@@ -1,7 +1,7 @@
 ---
-// Money page — CHECKPOINT 3 SAMPLE. Copy below is PLACEHOLDER (drawn from
-// config/business-context.md facts) and will be replaced by content-writer
-// against briefs/home.json before this page is called finished.
+// Money page. Copy authored by content-writer against briefs/home.json (2026-07-13).
+// Experience claims trace to config/expertise-library.md; regulatory facts to the
+// CANONICAL block in config/business-context.md (HDB rule 62 verified on hdb.gov.sg).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
@@ -23,27 +23,35 @@ const description =
 const faqItems = [
   {
     q: 'How much does a Maltipoo cost in Singapore?',
-    a: 'Maltipoo puppies at Maltipoo.sg are $3,288 to $5,988 all-in, depending on colour and adult size. That covers the 30-item starter kit, home delivery with playpen setup, the first training lesson, and the AVS licensing paperwork done at purchase.',
+    a: 'Maltipoo puppies at Maltipoo.sg are $3,288 to $5,988 all-in, depending on colour and adult size. That covers the 30-item starter kit, home delivery with playpen setup, the first training lesson, and the AVS licensing paperwork done at purchase. Around the market you will see anything from promo listings to five-figure imports, usually before extras.',
   },
   {
     q: 'Are Maltipoos HDB approved?',
-    a: 'Yes, by rule. HDB approves the Maltese (item 33), the Toy and Miniature Poodle (item 42), and any cross of two approved breeds (item 62), which is exactly what a Maltipoo is. Across 100+ placements, licence transfers to HDB homes have never been flagged either.',
+    a: 'Yes, by rule. HDB’s approved list names the Maltese at item 33 and the Toy and Miniature Poodle at item 42, and item 62 approves a cross of any two approved breeds, which is exactly what a Maltipoo is. Across 100+ placements, our licence transfers to HDB homes have never been flagged either.',
   },
   {
     q: 'When can my Maltipoo puppy come home?',
-    a: 'Around week nine, about a week after the second vaccination. Core jabs run at weeks 6, 8 and 12 with deworming at each visit. If your home is not ready yet, we board your puppy free for up to a month after deposit, vaccinations continuing on schedule.',
+    a: 'Around week nine, about a week after the second vaccination. Core jabs run at weeks 6, 8 and 12 with deworming at each visit, and an optional fourth jab at week 16 if your vet advises it. If your home is not ready yet, we board your puppy free for up to a month after deposit.',
   },
   {
     q: 'Can a Maltipoo be left alone while we are at work?',
-    a: 'Honestly, this is not the breed for an empty weekday home. Maltipoos are attachment-dependent and want daytime company. They thrive with retirees, WFH owners, and households with a helper or grandparent at home. If everyone is out 8am to 6pm, a Cavapoo suits better.',
+    a: 'Honestly, this is not the breed for an empty weekday home. Maltipoos are attachment-dependent and want daytime company. They thrive with retirees, WFH owners, and households with a helper or grandparent at home. If everyone is out 8am to 6pm, a Cavapoo suits that routine better, and we will say so.',
   },
   {
     q: 'How big does a toy Maltipoo get?',
-    a: 'The Maltipoos we place are toy-sized, finishing around 2 to 4kg full grown. That featherweight build is part of the appeal: lap-sized for the sofa, carrier-friendly for the MRT, and comfortable in any flat.',
+    a: 'The Maltipoos we place are toy-sized, finishing around 2 to 4kg full grown. That featherweight build is part of the appeal: lap-sized on the sofa, carrier-friendly on the MRT, and comfortable in any flat.',
+  },
+  {
+    q: 'How much is the dog licence, and when is it due?',
+    a: 'The AVS dog licence for your first year costs $13.50, because puppies go home at around nine weeks, under the five-month threshold. From five months an unsterilised dog is $81 a year; once sterilised it drops to $13.50 a year or a one-time $35 lifetime licence. We complete the paperwork with you at purchase.',
   },
   {
     q: 'How do I check a pet shop is AVS licensed?',
     a: 'Look the shop up on the AVS public registry of licensed pet shops on the NParks site. Curious Tails, the shop behind Maltipoo.sg, holds AVS licence AS24J00046. Verify it there before visiting us or anyone else.',
+  },
+  {
+    q: 'Do Maltipoos shed?',
+    a: 'Maltipoos are low-shedding, not non-shedding. The Poodle side keeps loose hair in the coat rather than on your sofa, which is also why regular brushing and grooming matter. No dog is truly hypoallergenic, so allergy-sensitive buyers should meet the puppy in person first.',
   },
 ];
 
@@ -73,8 +81,8 @@ const coatSwatches = [
 
 <BaseLayout title={title} description={description} path="/" schemas={schemas}>
   <Hero
-    heading="The featherweight companion for homes with company"
-    lede="Toy Maltipoo puppies, 2 to 4kg full grown, placed by an AVS licensed shop that asks about your routine before showing you a puppy. Vaccinated on the 6, 8 and 12 week schedule, licensed at purchase, delivered with the full 30-item starter kit. From $3,288, all-in."
+    heading="Maltipoo puppies in Singapore, matched to homes with company"
+    lede="Toy Maltipoos, 2 to 4kg full grown, from the AVS licensed shop that asks about your routine before showing you a puppy. Every Maltipoo goes home vaccinated on the 6, 8 and 12 week schedule, licensed at purchase, and set up with the full 30-item starter kit. From $3,288, all-in."
     ctaMessage="Hi! I would like to ask about Maltipoo puppies."
     secondaryLabel="See available puppies"
     secondaryHref="#recent"
@@ -82,17 +90,19 @@ const coatSwatches = [
 
   <section class="container-site pt-2">
     <p class="text-ink-soft max-w-[65ch] m-0">
-      Availability moves week to week. WhatsApp us to confirm a puppy, then book a viewing at
-      the Balestier shop.
+      Every "Maltipoo for sale Singapore" page you have open probably shows different puppies
+      by now; availability moves week to week. WhatsApp us to confirm a puppy, then book a
+      viewing at the Balestier shop.
     </p>
   </section>
-  <ListingGrid heading="Available Maltipoo puppies for sale" items={availablePups} mode="available" id="recent" />
+  <ListingGrid heading="Maltipoo puppies for sale in Singapore" items={availablePups} mode="available" id="recent" />
 
   <AnswerCapsule question="What is a Maltipoo?" id="what-is-a-maltipoo">
-    A Maltipoo is a small companion cross between a Maltese and a Toy or Miniature Poodle. Ours
-    finish toy-sized at roughly 2 to 4kg, with a soft low-shedding coat, most often apricot. It
-    inherits the Maltese devotion to its people and the Poodle's quick mind, which makes it a
-    devoted lap dog for homes where someone is usually around.
+    A Maltipoo is a small companion cross between a Maltese and a Toy or Miniature Poodle,
+    often described as a Maltese Poodle mix, typically 2 to 4kg full grown in the toy sizes we
+    place, with a soft low-shedding coat that in Singapore is most often apricot. It pairs the Maltese devotion to its people with the
+    Poodle's quick mind, which makes it a devoted lap dog for homes where someone is usually
+    around.
   </AnswerCapsule>
 
   <StatStrip
@@ -106,14 +116,16 @@ const coatSwatches = [
 
   <CaptionedBlock heading="A velcro dog, and proud of it" id="why-maltipoo">
     <p>
-      Some breeds tolerate your company. A Maltipoo insists on it. It follows you from room to
+      Some breeds tolerate your company. A Maltipoo insists on it: it follows you from room to
       room, naps against your leg, and treats your lap as assigned seating. For the right home,
-      that devotion is exactly the point.
+      that devotion is exactly the point, not a flaw to be managed.
     </p>
     <p>
-      The right home is one with company through the day: retirees, people who work from home,
-      families with a helper or a grandparent around. That is who we place Maltipoos with, and
-      why those placements stay happy.
+      After 100+ placements we can tell you precisely who the right home is: retirees, people
+      who work from home, and families with a helper or a grandparent around through the day.
+      That is the toy Maltipoo Singapore homes keep coming back for, and those placements are
+      the ones we keep hearing from.
+      <!-- TODO: link /maltipoo-temperament once built -->
     </p>
     <FactsCard
       slot="side"
@@ -132,15 +144,20 @@ const coatSwatches = [
   <div style="background: var(--color-tint-200);">
     <CaptionedBlock heading="The one question we ask before showing you a puppy" id="lifestyle-fit">
       <p>
-        Who is home between 8am and 6pm? Everything else, colour, coat, even budget, matters
-        less than that answer.
+        Who is home between 8am and 6pm? At the shop we ask it before colour, before size,
+        before budget, because it is the single number that decides whether a Maltipoo
+        placement works.
       </p>
       <p>
         If someone is around most of the day, a Maltipoo will be the happiest dog in the block.
         If the flat empties out every weekday, we will say so plainly and point you to a more
-        independent breed instead; our sister shop places Cavapoos for exactly that routine.
-        Talking a buyer out of the wrong dog costs us a sale and earns us a review, and we have
-        made that trade many times.
+        independent breed; our sister shop places Cavapoos for exactly that routine.
+        <!-- TODO: link /maltipoo-vs-cavapoo once built -->
+      </p>
+      <p>
+        A note from the shop floor: talking a buyer out of the wrong dog costs us a sale that
+        week and earns us a referral the next. We have made that trade many times, and it is
+        why our reviews mention honest advice more than anything else.
       </p>
       <FactsCard
         slot="side"
@@ -159,13 +176,13 @@ const coatSwatches = [
   <CaptionedBlock heading="What every Maltipoo goes home with" id="included" reverse>
     <p>
       All-in means an itemised list, not a slogan. The starter kit runs to 30 items worth over
-      $500: playpen, carrier, bed, grooming set, toilet-training set, food, bowls, oral care and
-      toys. We deliver it free, set the playpen up in your home, and show you how everything
-      works before we leave.
+      $500: playpen, carrier, bed, grooming set, toilet-training set, food, bowls, oral care
+      and toys. We deliver it free, assemble the playpen in your home, and walk you through how
+      every item works before we leave.
     </p>
     <p>
       The first lesson with an AVS-certified trainer is included, and the dog licence paperwork
-      is completed with you at purchase.
+      is completed with you at purchase, so nothing is left hanging after handover.
     </p>
     <FactsCard
       slot="side"
@@ -187,14 +204,13 @@ const coatSwatches = [
         <p class="eyebrow mb-2">Transparent pricing</p>
         <h2 class="text-2xl md:text-3xl mb-4">Maltipoo price in Singapore: {site.pricing.fromLine}</h2>
         <p class="text-ink-soft mb-4 max-w-[60ch]">
-          Our all-in price for a Maltipoo puppy is {site.pricing.range}; the exact figure depends
-          on colour and adult size. Deposit, then balance, and nothing added at collection. Most
-          sellers in Singapore do not publish prices at all, so we would rather you compare with
-          real numbers in front of you.
-        </p>
-        <p class="text-ink-soft mb-6 max-w-[60ch]">
-          The full <a href="/maltipoo-price-singapore">price guide</a> breaks down what moves a
-          puppy within the range, plus licence fees and yearly running costs.
+          Our all-in price for a Maltipoo puppy is {site.pricing.range}; colour and adult size
+          decide where a puppy sits in that range. Deposit, then balance, and nothing added at
+          collection. Scroll the "Maltipoo price Singapore" results and you will find
+          everything from $2,000-plus promo listings to imported puppies quoted near five
+          figures, usually before extras, and most sellers publish no prices at all. We would
+          rather you compare with real numbers in front of you.
+          <!-- TODO: link /maltipoo-price-singapore and /blog/maltipoo-cost-ownership once built -->
         </p>
         <a href={whatsappLink('Hi! Could you share current Maltipoo pricing and availability?')} class="btn-cta">Ask about pricing</a>
       </div>
@@ -210,21 +226,57 @@ const coatSwatches = [
   </section>
 
   <AnswerCapsule question="Is a Maltipoo HDB approved?" id="hdb">
-    Yes, and not just in practice: HDB's approved list names the Maltese at item 33 and the Toy
-    and Miniature Poodle at item 42, and item 62 approves a cross of any two approved breeds.
-    A Maltipoo qualifies by rule. Our licence transfers to HDB homes, across
-    {site.maltipoosPlaced} placements, back it up. One dog per flat, AVS licence required; the
-    <a href="/maltipoo-hdb-approved">full HDB guide</a> walks through it.
+    Yes, and not just in practice: HDB's
+    <a href="https://www.hdb.gov.sg/managing-my-home/home-ownership/keeping-pets" rel="noopener" target="_blank">approved breeds list</a>
+    names the Maltese at item 33 and the Toy and Miniature Poodle at item 42, and item 62
+    approves a cross of any two approved breeds. A Maltipoo qualifies by rule, which makes the
+    HDB approved Maltipoo a settled question rather than a grey area. Our licence transfers to
+    HDB homes, across {site.maltipoosPlaced} placements, have never been flagged either. One
+    dog per flat, AVS licence required.
+    <!-- TODO: link /maltipoo-hdb-approved once built -->
   </AnswerCapsule>
+
+  <CaptionedBlock heading="From our shop to your sofa: the week-by-week timeline" id="timeline">
+    <p>
+      The puppy vaccination schedule Singapore vets follow runs core jabs at weeks 6, 8 and 12,
+      with deworming at every visit and an optional fourth jab at week 16 if the vet advises it. Your puppy goes home about a week after the
+      second jab, at around week nine, and the annual booster starts from Year 1.
+    </p>
+    <p>
+      Renovating, travelling, or waiting for the flat to be ready? After a deposit we board
+      your puppy free for up to one month, vaccinations continuing on schedule at our cost, and
+      deliver when you are ready.
+    </p>
+    <p>
+      A first time dog owner in Singapore also needs one extra step: the
+      <a href="https://avs.nparks.gov.sg/pets/licensing-a-pet/applying-for-dog-and-cat-licences/pet-ownership-course/" rel="noopener" target="_blank">AVS Pet Ownership Course</a>
+      before the first licence; we point you to it during purchase so paperwork never delays
+      the homecoming.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The timeline"
+      items={[
+        'Week 6: first vaccination + deworming',
+        'Week 8: second vaccination + deworming',
+        'Week 9: puppy goes home (about a week after the 2nd jab)',
+        'Week 12: third vaccination + deworming',
+        'Week 16: optional 4th jab if the vet advises',
+        'Year 1 onward: annual booster',
+      ]}
+    />
+  </CaptionedBlock>
 
   <section class="container-site py-10" id="colours">
     <p class="eyebrow mb-2">Coats and colours</p>
     <h2 class="text-2xl md:text-3xl mb-4">Apricot, mostly: what we actually place</h2>
     <p class="text-ink-soft max-w-[65ch] mb-6">
       Maltipoos come in white, cream, apricot and the occasional black, but what comes through
-      our shop is overwhelmingly apricot, from pale cream-apricot to deep amber. Puppy coats
-      usually lighten as they mature, so we show you the parents' colouring rather than promise
-      a shade.
+      our shop is overwhelmingly apricot, so an apricot Maltipoo for sale here is the norm
+      rather than the exception, from pale cream-apricot to deep amber. Puppy coats
+      usually lighten as they mature, so we show you the parents' colouring in person rather
+      than promise a shade from a photo.
+      <!-- TODO: link /maltipoo-colours and /maltipoo-size once built -->
     </p>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
       {coatSwatches.map(([name, hex]) => (
@@ -236,17 +288,49 @@ const coatSwatches = [
     </div>
   </section>
 
+  <CaptionedBlock heading="Daily life with a 2 to 4kg dog in a Singapore flat" id="daily-life" reverse>
+    <p>
+      Plan the walk before the heat: fifteen to twenty minutes in the morning, then indoor play
+      in the evening suits a toy Maltipoo fine. Feeding is three small meals a day for a young
+      puppy, tapering to two, and the playpen from the kit anchors the daytime routine.
+    </p>
+    <p>
+      The coat is the real commitment. In our humidity, a few brushes a week keeps matting off
+      and a professional groom every four to six weeks keeps the teddy bear cut tidy. Maltipoo
+      grooming Singapore salons quote about $50 to $70 for a basic groom on a toy-sized dog
+      and $80 to $130 for a full one. The
+      daily 60-second eye wipe is what keeps apricot faces stain-free; see the
+      <a href="/blog/maltipoo-tear-stains">tear-stain routine</a> for the whole method.
+      <!-- TODO: link /maltipoo-grooming-haircuts once built -->
+    </p>
+    <FactsCard
+      slot="side"
+      heading="A first-time owner's week"
+      items={[
+        'Morning: 15-minute walk before the heat',
+        'Daytime: playpen routine with toys and water',
+        'Evening: dinner, indoor play, lap time',
+        'Few times weekly: brushing to stop matting',
+        'Every 4 to 6 weeks: professional groom',
+        'Daily: 60-second eye-corner wipe',
+      ]}
+    />
+  </CaptionedBlock>
+
   <CaptionedBlock heading="Buying safely: verify us, and anyone else, in 60 seconds" id="verify" tinted>
     <p>
       Every legitimate pet shop in Singapore is listed on the
       <a href="https://avs.nparks.gov.sg/outreach/resources/public-registry-of-avs-licensed-pet-shops/" rel="noopener" target="_blank">AVS public registry of licensed pet shops</a>.
-      Curious Tails, the shop behind this site, holds licence {site.license.avsNumber}; check it
-      before you visit, and check any other seller the same way.
+      Curious Tails, the shop behind this site, holds licence {site.license.avsNumber}; check
+      it before you visit, and check any other seller the same way.
     </p>
     <p>
-      Puppies sold outside licensed channels are commonly smuggled without veterinary care, and
-      buying one is itself an offence; NParks has fined a buyer $7,000. Licensed shop, published
-      pricing, paperwork at purchase: the boring route is the safe one.
+      Searches like "where to buy Maltipoo in Singapore" and "Maltipoo puppies for sale
+      Singapore under $500" surface everything from licensed shops to smuggled litters that
+      never saw a vet, and NParks has fined a buyer $7,000 for the wrong choice. Any Maltipoo
+      breeder Singapore buyers shortlist should appear on that registry; if it does not, walk
+      away. Licensed shop, published pricing, paperwork at purchase: the boring route is the
+      safe one, and we are happy to be boring.
     </p>
     <FactsCard
       slot="side"
@@ -266,10 +350,12 @@ const coatSwatches = [
       <div>
         <p class="eyebrow mb-2">From a Maltipoo family</p>
         <blockquote class="m-0 text-lg text-ink leading-relaxed">
-          "We'd been comparing breeders for weeks, and Curious Tails in Balestier stood head and
-          shoulders above the rest. Everything from the health records to the paperwork was
-          handled seamlessly. The $500+ starter pack was such a generous surprise and got us set
-          up right away. We couldn't be more pleased, an easy five stars."
+          "We'd been comparing breeders for weeks, and Curious Tails in Balestier stood head
+          and shoulders above the rest. It was clear Nelson knew their stuff, as they were
+          happy to help with even the small things and knew their stuff inside and out.
+          Everything from the health records to the paperwork was handled seamlessly. The
+          $500+ starter pack was such a generous surprise and got us set up right away. We
+          couldn't be more pleased, an easy five stars."
         </blockquote>
         <p class="text-sm text-ink-soft mt-3 mb-0">Karen Joy, Google review, after bringing home her Maltipoo</p>
       </div>
@@ -280,15 +366,46 @@ const coatSwatches = [
     </div>
   </section>
 
+  <CaptionedBlock heading="After the sale: the part most shops skip" id="aftercare">
+    <p>
+      If your puppy falls sick in the first five days, bring it back to us and we handle the
+      care. That bring-back promise sits alongside free boarding for up to a month after
+      deposit, the included trainer lesson, and ongoing care advice for as long as you need it.
+    </p>
+    <p>
+      Most of our WhatsApp threads stay active long after handover: food questions, grooming
+      questions, the odd 10pm photo of a puppy asleep in the wrong bed. That is the part of the
+      job we like best, and the reason families come back for their second dog.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Aftercare, in writing"
+      items={[
+        '5-day bring-back care if your puppy falls sick',
+        'Free boarding up to 1 month after deposit',
+        'First training lesson with an AVS-certified trainer',
+        'Free ongoing care advice, no expiry',
+      ]}
+    />
+  </CaptionedBlock>
+
   <FAQ items={faqItems} />
 
   <section class="container-site pb-4">
     <p class="text-ink-soft max-w-[65ch] m-0">
-      The shop sits at 2 Balestier Road, a short walk from Novena MRT, with paid parking behind
-      the block. Come meet the puppies on a weekend morning and take your time; honest advice
-      costs nothing here.
+      Checking Maltipoo adoption Singapore shelters first is a fine instinct; rescues rarely
+      have toy crosses, but look before you buy. Most Maltipoo SG searches end at a listing
+      page; ours ends at a real shop you can walk into. Every Maltipoo puppy Singapore families take home from us starts at 2 Balestier
+      Road #01-701, a short walk from Novena MRT, with paid parking behind the block. Weekdays
+      12pm to 6pm, weekends 10am to 6pm, viewings by appointment. Come on a weekend morning,
+      meet the puppies, and take your time; honest advice costs nothing here.
     </p>
   </section>
 
-  <CtaClose />
+  <CtaClose
+    secondaryHeading="Still deciding?"
+    secondaryText="Start with the pricing panel above: every dollar explained, no surprises at the shop."
+    secondaryHref="#price"
+    secondaryLabel="Review the pricing"
+  />
 </BaseLayout>
