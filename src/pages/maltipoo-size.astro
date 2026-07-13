@@ -1,0 +1,168 @@
+---
+// Core page. Copy authored against briefs/maltipoo-size.json (2026-07-13).
+// Toy-first sizing owner-confirmed; kg-first for the local audience.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site, whatsappLink } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+
+const title = 'Maltipoo Full Grown Size: How Big Do They Get | Maltipoo.sg';
+const description =
+  'A toy Maltipoo finishes 2 to 4kg full grown; minis run larger. Growth timeline in kg, when they stop growing, and what the toy, mini and teacup labels really mean in Singapore.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'Size Guide', url: '/maltipoo-size' },
+];
+
+const faqItems = [
+  {
+    q: 'When does Maltipoo stop growing?',
+    a: 'Most Maltipoos reach near-adult size between 8 and 12 months, with the frame finishing before the coat does. The fastest visible growth happens around months 3 to 5, which is why a 4-month-old already looks close to its adult outline.',
+  },
+  {
+    q: 'How can I predict my puppy’s adult size?',
+    a: 'Look at the parents, not the label on the listing. A puppy from a 3kg Maltese and a 3kg Toy Poodle will finish in that neighbourhood. We show you the parents’ sizing in person, which beats any size chart or marketing term.',
+  },
+  {
+    q: 'Is a teacup Maltipoo real?',
+    a: 'Teacup is a marketing label, not a recognised size class, and a teacup Maltipoo full grown often lands where a normal toy does anyway. The label usually means an unusually small puppy at a premium, with health risks from extreme miniaturisation. A healthy 2 to 4kg toy is already small enough for any Singapore home.',
+  },
+  {
+    q: 'Are male Maltipoos bigger than females?',
+    a: 'Slightly, on average, but within the toy range the difference is a few hundred grams, not a size class. Parent sizing and the individual puppy matter far more than gender.',
+  },
+  {
+    q: 'How tall is a full grown Maltipoo?',
+    a: 'Toys stand roughly 20 to 30cm at the shoulder. [VERIFY range against a vet source before launch] Height varies with the Poodle parent more than the Maltese side.',
+  },
+  {
+    q: 'Does size change the price?',
+    a: 'Yes: within our $3,288 to $5,988 all-in range, a smaller expected adult frame sits higher. The price guide explains both drivers; the label on a listing should never be one of them.',
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/maltipoo-size',
+    title,
+    description,
+    aboutName: 'Maltipoo full grown size',
+    datePublished: '2026-07-13',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/maltipoo-size" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <Breadcrumb items={crumbs} bare class="mb-5" />
+      <p class="eyebrow mb-2">Size guide</p>
+      <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">How big do Maltipoos get?</h1>
+      <p class="text-ink-soft max-w-[52ch] mb-5">
+        Most maltipoo sizes chart pages online are American and speak in pounds. Here is the
+        maltipoo weight kg answer instead, from the sizes we actually place in Singapore.
+      </p>
+      <a href={whatsappLink('Hi! Could you share the expected adult size of your available Maltipoo puppies?')} class="btn-cta">Ask about sizes</a>
+    </div>
+  </section>
+
+  <AnswerCapsule question="What is a Maltipoo's full grown size?">
+    A toy Maltipoo is 2 to 4kg full grown, and that is the maltipoo full grown size for most
+    of the puppies we place in Singapore; minis from a larger Poodle parent run roughly 4 to
+    6kg. Most reach near-adult size by 8 to 12 months. "Teacup" is a marketing label, not a
+    size class.
+  </AnswerCapsule>
+
+  <CaptionedBlock heading="The growth timeline, month by month" id="timeline">
+    <p>
+      At homecoming, around week nine, a toy Maltipoo weighs a fraction of its adult figure
+      and fits in two palms. [VERIFY typical homecoming weight with owner] The visible growth
+      spurt runs roughly months three to five, which is why a maltipoo 4 months old already
+      shows its adult outline, and by 8 to 12 months the frame is essentially done.
+    </p>
+    <p>
+      The coat finishes later than the skeleton: puppy fluff gives way to the adult coat
+      through the first year, often lightening in shade as it goes. So judge adult size by the
+      frame and the parents, and judge the adult coat with patience.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Growth stages, kg-first"
+      items={[
+        'Week 9: homecoming, palm-sized',
+        'Months 3 to 5: the visible growth spurt',
+        'Months 8 to 12: near-adult frame',
+        'Toy adult: 2 to 4kg; mini adult: 4 to 6kg',
+        'Coat matures after the frame, often lighter',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Toy, mini, teacup: decoding the labels" id="labels" reverse>
+    <p>
+      Toy is what we place: a Maltese crossed with a Toy Poodle, and a toy Maltipoo full
+      grown finishes 2 to 4kg, the maltipoo adult size buyers here should picture. Mini
+      means a Miniature Poodle parent and a 4 to 6kg adult. Teacup means marketing: an
+      unusually small puppy, a premium price, and health risks that arrive later, which is why
+      the label never appears on our cards or in the
+      <a href="/maltipoo-price-singapore">price guide</a>.
+    </p>
+    <p>
+      A note from the shop floor: buyers arrive quoting labels from overseas breeder sites,
+      and the labels predict adult size worse than a thirty-second look at the parents. We
+      keep the parents' sizing on record for every litter and show you in person; that is the
+      whole trick.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The label decoder"
+      items={[
+        'Toy: Toy Poodle parent, 2 to 4kg adult, what we place',
+        'Mini: Miniature Poodle parent, 4 to 6kg adult',
+        'Teacup: a price label, not a size class',
+        'Best predictor: the parents, every time',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="What 2 to 4kg means day to day in Singapore" id="day-to-day" tinted>
+    <p>
+      A featherweight dog reshapes the practical stuff. It rides in a carrier on the MRT and
+      in a Grab without negotiation, sits in the smallest grooming price tier ($50 to $70 for
+      a basic groom), eats a small bag of food slowly, and takes up one sofa cushion in any
+      <a href="/maltipoo-hdb-approved">HDB flat</a>.
+    </p>
+    <p>
+      The one honest caution: 2kg of dog is delicate. Toddlers who hug hard and staircases
+      without supervision are the real risks at this size, so homes with very young children
+      should handle-train the humans before the puppy arrives.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Featherweight, practically"
+      items={[
+        'Carrier-friendly on MRT and Grab',
+        'Smallest grooming price tier',
+        'Tiny food bills',
+        'Delicate with toddlers: supervise hugs',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <FAQ items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Meet the parents"
+    secondaryText="The honest size answer is standing in our shop. See who is available, then come look."
+    secondaryHref="/puppies"
+    secondaryLabel="See available puppies"
+  />
+</BaseLayout>
