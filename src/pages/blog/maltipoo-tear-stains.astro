@@ -1,6 +1,5 @@
 ---
-// Blog post — CHECKPOINT 3 SAMPLE. Copy is PLACEHOLDER; blog-writer rewrites
-// against briefs/maltipoo-tear-stains.json before this page is called finished.
+// Blog post. Copy authored against briefs/maltipoo-tear-stains.json (2026-07-14).
 // Evidence base: r/Maltipoo tear-stain thread (30+ comments), research.json UGC notes.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
@@ -36,8 +35,16 @@ const faqItems = [
     a: 'Owner communities swap plenty of theories, from distilled water to additive-free food. Some dogs do stain less after a diet change, so test one variable at a time for a month. Be skeptical of anything promising overnight whitening, and never use products meant for coats near the eyes.',
   },
   {
+    q: 'Is Angel Eyes safe for Maltipoo tear stains?',
+    a: 'We would not use it. Whitening and bleaching products applied near the eyes risk irritating an area that cannot afford it, and Maltipoo owner communities warn against them repeatedly. Prevention plus letting stained fur grow out is safer and works better than any near-eye product.',
+  },
+  {
     q: 'Does Singapore weather make tear stains worse?',
     a: 'Humidity slows drying, and damp fur is where porphyrins settle, so tropical climates do make staining more visible on light coats. The fix is the same routine done more consistently: daily wiping, eyes trimmed clear, and a proper blow-dry after baths.',
+  },
+  {
+    q: 'How long do tear stains take to clear?',
+    a: 'The stain is in fur that has already grown, so it does not wipe off; it grows out. Expect a few weeks of consistent prevention before the fresh fur coming through is clean, which is why the daily routine matters more than any one product.',
   },
 ];
 
@@ -65,11 +72,12 @@ const schemas = [
       </div>
     </section>
 
-    <AnswerCapsule question="How do I stop my Maltipoo's tear stains?">
-      Prevention beats removal: wipe the eye corners with a damp cotton pad once a day, have the
-      groomer cut hair fully clear of the eyes every session, and dry the face properly after
-      baths. Existing stains grow out over a few weeks once the routine holds; sudden heavy
-      tearing means a vet visit, not a new product.
+    <AnswerCapsule question="How do I remove Maltipoo tear stains?">
+      There is no instant tear stain removal; prevention plus growing the stained fur out is how
+      you actually remove Maltipoo tear stains. Wipe the eye corners with a damp cotton pad once
+      a day, have the groomer cut hair fully clear of the eyes every session, and dry the face
+      properly after baths. To prevent tear stains returning, keep that routine daily; sudden
+      heavy tearing means a vet visit, not a new product.
     </AnswerCapsule>
 
     <section class="container-site py-6">
@@ -78,24 +86,37 @@ const schemas = [
           <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Gently wiping a Maltipoo’s eye corners clean with a cotton pad" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">Why light coats stain, especially here</h2>
           <p>
-            The streaks are porphyrins, pigments carried in tears, oxidising on fur that never
-            quite dries. An apricot or white Maltipoo face shows every bit of it. Singapore's
-            humidity keeps that fur damp longer than a dry climate would, which is why owners
-            here fight stains harder than the overseas care guides suggest.
+            The rusty reddish-brown streaks are porphyrins, iron-rich pigments carried in tears,
+            oxidising on fur that never quite dries. It is not dirt, which is why scrubbing after
+            the fact does nothing. The lighter the coat the more it shows, so
+            <a href="/maltipoo-colours">apricot and white Maltipoos</a> display every bit of it
+            while a dark face hides it. Singapore's humidity keeps that fur damp longer than a
+            dry climate would, which is why owners here fight tear stains harder than the
+            overseas care guides suggest.
           </p>
           <h2 class="text-2xl text-ink">The routine that beats the products</h2>
           <p>
             One damp cotton pad, eye corners only, once a day, after the morning walk. At the
-            groomer, ask for the eye corners to be cut completely clear every session. Wash food
-            and water bowls daily, and prefer ceramic or steel over plastic. That unglamorous
-            list outperforms every whitening product owners ask us about, and it costs nothing.
+            groomer, ask for the eye corners to be cut completely clear every session, which the
+            <a href="/maltipoo-grooming-haircuts">grooming guide</a> puts on every brief. Wash
+            food and water bowls daily, and prefer ceramic or steel over plastic, since
+            scratched plastic harbours the bacteria that worsen staining. Some owners find
+            switching to filtered or distilled water helps a little; test one variable at a time
+            for a month rather than believing any overnight claim.
+          </p>
+          <p>
+            One firm warning from the owner community and from us: skip Angel Eyes and any
+            whitening or bleaching product near the eyes. The reddish tint is not worth the risk
+            of an irritant that close to the eyeball, and the free routine above outperforms
+            every whitening tear stain remover owners ask us about.
           </p>
           <h2 class="text-2xl text-ink">When staining is a symptom instead</h2>
           <p>
-            Change is the tell. Tearing that suddenly gets heavier, squinting, pawing at the
-            face, or discharge turning thick means irritation, a blocked duct or an infection,
-            and those are vet visits. Steady mild staining on a happy, bright-eyed dog is a
-            photography problem, not a health one.
+            Most Maltipoo tear stains are cosmetic, but not all, so learn the difference. Change
+            is the tell. Tearing that suddenly gets heavier, squinting, pawing at the face, or
+            dog eye discharge turning thick and yellow-green means irritation, a blocked tear
+            duct or an infection, and those are vet visits, not grooming ones. Steady mild
+            staining on a happy, bright-eyed dog is a photography problem, not a health one.
           </p>
         </div>
         <FactsCard
@@ -116,7 +137,7 @@ const schemas = [
     <CtaClose
       secondaryHeading="Meet our apricot Maltipoos"
       secondaryText="Toy-sized, vaccinated on schedule, and placed with homes that suit them."
-      secondaryHref="/"
+      secondaryHref="/puppies"
       secondaryLabel="See available puppies"
     />
   </article>
