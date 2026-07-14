@@ -5,6 +5,25 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { webPageSchema, breadcrumbSchema } from '../../lib/schema';
 import heroImg from '../../assets/site/36-maltipoo-portrait-classic.webp';
+import imgPortrait from '../../assets/site/36-maltipoo-portrait-classic.webp';
+import imgTearStain from '../../assets/site/22-maltipoo-tear-stain-wipe.webp';
+import imgWindowAlert from '../../assets/site/25-maltipoo-window-alert.webp';
+import imgPenWaiting from '../../assets/site/26-maltipoo-pen-waiting.webp';
+import imgPeePad from '../../assets/site/27-maltipoo-pee-pad.webp';
+import imgCrateDen from '../../assets/site/28-maltipoo-crate-den.webp';
+import imgChewToy from '../../assets/site/29-maltipoo-chew-toy.webp';
+import imgFirstGroom from '../../assets/site/30-maltipoo-salon-first-groom.webp';
+import imgEatingBowl from '../../assets/site/31-maltipoo-eating-bowl.webp';
+import imgMorningWalk from '../../assets/site/32-maltipoo-morning-walk.webp';
+import imgCarrierTravel from '../../assets/site/33-maltipoo-carrier-travel.webp';
+import imgGrandmaSofa from '../../assets/site/34-maltipoo-grandma-sofa.webp';
+import imgHdbLivingRoom from '../../assets/site/12-maltipoo-hdb-living-room.webp';
+import imgTwoMaltipoos from '../../assets/site/35-two-maltipoos-meeting.webp';
+import imgSizeAdultPuppy from '../../assets/site/13-maltipoo-size-adult-puppy.webp';
+import imgTrainingSit from '../../assets/site/19-maltipoo-training-sit.webp';
+import imgTemperamentLap from '../../assets/site/15-maltipoo-temperament-lap.webp';
+import imgCoatCloseup from '../../assets/site/24-maltipoo-coat-closeup.webp';
+import imgStarterKit from '../../assets/site/23-maltipoo-starter-kit.webp';
 
 const title = 'Maltipoo Care Guides and Owner Answers | Maltipoo.sg';
 const description =
@@ -16,31 +35,31 @@ const crumbs = [
 ];
 
 const posts = [
-  { href: '/blog/maltipoo-first-week-home', tag: 'New owners', title: 'Bringing your Maltipoo home at 9 weeks', blurb: 'The day-one plan, the first-night protocol, and the week-one systems that set up everything after.' },
-  { href: '/blog/maltipoo-potty-training', tag: 'Training', title: 'Potty training a Maltipoo in Singapore', blurb: 'Pad or downstairs, the schedule that does the work, and the honest 4 to 12 week timeline.' },
-  { href: '/blog/maltipoo-crate-training', tag: 'Training', title: 'Crate training without the crying', blurb: 'Make the den the best room in the flat, then close the door for seconds, not hours.' },
-  { href: '/blog/maltipoo-sleep', tag: 'Routine', title: 'Where should your Maltipoo sleep?', blurb: 'Bedroom crate first, your bed later (safely), and how much sleep is actually normal.' },
-  { href: '/blog/maltipoo-puppy-biting', tag: 'Training', title: 'Stopping puppy biting and nipping', blurb: 'Redirect, withdraw, survive month four: teething is construction, not aggression.' },
-  { href: '/blog/maltipoo-separation-anxiety', tag: 'Behaviour', title: 'Separation anxiety, prevented early', blurb: 'The breed’s real risk, the week-one conditioning that prevents it, and the honest routine question.' },
-  { href: '/blog/maltipoo-barking', tag: 'Behaviour', title: 'Do Maltipoos bark a lot?', blurb: 'Yes, honestly. Why, what loneliness has to do with it, and the quiet routine that works.' },
-  { href: '/blog/maltipoo-adolescence', tag: 'Behaviour', title: 'Surviving Maltipoo adolescence', blurb: 'Months 6 to 18: regressions, selective hearing, and holding the line until the adult emerges.' },
-  { href: '/blog/maltipoo-licking', tag: 'Behaviour', title: 'Why does my Maltipoo lick so much?', blurb: 'Love language, attention button, or itchy paws: reading the target tells you which.' },
-  { href: '/blog/maltipoo-tear-stains', tag: 'Face care', title: 'Tear stains: what works in Singapore', blurb: 'Why light coats stain in our humidity, the daily wipe that prevents it, and when it is a vet matter.' },
-  { href: '/blog/maltipoo-coat-matting', tag: 'Grooming', title: 'Preventing matting in Maltipoo coats', blurb: 'Line-brushing to the skin, the coat-change danger window, and what to do when mats win.' },
-  { href: '/blog/maltipoo-first-groom', tag: 'Grooming', title: 'The first grooming, done right', blurb: 'Home rehearsal, a short intro session, and the brief that prevents lifelong clipper fear.' },
-  { href: '/blog/maltipoo-hypoallergenic-shedding', tag: 'Coat & allergies', title: 'Are Maltipoos hypoallergenic?', blurb: 'Low-shedding yes, hypoallergenic no dog truly is. The honest version, and the only test that counts.' },
-  { href: '/blog/maltipoo-food', tag: 'Feeding', title: 'What to feed a Maltipoo puppy', blurb: 'Portions for a 2 to 4kg dog, the picky-eater trap, and the foods that are never safe.' },
-  { href: '/blog/maltipoo-hot-weather', tag: 'Singapore living', title: 'Comfortable in Singapore heat', blurb: 'The walk clock, the pavement test, coat logic and the heat-stress escalation to know.' },
-  { href: '/blog/maltipoo-hdb-living', tag: 'Singapore living', title: 'Living with a Maltipoo in an HDB flat', blurb: 'Lift manners, corridor etiquette, the noise question and the one-dog rule in practice.' },
-  { href: '/blog/maltipoo-transport-singapore', tag: 'Singapore living', title: 'Getting around Singapore together', blurb: 'GrabPet, taxis, carrier conditioning and the featherweight advantage used well.' },
-  { href: '/blog/maltipoo-daycare-options', tag: 'Singapore living', title: 'Daycare, sitters and helpers', blurb: 'When the flat empties out: the honest menu of daytime-company options.' },
-  { href: '/blog/maltipoo-with-kids', tag: 'Family', title: 'Are Maltipoos good with kids?', blurb: 'Gentle dog, fragile physics: the house rules that make children and toy dogs work.' },
-  { href: '/blog/maltipoo-second-dog', tag: 'Multi-pet', title: 'Adding a Maltipoo to a home with pets', blurb: 'Neutral-ground introductions, cat protocol, and the HDB one-dog maths.' },
-  { href: '/blog/maltipoo-growth-stages', tag: 'Development', title: 'Growth from puppy to adult', blurb: 'The 3-to-5-month spurt, the coat change, adolescence, and when growth actually stops.' },
-  { href: '/blog/male-vs-female-maltipoo', tag: 'Choosing', title: 'Male or female Maltipoo?', blurb: 'The overlap dwarfs the folklore: what actually differs, and how to choose.' },
-  { href: '/blog/maltipoo-adoption-singapore', tag: 'Buying honestly', title: 'Adopting vs buying in Singapore', blurb: 'Where adoptable Maltipoos actually appear, honest trade-offs, and buying safely if shelters come up empty.' },
-  { href: '/blog/maltipoo-cost-ownership', tag: 'Money', title: 'The real cost of ownership', blurb: 'The yearly ledger: grooming, food, the $13.50 licence and the emergency fund nobody budgets.' },
-  { href: '/blog/maltipoo-in-chinese', tag: 'Local knowledge', title: 'What is a Maltipoo called in Chinese?', blurb: '马尔济斯贵宾犬, 摩天使 and friends: the names, the registers, and where they earn their keep.' },
+  { href: '/blog/maltipoo-first-week-home', tag: 'New owners', title: 'Bringing your Maltipoo home at 9 weeks', blurb: 'The day-one plan, the first-night protocol, and the week-one systems that set up everything after.', img: imgPortrait, alt: 'Portrait of an apricot Maltipoo puppy newly home at nine weeks' },
+  { href: '/blog/maltipoo-potty-training', tag: 'Training', title: 'Potty training a Maltipoo in Singapore', blurb: 'Pad or downstairs, the schedule that does the work, and the honest 4 to 12 week timeline.', img: imgPeePad, alt: 'Maltipoo puppy standing proudly on a pee pad during toilet training' },
+  { href: '/blog/maltipoo-crate-training', tag: 'Training', title: 'Crate training without the crying', blurb: 'Make the den the best room in the flat, then close the door for seconds, not hours.', img: imgCrateDen, alt: 'Maltipoo napping inside an open crate with soft bedding' },
+  { href: '/blog/maltipoo-sleep', tag: 'Routine', title: 'Where should your Maltipoo sleep?', blurb: 'Bedroom crate first, your bed later (safely), and how much sleep is actually normal.', img: imgCrateDen, alt: 'Maltipoo asleep inside its open crate den at night' },
+  { href: '/blog/maltipoo-puppy-biting', tag: 'Training', title: 'Stopping puppy biting and nipping', blurb: 'Redirect, withdraw, survive month four: teething is construction, not aggression.', img: imgChewToy, alt: 'Teething Maltipoo puppy chewing a rubber toy' },
+  { href: '/blog/maltipoo-separation-anxiety', tag: 'Behaviour', title: 'Separation anxiety, prevented early', blurb: 'The breed’s real risk, the week-one conditioning that prevents it, and the honest routine question.', img: imgPenWaiting, alt: 'Maltipoo waiting quietly in its playpen with a chew toy' },
+  { href: '/blog/maltipoo-barking', tag: 'Behaviour', title: 'Do Maltipoos bark a lot?', blurb: 'Yes, honestly. Why, what loneliness has to do with it, and the quiet routine that works.', img: imgWindowAlert, alt: 'Maltipoo standing alert at a window looking out at the corridor' },
+  { href: '/blog/maltipoo-adolescence', tag: 'Behaviour', title: 'Surviving Maltipoo adolescence', blurb: 'Months 6 to 18: regressions, selective hearing, and holding the line until the adult emerges.', img: imgTrainingSit, alt: 'Adolescent Maltipoo practising a sit during a training session' },
+  { href: '/blog/maltipoo-licking', tag: 'Behaviour', title: 'Why does my Maltipoo lick so much?', blurb: 'Love language, attention button, or itchy paws: reading the target tells you which.', img: imgTemperamentLap, alt: 'Maltipoo resting affectionately on its owner’s lap' },
+  { href: '/blog/maltipoo-tear-stains', tag: 'Face care', title: 'Tear stains: what works in Singapore', blurb: 'Why light coats stain in our humidity, the daily wipe that prevents it, and when it is a vet matter.', img: imgTearStain, alt: 'Gently wiping a Maltipoo’s eye corners clean with a cotton pad' },
+  { href: '/blog/maltipoo-coat-matting', tag: 'Grooming', title: 'Preventing matting in Maltipoo coats', blurb: 'Line-brushing to the skin, the coat-change danger window, and what to do when mats win.', img: imgCoatCloseup, alt: 'Close-up of a Maltipoo coat with a metal grooming comb' },
+  { href: '/blog/maltipoo-first-groom', tag: 'Grooming', title: 'The first grooming, done right', blurb: 'Home rehearsal, a short intro session, and the brief that prevents lifelong clipper fear.', img: imgFirstGroom, alt: 'Calm Maltipoo puppy on a grooming table at its first salon visit' },
+  { href: '/blog/maltipoo-hypoallergenic-shedding', tag: 'Coat & allergies', title: 'Are Maltipoos hypoallergenic?', blurb: 'Low-shedding yes, hypoallergenic no dog truly is. The honest version, and the only test that counts.', img: imgCoatCloseup, alt: 'Close-up of an apricot Maltipoo’s soft low-shedding wavy coat' },
+  { href: '/blog/maltipoo-food', tag: 'Feeding', title: 'What to feed a Maltipoo puppy', blurb: 'Portions for a 2 to 4kg dog, the picky-eater trap, and the foods that are never safe.', img: imgEatingBowl, alt: 'Maltipoo puppy eating from a steel bowl at a feeding station' },
+  { href: '/blog/maltipoo-hot-weather', tag: 'Singapore living', title: 'Comfortable in Singapore heat', blurb: 'The walk clock, the pavement test, coat logic and the heat-stress escalation to know.', img: imgMorningWalk, alt: 'Maltipoo on a morning walk along a shaded Singapore park connector' },
+  { href: '/blog/maltipoo-hdb-living', tag: 'Singapore living', title: 'Living with a Maltipoo in an HDB flat', blurb: 'Lift manners, corridor etiquette, the noise question and the one-dog rule in practice.', img: imgHdbLivingRoom, alt: 'Apricot Maltipoo at home in its playpen corner of an HDB flat' },
+  { href: '/blog/maltipoo-transport-singapore', tag: 'Singapore living', title: 'Getting around Singapore together', blurb: 'GrabPet, taxis, carrier conditioning and the featherweight advantage used well.', img: imgCarrierTravel, alt: 'Maltipoo peeking out of a travel carrier bag' },
+  { href: '/blog/maltipoo-daycare-options', tag: 'Singapore living', title: 'Daycare, sitters and helpers', blurb: 'When the flat empties out: the honest menu of daytime-company options.', img: imgGrandmaSofa, alt: 'Maltipoo sitting with a grandmother on a sofa in a multi-generation home' },
+  { href: '/blog/maltipoo-with-kids', tag: 'Family', title: 'Are Maltipoos good with kids?', blurb: 'Gentle dog, fragile physics: the house rules that make children and toy dogs work.', img: imgGrandmaSofa, alt: 'Maltipoo beside a grandmother on the sofa while a child plays nearby' },
+  { href: '/blog/maltipoo-second-dog', tag: 'Multi-pet', title: 'Adding a Maltipoo to a home with pets', blurb: 'Neutral-ground introductions, cat protocol, and the HDB one-dog maths.', img: imgTwoMaltipoos, alt: 'Two Maltipoos greeting each other politely on a light floor' },
+  { href: '/blog/maltipoo-growth-stages', tag: 'Development', title: 'Growth from puppy to adult', blurb: 'The 3-to-5-month spurt, the coat change, adolescence, and when growth actually stops.', img: imgSizeAdultPuppy, alt: 'Adult Maltipoo beside a Maltipoo puppy showing the growth difference' },
+  { href: '/blog/male-vs-female-maltipoo', tag: 'Choosing', title: 'Male or female Maltipoo?', blurb: 'The overlap dwarfs the folklore: what actually differs, and how to choose.', img: imgTwoMaltipoos, alt: 'Two apricot Maltipoos of different shades sitting together' },
+  { href: '/blog/maltipoo-adoption-singapore', tag: 'Buying honestly', title: 'Adopting vs buying in Singapore', blurb: 'Where adoptable Maltipoos actually appear, honest trade-offs, and buying safely if shelters come up empty.', img: imgPortrait, alt: 'Portrait of an apricot Maltipoo looking for its home' },
+  { href: '/blog/maltipoo-cost-ownership', tag: 'Money', title: 'The real cost of ownership', blurb: 'The yearly ledger: grooming, food, the $13.50 licence and the emergency fund nobody budgets.', img: imgStarterKit, alt: 'Puppy starter kit flatlay showing what ownership includes' },
+  { href: '/blog/maltipoo-in-chinese', tag: 'Local knowledge', title: 'What is a Maltipoo called in Chinese?', blurb: '马尔济斯贵宾犬, 摩天使 and friends: the names, the registers, and where they earn their keep.', img: imgPortrait, alt: 'Classic portrait of an apricot Maltipoo with a soft teddy face' },
 ];
 
 const schemas = [
@@ -76,10 +95,20 @@ const schemas = [
   <section class="container-site py-10">
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
       {posts.map((post) => (
-        <a href={post.href} class="pop pop-hover p-6 no-underline flex flex-col">
-          <span class="pill pill-tint mb-3 self-start">{post.tag}</span>
-          <h2 class="text-xl m-0 mb-2">{post.title}</h2>
-          <p class="text-ink-soft text-sm m-0">{post.blurb}</p>
+        <a href={post.href} class="pop pop-hover no-underline flex flex-col overflow-hidden">
+          <img
+            src={post.img.src}
+            width={post.img.width}
+            height={post.img.height}
+            alt={post.alt}
+            loading="lazy"
+            class="w-full aspect-[4/3] object-cover"
+          />
+          <div class="p-6 flex flex-col flex-1">
+            <span class="pill pill-tint mb-3 self-start">{post.tag}</span>
+            <h2 class="text-xl m-0 mb-2">{post.title}</h2>
+            <p class="text-ink-soft text-sm m-0">{post.blurb}</p>
+          </div>
         </a>
       ))}
     </div>
