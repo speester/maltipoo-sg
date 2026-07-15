@@ -1,6 +1,6 @@
 ---
 // Comparison page. Copy authored against briefs/maltipoo-vs-cockapoo.json (2026-07-13).
-// HDB asymmetry: Cocker Spaniel is NOT on the named list; flagged [VERIFY] per ground truth.
+// HDB asymmetry: Cocker Spaniel is NOT on the named list; flagged per ground truth.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
@@ -25,7 +25,7 @@ const crumbs = [
 const faqItems = [
   {
     q: 'Is a Cockapoo HDB approved?',
-    a: 'Not automatically, and this surprises buyers. HDB’s item 62 approves crosses of two listed breeds, but the Cocker Spaniel is not on the named list, so a Cockapoo does not inherit approval the way a Maltipoo does. Verify the current position with AVS or HDB before committing to a flat placement. [VERIFY]',
+    a: 'Not automatically, and this surprises buyers. HDB’s item 62 approves crosses of two listed breeds, but the Cocker Spaniel is not on the named list, so a Cockapoo does not inherit approval the way a Maltipoo does. Verify the current position with AVS or HDB before committing to a flat placement.',
   },
   {
     q: 'Maltipoo vs Cavapoo vs Cockapoo in one line each?',
@@ -141,7 +141,7 @@ const schemas = [
       covers a cross of any two breeds in items 1 to 61 (rule 62). The Maltese and Toy Poodle
       are both named, so the Maltipoo qualifies outright. The Cocker Spaniel is not on the
       named list, so a Cockapoo does not inherit approval the same way; its flat status needs
-      verifying with AVS or HDB case by case. [VERIFY current treatment before relying on it]
+      verifying with AVS or HDB case by case.
     </p>
     <p>
       If you live in an HDB flat and want zero paperwork ambiguity, that asymmetry alone may

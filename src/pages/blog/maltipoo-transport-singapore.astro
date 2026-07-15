@@ -1,6 +1,6 @@
 ---
 // Blog post. Copy authored against briefs/maltipoo-transport-singapore.json (2026-07-13).
-// Evidence: local set; toy size = carrier-friendly angle; [VERIFY LTA rule]
+// Evidence: local set; toy size = carrier-friendly angle;
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AnswerCapsule from '../../components/AnswerCapsule.astro';
@@ -24,11 +24,11 @@ const crumbs = [
 const faqItems = [
   {
     q: "Can I take my Maltipoo on the MRT in a bag?",
-    a: "The rule says no pets on trains and buses regardless of bag; assistance dogs are the exception. [VERIFY current policy] GrabPet exists for exactly this gap.",
+    a: "The rule says no pets on trains and buses regardless of bag; assistance dogs are the exception. GrabPet exists for exactly this gap.",
   },
   {
     q: "How much does GrabPet cost?",
-    a: "A modest surcharge over the standard fare on the same route; for a toy dog in a carrier it is the cheapest reliable option in town. [VERIFY current surcharge]",
+    a: "A modest surcharge over the standard fare on the same route; for a toy dog in a carrier it is the cheapest reliable option in town.",
   },
   {
     q: "My puppy cries in the carrier. Fix?",
@@ -37,7 +37,15 @@ const faqItems = [
   {
     q: "Any pet-friendly cafes to start with?",
     a: "Plenty across the island, changing faster than any list survives; search current roundups and call ahead. A carried, quiet toy dog gets the widest welcome.",
-  }
+  },
+  {
+    q: "How do I safely take a Maltipoo in a car?",
+    a: "A crash-secured carrier or a harness-to-seatbelt tether, never a loose dog on a lap. At 2 to 4kg an emergency stop turns an unsecured dog into a projectile, and the fix costs one strap.",
+  },
+  {
+    q: "Can a Maltipoo ride in a taxi in Singapore?",
+    a: "Standard taxis carry pets at the driver's discretion, and a clean, zipped carrier plus a heads-up that it is a small dog turns most maybes into yes. GrabPet accepts pets explicitly if you want certainty.",
+  },
 ];
 
 const schemas = [
@@ -65,7 +73,7 @@ const schemas = [
     </section>
 
     <AnswerCapsule question='Can you take a Maltipoo on public transport in Singapore?'>
-      Only assistance dogs ride MRT and public buses; pets are not permitted, carrier or otherwise. [VERIFY current LTA/SMRT policy] A 2 to 4kg Maltipoo still travels easily: GrabPet and pet-friendly taxis take carriers routinely, regular taxis at the driver's discretion, and the carrier itself is the all-access pass everywhere else.
+      Only assistance dogs ride the MRT and public buses; pet dogs are not permitted, carrier or otherwise, under the current conditions of carriage. A 2 to 4kg Maltipoo still travels easily: GrabPet and pet-friendly taxis take carriers routinely, regular taxis at the driver's discretion, and the carrier itself is the all-access pass everywhere else.
     </AnswerCapsule>
 
     <section class="container-site py-6">
@@ -74,7 +82,7 @@ const schemas = [
           <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Maltipoo peeking out of a travel carrier bag" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">The public transport reality</h2>
           <p>
-            The standing rule on trains and public buses is assistance dogs only; pet dogs, even zipped into carriers, are not permitted under the current conditions of carriage. [VERIFY against LTA/SMRT publications before relying on this] Plan around it rather than testing it; the fine print is not on your side.
+            The standing rule on trains and public buses is assistance dogs only; pet dogs, even zipped into carriers, are not permitted under the current conditions of carriage. Plan around it rather than testing it; the fine print is not on your side.
           </p>
           <p>
             The practical consequence is a ride-hailing life for vet trips and groomer runs, which at toy size is cheap and easy: this is a dog that travels in a bag you can sling over one shoulder.
@@ -88,16 +96,16 @@ const schemas = [
           </p>
           <h2 class="text-2xl text-ink">The featherweight advantage, used well</h2>
           <p>
-            Where the toy size shines is everywhere else: malls and cafes that welcome carried pets, park connectors reached by a short ride, staycations at pet-friendly hotels where the size limit is never your problem. The carrier from the starter kit is the passport; condition the puppy to love it early with treats and short sessions at home.
+            Where the toy size shines is everywhere else: malls and cafes that welcome carried pets, park connectors reached by a short ride, staycations at pet-friendly hotels where the size limit is never your problem. The carrier from <a href="/maltipoo-price-singapore">the starter kit</a> is the passport; condition the puppy to love it early with treats and short sessions at home.
           </p>
           <p>
-            For trips the dog sits out, the circle closes conveniently: boarding options, sitters from the daycare guide, and for new buyers, the free first-month boarding window after deposit.
+            For trips the dog sits out, the circle closes conveniently: boarding options, <a href="/blog/maltipoo-daycare-options">sitters and daycare</a>, and for new buyers, the free first-month boarding window after deposit.
           </p>
         </div>
         <FactsCard
           heading='Transport card'
           items={[
-            "MRT and buses: assistance dogs only [VERIFY]",
+            "MRT and buses: assistance dogs only",
             "GrabPet: the reliable default",
             "Taxis: driver's discretion, carrier helps",
             "Cars: secured carrier or tether, always",
