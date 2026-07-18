@@ -8,6 +8,8 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://maltipoo.sg',
   output: 'static',
+  trailingSlash: 'never',
+  build: { format: 'file' },
   server: { port: 4323 },
   vite: {
     plugins: [tailwindcss()]
