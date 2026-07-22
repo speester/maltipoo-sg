@@ -4,6 +4,7 @@ import { organizationSchema, personSchema, websiteSchema } from '../lib/schema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StickyMobileCTA from '../components/StickyMobileCTA.astro';
+import Analytics from '../components/Analytics.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -17,7 +18,7 @@ interface Props {
 
 const { title, description, path, ogImage, schemas = [], noindex = false } = Astro.props;
 const canonical = `${site.domain}${path}`;
-const ogImageUrl = ogImage ? `${site.domain}${ogImage}` : undefined;
+const ogImageUrl = `${site.domain}${ogImage ?? site.defaultOgImage}`;
 const allSchemas = [organizationSchema(), personSchema(), websiteSchema(), ...schemas];
 ---
 
@@ -35,7 +36,7 @@ const allSchemas = [organizationSchema(), personSchema(), websiteSchema(), ...sc
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta property="og:image" content={ogImageUrl} />
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -47,6 +48,7 @@ const allSchemas = [organizationSchema(), personSchema(), websiteSchema(), ...sc
 
     <link rel="sitemap" href="/sitemap-index.xml" />
     {allSchemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+    <Analytics />
   </head>
   <body>
     <a

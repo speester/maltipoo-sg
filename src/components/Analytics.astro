@@ -1,0 +1,47 @@
+---
+// GA4, wired to protect the perf budget: the gtag library is fetched only after
+// the first real interaction (or a 4s idle fallback), never during initial load.
+// Conversion events: whatsapp_click and cta_click (the key events marked on the
+// GA4 property). Renders nothing until a measurement ID is set in site.ts.
+import { site } from '../data/site';
+const id = site.ga4MeasurementId;
+---
+{id && (
+  <script is:inline define:vars={{ id }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+
+    let loaded = false;
+    function loadGA() {
+      if (loaded) return;
+      loaded = true;
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+      document.head.appendChild(s);
+      gtag('js', new Date());
+      gtag('config', id);
+    }
+    ['pointerdown', 'keydown', 'scroll', 'touchstart'].forEach(function (evt) {
+      window.addEventListener(evt, loadGA, { once: true, passive: true });
+    });
+    setTimeout(loadGA, 4000);
+
+    document.addEventListener('click', function (e) {
+      const t = e.target;
+      if (!t || !t.closest) return;
+      const wa = t.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"]');
+      if (wa) {
+        loadGA();
+        gtag('event', 'whatsapp_click', { link_url: wa.getAttribute('href') || '' });
+        return;
+      }
+      const cta = t.closest('.btn-cta, .btn-wa, [data-cta]');
+      if (cta) {
+        loadGA();
+        gtag('event', 'cta_click', { label: (cta.textContent || '').trim().slice(0, 60) });
+      }
+    }, true);
+  </script>
+)}
