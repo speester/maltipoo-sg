@@ -4,6 +4,7 @@
 export const site = {
   domain: 'https://maltipoo.sg',
   brand: 'Maltipoo.sg',
+  defaultOgImage: '/assets/home/og-home.jpg', // site-wide social-card fallback (1200x630) when a page passes no ogImage
   positioning: "Maltipoo.sg: Singapore's Maltipoo specialists, by Curious Tails",
   parent: {
     name: 'Curious Tails',
@@ -52,7 +53,7 @@ export const site = {
   owners: 'Nelson and Kim',
 
   // GA4: NEW property at Phase F — never reuse the Curious Tails ID. Empty = snippet not rendered.
-  ga4MeasurementId: '',
+  ga4MeasurementId: 'G-FNVHX42ZGG',
 } as const;
 
 export function whatsappLink(message?: string): string {
