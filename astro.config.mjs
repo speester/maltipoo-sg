@@ -8,6 +8,7 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://maltipoo.sg',
   output: 'static',
+  compressHTML: false,
   trailingSlash: 'never',
   build: { format: 'file' },
   server: { port: 4323 },
