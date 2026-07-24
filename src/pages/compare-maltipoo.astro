@@ -2,12 +2,19 @@
 // Comparison hub (owner spec 2026-07-13: 3x2 card grid of 6 comparisons).
 // Copy authored against briefs/compare-maltipoo.json.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PawTrail from '../components/PawTrail.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
 import CaptionedBlock from '../components/CaptionedBlock.astro';
 import FactsCard from '../components/FactsCard.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site } from '../data/site';
+import imgMaltese from '../assets/site/47-maltese-vs-maltipoo.webp';
+import imgCavapoo from '../assets/site/48-maltipoo-vs-cavapoo.webp';
+import imgPoodle from '../assets/site/49-maltipoo-vs-toy-poodle.webp';
+import imgBichon from '../assets/site/50-maltipoo-vs-bichon-frise.webp';
+import imgShihTzu from '../assets/site/51-maltipoo-vs-shih-tzu.webp';
+import imgCockapoo from '../assets/site/52-maltipoo-vs-cockapoo.webp';
 import { webPageSchema, breadcrumbSchema } from '../lib/schema';
 import featuredImg from '../assets/site/20-small-breeds-lineup.webp';
 
@@ -23,6 +30,7 @@ const crumbs = [
 const comparisons = [
   {
     href: '/maltese-vs-maltipoo',
+    img: imgMaltese,
     name: 'Maltese',
     tag: 'The parent breed',
     verdict: 'Same devoted heart; the Maltipoo adds a quicker training mind and a low-shed apricot coat. Pick by coat ritual.',
@@ -30,6 +38,7 @@ const comparisons = [
   },
   {
     href: '/maltipoo-vs-cavapoo',
+    img: imgCavapoo,
     name: 'Cavapoo',
     tag: 'The sister cross',
     verdict: 'The working-couple dog. More independent, settles alone better; the Maltipoo wins homes with daytime company.',
@@ -37,6 +46,7 @@ const comparisons = [
   },
   {
     href: '/maltipoo-vs-poodle',
+    img: imgPoodle,
     name: 'Toy Poodle',
     tag: 'The scholar',
     verdict: 'Sharper mind, more athletic, more independent. The Maltipoo is the same look with a softer, clingier heart.',
@@ -44,6 +54,7 @@ const comparisons = [
   },
   {
     href: '/maltipoo-vs-bichon-frise',
+    img: imgBichon,
     name: 'Bichon Frise',
     tag: 'The powder puff',
     verdict: 'Sturdier crowd-pleaser for busy, kid-filled homes; bigger coat workload. The Maltipoo is the lighter one-person shadow.',
@@ -51,6 +62,7 @@ const comparisons = [
   },
   {
     href: '/maltipoo-vs-shih-tzu',
+    img: imgShihTzu,
     name: 'Shih Tzu',
     tag: 'The classic',
     verdict: 'More independent and fine alone, but flat-faced and heat-sensitive. The Maltipoo trains faster and cools easier.',
@@ -58,6 +70,7 @@ const comparisons = [
   },
   {
     href: '/maltipoo-vs-cockapoo',
+    img: imgCockapoo,
     name: 'Cockapoo',
     tag: 'The athlete',
     verdict: 'The sporty, larger cross for walking households. The Maltipoo is the lap dog, and the only one with a clean HDB yes.',
@@ -90,14 +103,22 @@ const schemas = [
 
 <BaseLayout title={title} description={description} path="/compare-maltipoo" schemas={schemas}>
   <section class="container-site pt-4">
-    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
       <Breadcrumb items={crumbs} bare class="mb-5" />
       <p class="eyebrow mb-2">Compare breeds</p>
       <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo compared with six popular breeds</h1>
       <p class="text-ink-soft max-w-[52ch] m-0">
         Looking for dogs similar to Maltipoo, or trying to compare small breeds Singapore families actually keep? This maltipoo comparison hub runs every breed through one honest framework, so the verdicts add up instead of contradicting each other.
       </p>
-    </div>
+    </div></div>
   </section>
 
   <AnswerCapsule question="Which small breed suits your home?">
@@ -122,11 +143,14 @@ const schemas = [
     <h2 class="text-2xl md:text-3xl mb-6">The six verdicts</h2>
     <div class="grid gap-6" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
       {comparisons.map((c) => (
-        <a href={c.href} class="pop pop-hover p-6 no-underline flex flex-col">
+        <a href={c.href} class="pop pop-hover overflow-hidden no-underline flex flex-col">
+          <img src={c.img.src} width={c.img.width} height={c.img.height} alt={`Maltipoo and ${c.name} side by side`} loading="lazy" class="w-full aspect-[16/9] object-cover" />
+          <div class="p-6 flex flex-col flex-1">
           <span class="pill pill-tint mb-3 self-start">{c.tag}</span>
           <h3 class="text-xl m-0 mb-2">Maltipoo vs {c.name}</h3>
           <p class="text-ink-soft text-sm m-0 mb-4">{c.verdict}</p>
           <span class="pill pill-mint mt-auto self-start">{c.hdb}</span>
+          </div>
         </a>
       ))}
     </div>

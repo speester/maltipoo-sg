@@ -1,6 +1,7 @@
 ---
 // Comparison page. Copy authored against briefs/maltese-vs-maltipoo.json (2026-07-13).
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PawTrail from '../components/PawTrail.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
 import CaptionedBlock from '../components/CaptionedBlock.astro';
@@ -9,7 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
-import featuredImg from '../assets/site/20-small-breeds-lineup.webp';
+import featuredImg from '../assets/site/47-maltese-vs-maltipoo.webp';
 
 const title = 'Maltese vs Maltipoo: What the Poodle Changes | Maltipoo.sg';
 const description =
@@ -59,7 +60,15 @@ const schemas = [
 
 <BaseLayout title={title} description={description} path="/maltese-vs-maltipoo" schemas={schemas}>
   <section class="container-site pt-4">
-    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
       <Breadcrumb items={crumbs} bare class="mb-5" />
       <p class="eyebrow mb-2">Comparison</p>
       <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltese vs Maltipoo: what does the Poodle change?</h1>
@@ -68,7 +77,7 @@ const schemas = [
         actually changes when a Toy Poodle joins the family tree.
       </p>
       <a href={whatsappLink('Hi! Could you help me decide between a Maltese and a Maltipoo?')} class="btn-cta">Ask which fits you</a>
-    </div>
+    </div></div>
   </section>
 
   <AnswerCapsule question="Maltipoo or Maltese: what is the difference?">
@@ -82,7 +91,7 @@ const schemas = [
       src={featuredImg.src}
       width={featuredImg.width}
       height={featuredImg.height}
-      alt="Maltipoo sitting beside a white Maltese among other small breeds"
+      alt="Maltese and apricot Maltipoo sitting side by side on a light sofa for comparison"
       loading="lazy"
       class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
     />
@@ -175,6 +184,32 @@ const schemas = [
         'Classic white + brushing ritual: Maltese',
         'Faster training + teddy apricot: Maltipoo',
         'Empty weekday flat: honestly, neither',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Buying either in Singapore, practically" id="buying">
+    <p>
+      Both breeds are HDB-permitted toy dogs, both need the AVS dog licence (dropping to $13.50 yearly or the $35 lifetime rate once sterilised), and both come home on the same 6, 8 and 12 week vaccination arc. The paperwork experience is identical; the difference is in the dog and the decade of coat care that follows.
+    </p>
+    <p>
+      Availability is not identical. The Maltese is a long-established local favourite with steady supply; Maltipoos move through our shop in waves, mostly apricot, mostly toy-sized at 2 to 4kg. Our Maltipoo pricing runs $3,288 to $5,988 all-in; purebred Maltese pricing elsewhere spans a similar band, with show-line dogs above it.
+    </p>
+    <p>
+      At the counter, ask the same three questions for either: meet at least one parent, see the vaccination record against the week schedule, and get the health terms in writing. A seller comfortable with all three is the seller to buy from, whichever side of this comparison you land on.
+    </p>
+    <p>
+      One buying nuance specific to the cross: a Maltipoo puppy's coat texture is a preview, not a promise, as the adult coat lands after the <a href="/blog/maltipoo-coat-matting">coat change</a>. If you are choosing the Maltipoo for the curl, look at the Poodle-side parent, not the eight-week fluff.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Counter checklist"
+      items={[
+        "Both HDB-permitted, same licence rates",
+        "Same 6/8/12-week vaccination arc",
+        "Maltipoo here: $3,288-$5,988 all-in",
+        "Meet a parent; records in writing",
+        "Adult coat lands after the coat change"
       ]}
     />
   </CaptionedBlock>

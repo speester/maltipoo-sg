@@ -2,6 +2,7 @@
 // Core page. Copy authored against briefs/maltipoo-grooming-haircuts.json (2026-07-13).
 // Salon prices attributed to live SERP research (Pawpy Kisses Balestier et al., 2026-07-13).
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PawTrail from '../components/PawTrail.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
 import CaptionedBlock from '../components/CaptionedBlock.astro';
@@ -59,7 +60,15 @@ const schemas = [
 
 <BaseLayout title={title} description={description} path="/maltipoo-grooming-haircuts" schemas={schemas}>
   <section class="container-site pt-4">
-    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
       <Breadcrumb items={crumbs} bare class="mb-5" />
       <p class="eyebrow mb-2">Grooming</p>
       <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo grooming and haircut styles</h1>
@@ -68,7 +77,7 @@ const schemas = [
         between-grooms routine our humidity insists on.
       </p>
       <a href={whatsappLink('Hi! Could you share grooming advice for a Maltipoo puppy?')} class="btn-cta">Ask a grooming question</a>
-    </div>
+    </div></div>
   </section>
 
   <AnswerCapsule question="What are the best Maltipoo haircuts?">
@@ -181,6 +190,38 @@ const schemas = [
         'Short session, calm beats perfect',
         'Rehearse brushing and paw handling at home',
         'Brief the groomer: teddy face, eyes clear',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="When mats win, and the kit worth owning" id="mats-kit">
+    <p>
+      Found a mat? Scale decides the response. A coin-sized felt behind one ear yields to cornstarch, fingers, and the slicker working from the tips inward, never yanking from the skin. A matted undercarriage or pelted patches are a salon call the same week; soaking a serious mat only shrinks it tighter, so the bath comes after the dematt, not before.
+    </p>
+    <p>
+      Sometimes the kindest cut is the short one. If a coat has pelted through a missed fortnight, the professional answer is a shave-down and a restart, and the correct owner response is relief, not guilt: coats regrow in eight to twelve weeks, skin damage from tugging does not. Our <a href="/blog/maltipoo-coat-matting">matting guide</a> covers the danger window in detail.
+    </p>
+    <p>
+      The home kit that actually earns bench space is short: a long-pin slicker, a metal greyhound comb (the honesty tool, if it snags, the slicker missed), blunt-tip face scissors, and dog-pH shampoo. The comb test beats any product promise; run it to the skin weekly and mats never reach the felt stage.
+    </p>
+    <p>
+      Face maintenance runs on its own faster clock: eye-corner wipe daily against Singapore humidity's <a href="/blog/maltipoo-tear-stains">tear-stain tax</a>, beard rinse after meals, and a monthly blunt-scissor tidy of the visor so the eyes stay visible between salon visits.
+    </p>
+    <p>
+      Scheduling by season of life: puppies need intro sessions early (our <a href="/blog/maltipoo-first-groom">first-groom guide</a> maps the rehearsal), adolescents hit the coat-change window around month eight when the daily line-brush is non-negotiable, and adults settle into the four-to-six-week salon rhythm this page budgets. Seniors often do better with shorter, more frequent sessions than one long stand.
+    </p>
+    <p>
+      Last, the ears and nails nobody photographs: drop-eared dogs in Singapore humidity need a weekly ear glance (clean and dry is the whole test, a yeasty smell books a vet, not a groomer), and nails that click on the tiles are overdue, roughly every three weeks. The salon covers both in every session; the weeks in between are yours.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Matting triage"
+      items={[
+        "Small felt: cornstarch + slicker, tips inward",
+        "Pelted patches: salon this week",
+        "Never bathe before the dematt",
+        "Shave-down = restart, not failure",
+        "Weekly comb-to-skin test prevents all of it"
       ]}
     />
   </CaptionedBlock>

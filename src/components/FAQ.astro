@@ -1,5 +1,9 @@
 ---
 // Accordion; the page passes the same items to faqSchema() for JSON-LD.
+// Design: butter tinted band with a marching paw-trail — breaks the white-card
+// rhythm of the sections above it (section-variety rule).
+import PawTrail from './PawTrail.astro';
+
 interface Props {
   heading?: string;
   items: { q: string; a: string }[];
@@ -7,19 +11,22 @@ interface Props {
 const { heading = 'Frequently asked questions', items } = Astro.props;
 ---
 
-<section class="container-site py-10">
-  <h2 class="text-2xl md:text-3xl mb-6">{heading}</h2>
-  <div class="grid gap-3">
-    {items.map((item) => (
-      <details class="pop px-6 py-4 group">
-        <summary class="font-semibold cursor-pointer list-none flex justify-between items-center gap-4 min-h-[44px]">
-          {item.q}
-          <svg class="w-5 h-5 shrink-0 text-primary transition-transform group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
-            <path d="M12 5v14M5 12h14" />
-          </svg>
-        </summary>
-        <p class="text-ink-soft mt-3 mb-1 max-w-[65ch]">{item.a}</p>
-      </details>
-    ))}
+<section class="container-site py-6">
+  <div class="rounded-[var(--radius-panel)] bg-butter px-5 py-8 md:px-10 md:py-10 overflow-hidden">
+    <PawTrail tone="cta" class="-mx-10 mb-6 opacity-40" />
+    <h2 class="text-2xl md:text-3xl mb-6 text-butter-ink">{heading}</h2>
+    <div class="grid gap-3">
+      {items.map((item) => (
+        <details class="pop px-6 py-4 group">
+          <summary class="font-semibold cursor-pointer list-none flex justify-between items-center gap-4 min-h-[44px]">
+            {item.q}
+            <svg class="w-5 h-5 shrink-0 text-primary transition-transform group-open:rotate-45" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </summary>
+          <p class="text-ink-soft mt-3 mb-1 max-w-[65ch]">{item.a}</p>
+        </details>
+      ))}
+    </div>
   </div>
 </section>

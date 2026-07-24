@@ -2,6 +2,7 @@
 // Core page. Copy authored against briefs/maltipoo-lifespan-health.json (2026-07-13).
 // Regulatory/health schedule facts verbatim from the CANONICAL block in business-context.md.
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PawTrail from '../components/PawTrail.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
 import CaptionedBlock from '../components/CaptionedBlock.astro';
@@ -59,7 +60,15 @@ const schemas = [
 
 <BaseLayout title={title} description={description} path="/maltipoo-lifespan-health" schemas={schemas}>
   <section class="container-site pt-4">
-    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
       <Breadcrumb items={crumbs} bare class="mb-5" />
       <p class="eyebrow mb-2">Lifespan & health</p>
       <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo lifespan and common health issues</h1>
@@ -68,7 +77,7 @@ const schemas = [
         gets checked before a puppy leaves our shop.
       </p>
       <a href={whatsappLink('Hi! Could you share the health records process for your Maltipoo puppies?')} class="btn-cta">Ask about health checks</a>
-    </div>
+    </div></div>
   </section>
 
   <AnswerCapsule question="What is the Maltipoo lifespan?">
@@ -186,6 +195,38 @@ const schemas = [
         'Vaccination + deworming records handed over',
         '5-day bring-back care if your puppy falls sick',
         'Seller verifiable on the AVS registry',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The vet cadence, and reading a healthy puppy" id="vet-cadence">
+    <p>
+      The visit rhythm across a Maltipoo life: the vaccination arc at weeks 6, 8 and 12 (with the optional week-16 booster), the first annual booster from year one, then a yearly wellness visit through adulthood. From around age eight, switch to twice-yearly senior checks with bloodwork; small dogs hide decline well, and six-month intervals catch what a stoic 3kg face will not show you.
+    </p>
+    <p>
+      Reading a healthy puppy at the counter takes two minutes and no expertise: clear bright eyes without discharge, a clean dry rear, pink gums, a coat that smells of nothing much, easy breathing at rest, and curiosity that switches on when you do. A puppy that is limp, wheezy or crusted is a walk-away, whatever the discount.
+    </p>
+    <p>
+      Budget the unglamorous line items alongside the purchase: the yearly licence at $13.50 sterilised, dental care from year two (small jaws crowd teeth, and dental disease is the quiet tax on toy breeds), and either insurance from puppyhood or a dedicated emergency fund, because the one certainty in a 12-to-16-year run is one unscheduled vet week.
+    </p>
+    <p>
+      Our part of the bargain is the paperwork: every puppy leaves Balestier with its vaccination record against the schedule above and the health terms in writing, so your vet starts with facts rather than guesses.
+    </p>
+    <p>
+      Weight is the health lever most owners under-rate. On a 3kg frame, 300 extra grams is a ten percent overload on knees already carrying the breed's patella watch-point, and it accumulates in coin-sized treats. The rib test beats the bowl maths: ribs easy to feel under a light fat cover, a visible waist from above, and portions from the <a href="/blog/maltipoo-food">feeding guide</a> adjusted to what your hands find.
+    </p>
+    <p>
+      Daily teeth brushing from puppyhood is the other quiet multiplier; small-jaw dental disease seeds heart and kidney trouble in later years, and a toy breed that accepts the toothbrush at twelve weeks keeps it as a lifelong two-minute habit. Between the scale, the toothbrush and the walk clock, most of a Maltipoo's 12-to-16-year potential is decided in the kitchen, not the clinic.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Life-stage cadence"
+      items={[
+        "Weeks 6/8/12 (+16 optional): vaccinations",
+        "Year 1 on: annual booster + wellness",
+        "Age 8+: twice-yearly senior bloodwork",
+        "Dental care from year two",
+        "Insurance or emergency fund, pick one"
       ]}
     />
   </CaptionedBlock>

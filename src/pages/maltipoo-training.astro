@@ -1,6 +1,7 @@
 ---
 // Core page. Copy authored against briefs/maltipoo-training.json (2026-07-13).
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PawTrail from '../components/PawTrail.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
 import CaptionedBlock from '../components/CaptionedBlock.astro';
@@ -58,7 +59,15 @@ const schemas = [
 
 <BaseLayout title={title} description={description} path="/maltipoo-training" schemas={schemas}>
   <section class="container-site pt-4">
-    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
       <Breadcrumb items={crumbs} bare class="mb-5" />
       <p class="eyebrow mb-2">Training</p>
       <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Training a Maltipoo puppy in Singapore</h1>
@@ -67,7 +76,7 @@ const schemas = [
         lesson to start you right.
       </p>
       <a href={whatsappLink('Hi! Could you tell me about the free training lesson that comes with a puppy?')} class="btn-cta">Ask about the free lesson</a>
-    </div>
+    </div></div>
   </section>
 
   <AnswerCapsule question="How to train a Maltipoo?">
@@ -178,6 +187,38 @@ const schemas = [
         'First lesson, AVS-certified trainer',
         'Tuned to your home and routine',
         'Ongoing advice on WhatsApp, no expiry',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Marker training, and the adolescence wobble" id="marker-adolescence">
+    <p>
+      Every command on this page installs faster with a marker: one word ("yes") or a clicker, always followed by a treat within a second. A Maltipoo's food drive and people-focus make it a natural marker-training student; five-minute sessions, twice a day, beat one ambitious half-hour that outlasts a puppy attention span.
+    </p>
+    <p>
+      Then, around month six, the trained puppy appears to uninstall itself: recall slows, "sit" gets a thoughtful pause, and the pad routine develops opinions. This is <a href="/blog/maltipoo-adolescence">adolescence</a>, not failure. The rules that survive it: never repeat a cue twice (say it once, help the dog succeed, reward), keep rewarding the boring basics you stopped paying for, and hold routines identical while the teenager re-tests them.
+    </p>
+    <p>
+      The mistakes that cost owners months are consistent across our WhatsApp threads: punishing after the fact (the dog links the punishment to you, not the puddle), free-feeding (which dissolves both toilet schedule and food-reward power), and skipping alone-time drills on work-from-home weeks, which is precisely when <a href="/blog/maltipoo-separation-anxiety">separation anxiety</a> takes root.
+    </p>
+    <p>
+      Hold the line to roughly month eighteen and the adult that emerges is the dog the breed promised: quick, biddable, and convinced your lap is the classroom. Every buyer's first lesson at Balestier covers the marker mechanics in person, free.
+    </p>
+    <p>
+      Socialisation runs on the same clock as the commands and matters more. Between homecoming and roughly week sixteen, a puppy files every new surface, sound and visitor under "normal"; after that window, novelty defaults to suspicion. Lift rides, umbrella openings, the void-deck badminton game, one calm adult dog: a checklist a week, at the puppy's pace, does more for adult temperament than any sit-stay.
+    </p>
+    <p>
+      Keep a floor rule under all of it: this breed trains on warmth and food, never on force. A harsh correction that a Labrador shrugs off genuinely frightens a 3kg velcro dog and spends trust you will want during <a href="/blog/maltipoo-puppy-biting">teething month four</a>. If a trainer's method needs a stern voice and a yank, it is the wrong trainer for this page's breed.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Marker rules"
+      items={[
+        "Mark ('yes'/click), treat within 1 second",
+        "5-minute sessions, twice daily",
+        "Say a cue once, never twice",
+        "Month 6-18: re-testing, not forgetting",
+        "Never punish after the fact"
       ]}
     />
   </CaptionedBlock>

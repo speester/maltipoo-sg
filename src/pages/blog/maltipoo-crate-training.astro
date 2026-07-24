@@ -2,6 +2,7 @@
 // Blog post. Copy authored against briefs/maltipoo-crate-training.json (2026-07-13).
 // Evidence: r/Maltipoo: crying in crate (20+), crate games threads, 1yo crate + separation anxiety
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PawTrail from '../../components/PawTrail.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AnswerCapsule from '../../components/AnswerCapsule.astro';
 import FactsCard from '../../components/FactsCard.astro';
@@ -64,12 +65,20 @@ const schemas = [
 <BaseLayout title={title} description={description} path="/blog/maltipoo-crate-training" schemas={schemas}>
   <article>
     <section class="container-site pt-4">
-      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
         <Breadcrumb items={crumbs} bare class="mb-5" />
         <p class="eyebrow mb-2">Training</p>
         <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Crate training a Maltipoo without the crying</h1>
         <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
-      </div>
+      </div></div>
     </section>
 
     <AnswerCapsule question='How do you crate train a Maltipoo?'>
@@ -78,8 +87,8 @@ const schemas = [
 
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
-        <div class="text-ink-soft space-y-5 max-w-[68ch]">
-          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Maltipoo napping inside an open crate with soft bedding" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
+        <div class="pop p-6 md:p-8 text-ink-soft space-y-5 max-w-[72ch]">
+          <img data-tilt src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Maltipoo napping inside an open crate with soft bedding" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">Why the den matters for this breed</h2>
           <p>
             A Maltipoo would happily spend its life on your lap, which is exactly why it needs one place that feels safe without you attached. A properly conditioned pen or crate becomes that place: naps happen there by choice, <a href="/blog/maltipoo-separation-anxiety">alone-time conditioning</a> has a home base, and grooming or travel days get dramatically easier.
@@ -102,6 +111,7 @@ const schemas = [
             Whining at 3am usually means a real toilet need at nine weeks old: quiet trip to the spot, zero play, back to bed. Crying the moment the lights go off is protest; wait for the first pause, then reward the silence. Consistency over three to five nights settles most puppies.
           </p>
         </div>
+        <div class="md:sticky md:top-24">
         <FactsCard
           heading='Crate rules'
           items={[
@@ -112,6 +122,7 @@ const schemas = [
             "Reward the silence, not the noise"
           ]}
         />
+        </div>
       </div>
     </section>
 

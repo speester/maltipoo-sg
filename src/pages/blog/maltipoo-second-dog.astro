@@ -2,6 +2,7 @@
 // Blog post. Copy authored against briefs/maltipoo-second-dog.json (2026-07-13).
 // Evidence: r/Maltipoo older-dog-plus-puppy thread (30+ comments)
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PawTrail from '../../components/PawTrail.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AnswerCapsule from '../../components/AnswerCapsule.astro';
 import FactsCard from '../../components/FactsCard.astro';
@@ -64,12 +65,20 @@ const schemas = [
 <BaseLayout title={title} description={description} path="/blog/maltipoo-second-dog" schemas={schemas}>
   <article>
     <section class="container-site pt-4">
-      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
         <Breadcrumb items={crumbs} bare class="mb-5" />
         <p class="eyebrow mb-2">Multi-pet</p>
         <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Adding a Maltipoo to a home with pets</h1>
         <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
-      </div>
+      </div></div>
     </section>
 
     <AnswerCapsule question='Do Maltipoos get along with other pets?'>
@@ -78,8 +87,8 @@ const schemas = [
 
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
-        <div class="text-ink-soft space-y-5 max-w-[68ch]">
-          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Two Maltipoos greeting each other politely on a light floor" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
+        <div class="pop p-6 md:p-8 text-ink-soft space-y-5 max-w-[72ch]">
+          <img data-tilt src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Two Maltipoos greeting each other politely on a light floor" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">Puppy meets resident dog</h2>
           <p>
             The r/Maltipoo archives are full of week-one panic posts about an older dog growling at the new puppy, and almost all of them resolve the same way: normally, with time. First meeting happens on neutral ground (a quiet corridor of park, not the resident dog's sofa), both leashed, sniffing rationed, everything brief and boring.
@@ -102,6 +111,7 @@ const schemas = [
             The regulatory maths for flats: HDB allows one approved-list dog per flat, so the legal second pet is a cat (up to two, licensed, since September 2024) rather than a second dog. The <a href="/maltipoo-hdb-approved">HDB guide</a> covers the whole rulebook.
           </p>
         </div>
+        <div class="md:sticky md:top-24">
         <FactsCard
           heading='Introduction protocol'
           items={[
@@ -112,6 +122,7 @@ const schemas = [
             "HDB: one dog, so dog + cat is the combo"
           ]}
         />
+        </div>
       </div>
     </section>
 

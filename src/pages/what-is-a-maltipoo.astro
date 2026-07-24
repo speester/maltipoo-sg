@@ -1,0 +1,455 @@
+---
+// Breed pillar. Copy authored against briefs/what-is-a-maltipoo.json (2026-07-24).
+// Carries the BARE head terms (maltipoo, maltipoo puppy). Cannibalisation guard:
+// the homepage keeps the transactional terms, /puppies keeps availability.
+// Informational intent — exactly ONE commercial CTA block (the closing CtaClose).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PawTrail from '../components/PawTrail.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import AnswerCapsule from '../components/AnswerCapsule.astro';
+import CaptionedBlock from '../components/CaptionedBlock.astro';
+import FactsCard from '../components/FactsCard.astro';
+import StatStrip from '../components/StatStrip.astro';
+import FAQ from '../components/FAQ.astro';
+import CtaClose from '../components/CtaClose.astro';
+import { site } from '../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+import featuredImg from '../assets/site/36-maltipoo-portrait-classic.webp';
+import sizeImg from '../assets/site/13-maltipoo-size-adult-puppy.webp';
+
+const title = 'What Is a Maltipoo? The Complete Breed Guide | Maltipoo.sg';
+const description =
+  'A Maltipoo is a Maltese and Toy Poodle cross: 2 to 4kg, low-shedding, devoted. Singapore’s complete breed guide, downsides included.';
+
+const crumbs = [
+  { name: 'Home', url: '/' },
+  { name: 'What Is a Maltipoo', url: '/what-is-a-maltipoo' },
+];
+
+const guideLibrary = [
+  { href: '/maltipoo-size', tag: 'Size', h: 'How big do Maltipoos get', d: 'The full grown weight and height band, and why the Poodle parent decides more than the Maltese one.' },
+  { href: '/toy-teacup-maltipoo', tag: 'Size', h: 'Toy, teacup and mini, honestly', d: 'What those labels actually mean in Singapore, and which ones are marketing.' },
+  { href: '/maltipoo-colours', tag: 'Coat', h: 'Maltipoo colours', d: 'Apricot, cream, white, black and brown, and which ones actually turn up here.' },
+  { href: '/maltipoo-temperament', tag: 'Character', h: 'Temperament and personality', d: 'The velcro attachment described accurately, including the part that is hard work.' },
+  { href: '/maltipoo-grooming-haircuts', tag: 'Care', h: 'Grooming and haircut styles', d: 'Brushing cadence, salon intervals, real Singapore prices, and the teddy bear cut.' },
+  { href: '/maltipoo-lifespan-health', tag: 'Health', h: 'Lifespan and health issues', d: 'How long they live, what goes wrong in toy breeds, and the vaccination schedule.' },
+  { href: '/maltipoo-training', tag: 'Training', h: 'Training a Maltipoo puppy', d: 'Why the Poodle brain makes this easy, and the first lesson included with every puppy.' },
+  { href: '/maltipoo-hdb-approved', tag: 'Singapore', h: 'Are Maltipoos HDB approved', d: 'The rule, the two approved parent breeds, and what to say if anyone questions it.' },
+  { href: '/maltipoo-price-singapore', tag: 'Cost', h: 'Price in Singapore', d: 'What a Maltipoo costs here, all-in, and what the market range looks like elsewhere.' },
+  { href: '/blog/maltipoo-cost-ownership', tag: 'Cost', h: 'The real cost of ownership', d: 'Licence tiers, grooming, food and vet care after the puppy price is paid.' },
+  { href: '/compare-maltipoo', tag: 'Compare', h: 'Maltipoo vs six other breeds', d: 'Maltese, Cavapoo, Toy Poodle, Bichon Frise, Shih Tzu and Cockapoo, verdict by verdict.' },
+  { href: '/blog/maltipoo-hypoallergenic-shedding', tag: 'Coat', h: 'Shedding and allergies', d: 'What low-shedding really means, and the honest version of hypoallergenic.' },
+  { href: '/blog/maltipoo-barking', tag: 'Behaviour', h: 'Do Maltipoos bark a lot', d: 'The vocality question answered straight, with the HDB courtesy line in mind.' },
+  { href: '/blog/maltipoo-separation-anxiety', tag: 'Behaviour', h: 'Being left alone', d: 'The single biggest reason a Maltipoo placement goes wrong, and how to test for it.' },
+  { href: '/blog/maltipoo-first-week-home', tag: 'Puppy', h: 'The first week home', d: 'What week nine looks like, the starter kit, and surviving the first night.' },
+  { href: '/blog/maltipoo-potty-training', tag: 'Puppy', h: 'Potty training', d: 'Pee pads versus downstairs in an HDB flat, and a realistic timeline.' },
+  { href: '/blog/maltipoo-growth-stages', tag: 'Puppy', h: 'Growth stages', d: 'When a Maltipoo stops growing, and what to expect month by month.' },
+  { href: '/blog/maltipoo-in-chinese', tag: 'Local', h: 'Maltipoo in Chinese', d: 'What to call the breed when the family asks, and why the name varies.' },
+];
+
+const faqItems = [
+  {
+    q: 'Is a Maltipoo a good dog to have?',
+    a: 'For the right routine, one of the best small companions you can own: gentle indoors, quick to learn, small enough for an HDB flat and low-shedding. The condition is company. Households where someone is usually home get a devoted dog; flats that empty out all day get a stressed, vocal one.',
+  },
+  {
+    q: 'Is a Maltipoo a good house dog?',
+    a: 'Yes, and unusually so. At 2 to 4kg it needs very little space, exercises happily indoors, and settles on a lap rather than patrolling. Both parent breeds are HDB approved, so the flat is rarely the problem. The daily schedule inside it is what decides the outcome.',
+  },
+  {
+    q: 'What is a common problem with Maltipoo?',
+    a: 'Separation-related stress is the most common, and it drives the second most common: barking. After that come coat matting if brushing slips, tear staining on light faces, and small-dog dental disease. Every one of those is manageable, and every one of them is a routine problem before it is a medical one.',
+  },
+  {
+    q: 'What are the negatives of a Maltipoo?',
+    a: 'It does not like being alone, it is more vocal than the average small companion breed, the coat needs brushing at home plus a salon visit every four to six weeks, and at toy size it is physically delicate around toddlers. As a cross, adult size is also less predictable than in a pure breed.',
+  },
+  {
+    q: 'Is a Maltipoo high maintenance?',
+    a: 'Grooming, yes: a few minutes of brushing most days and a professional groom every four to six weeks, which in Singapore runs roughly $50 to $130 a session depending on coat length and salon. Exercise, no: two short walks and indoor play suit a toy dog. Company is the real maintenance cost.',
+  },
+  {
+    q: 'Is a Maltipoo a yappy dog?',
+    a: 'Not naturally yappy, but genuinely alert. Expect barking at the door chime and corridor footsteps rather than constant noise. Where it tips into yappy is loneliness and boredom. Early quiet-marker training plus enough daytime company keeps a Maltipoo well inside HDB’s considerate-ownership line.',
+  },
+  {
+    q: 'Do Maltipoo bark a lot?',
+    a: 'More than a Cavapoo, less than a terrier. The Maltese watchdog streak survives the cross, so they announce arrivals. Volume is a symptom, not a trait: when an owner reports a barking problem, the calendar almost always shows a flat that is empty from morning to evening.',
+  },
+  {
+    q: 'Can Maltipoo dogs be left alone?',
+    a: 'Short stretches, yes, with a settled pen routine and something to chew. A full working day, every weekday, no. That routine suits a more independent breed, and we will say so before you buy rather than after. It is the single most useful question to answer honestly about yourself.',
+  },
+  {
+    q: 'What is the lifespan of a Maltipoo?',
+    a: 'Commonly cited at 12 to 15 years, with well-cared-for dogs going beyond. Small breeds outlive large ones as a class. Weight control, daily tooth brushing from puppyhood and keeping up with annual vet checks move that number more than anything you can buy.',
+  },
+  {
+    q: 'How big does a Maltipoo get?',
+    a: 'The toy Maltipoos we place finish at 2 to 4kg and roughly 20 to 30cm at the shoulder, usually by about ten to twelve months. Crosses using a Miniature Poodle parent instead of a Toy run larger. Ask about the Poodle side before you ask about the Maltese side.',
+  },
+  {
+    q: 'Is a Maltipoo a purebred dog?',
+    a: 'No. A Maltipoo is a deliberate cross of two pure breeds, the Maltese and the Toy or Miniature Poodle, and is not recognised as a breed by kennel clubs. That is a description, not a criticism: it is bred as a companion, and it is judged by how it lives with people rather than by a standard.',
+  },
+  {
+    q: 'How much is a Maltipoo in Singapore?',
+    a: `Ours are ${site.pricing.range} all-in, which covers vaccinations to date, microchipping, the licence transfer, a health check and the first trainer lesson. Other Singapore shops advertise from around $3,288 to just under $5,000, though what is bundled into that figure varies a great deal.`,
+  },
+];
+
+const schemas = [
+  webPageSchema({
+    path: '/what-is-a-maltipoo',
+    title,
+    description,
+    aboutName: 'Maltipoo dog breed',
+    datePublished: '2026-07-24',
+    dateModified: '2026-07-24',
+  }),
+  breadcrumbSchema(crumbs),
+  faqSchema(faqItems),
+];
+---
+
+<BaseLayout title={title} description={description} path="/what-is-a-maltipoo" schemas={schemas}>
+  <section class="container-site pt-4">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+      <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+        <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+        <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+        <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+        <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+      </div>
+      <div class="relative">
+        <Breadcrumb items={crumbs} bare class="mb-5" />
+        <p class="eyebrow mb-2">Breed guide</p>
+        <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">What Is a Maltipoo? The Complete Breed Guide</h1>
+        <p class="text-ink-soft max-w-[54ch] mb-5">
+          Everything the breed pages tell you, plus the Singapore parts they leave out: the
+          size band that actually turns up here, the HDB question, the grooming bill, and the
+          reason some homes should not get one. Written by the people who have placed
+          {' '}{site.maltipoosPlaced} of them.
+        </p>
+        <a href="#library" class="btn-outline">Jump to the guide library</a>
+      </div>
+    </div>
+  </section>
+
+  <AnswerCapsule question="What is a Maltipoo?">
+    A Maltipoo is a small companion dog: a crossbreed of a Maltese and a Toy or Miniature
+    Poodle, so it is often called a Maltese Poodle mix. In the toy sizes placed in Singapore
+    it finishes at 2 to 4kg with a soft, low-shedding coat, pairing Maltese devotion with
+    Poodle cleverness. It is a companion cross, not a recognised pure breed.
+  </AnswerCapsule>
+
+  <section class="container-site pt-8">
+    <img
+      src={featuredImg.src}
+      width={featuredImg.width}
+      height={featuredImg.height}
+      alt="Apricot Maltipoo sitting in a bright Singapore living room, full body portrait"
+      loading="lazy"
+      class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]"
+    />
+  </section>
+
+  <StatStrip
+    stats={[
+      { value: '2–4kg', label: 'Adult weight, toy sizes' },
+      { value: '20–30cm', label: 'Height at the shoulder' },
+      { value: '12–15 yrs', label: 'Lifespan, commonly cited' },
+      { value: site.pricing.from, label: 'All-in, in Singapore' },
+    ]}
+  />
+
+  <CaptionedBlock heading="Where the Maltipoo comes from" id="origins">
+    <p>
+      The formula is simple and it is the whole answer to what is a Maltipoo: one Maltese, one
+      Poodle, usually a Toy Poodle in Singapore because the toy result is what flats want. The
+      Maltese brings the devotion, the white-to-cream coat and a watchdog streak that has been
+      shrunk but not deleted. The Poodle brings the brain, the curl and the low-shed coat.
+      Neither parent was ever bred to work; both were bred to sit with people, which is why the
+      cross behaves the way it does.
+    </p>
+    <p>
+      You will see generation labels attached to the maltipoo dog. F1 means a straight
+      Maltese-to-Poodle cross, the most common. F1b means an F1 Maltipoo bred back to a Poodle,
+      which usually tightens the curl and lowers shedding further, at the cost of a coat that
+      mats faster in humidity. Neither label is a quality grade. What it tells you is roughly
+      what coat you are signing up to brush.
+    </p>
+    <p>
+      One thing to be clear about, because the Google panel calls it a dog breed: a Maltipoo is
+      not a recognised pure breed. It is a companion cross, and it is judged by how it lives
+      with a family rather than against a written standard. That also means adult size varies
+      more than it would in a pure breed, which matters when you are buying a puppy for a flat.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The cross, at a glance"
+      items={[
+        'Maltese × Toy or Miniature Poodle',
+        'F1 = first cross · F1b = crossed back to Poodle',
+        'Not a kennel-club recognised breed',
+        'Both parent breeds bred purely as companions',
+        'Toy Poodle parent = the 2–4kg result',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock
+    heading="What a Maltipoo looks like full grown"
+    id="appearance"
+    reverse
+    imageSrc={sizeImg.src}
+    imageAlt="Adult Maltipoo beside a Maltipoo puppy, showing the full grown size difference"
+  >
+    <p>
+      The toy Maltipoos we place finish at 2 to 4kg and roughly 20 to 30cm at the shoulder,
+      usually reaching adult size somewhere around ten to twelve months. That is smaller than
+      the ranges you will read on overseas breed pages, and the reason is simply which Poodle
+      parent is used: a Miniature Poodle side produces a noticeably bigger dog. If a listing
+      anywhere quotes you a weight, the useful follow-up question is about the Poodle, not the
+      Maltese.
+    </p>
+    <p>
+      Coats run from loosely wavy to properly curly, and the texture usually settles by the
+      first or second groom rather than at eight weeks. Colour is where Singapore differs from
+      the textbooks: apricot dominates what actually arrives here, with cream and white next,
+      and black or brown far rarer. The
+      <a href="/maltipoo-colours">colours guide</a> covers how puppy coats lighten as they
+      mature, which surprises a lot of first-time owners. For the numbers in detail, the
+      <a href="/maltipoo-size">full grown size guide</a> and the honest take on
+      <a href="/toy-teacup-maltipoo">toy, teacup and mini labels</a> go further than this page can.
+    </p>
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Maltipoo temperament and characteristics" id="temperament" tinted>
+    <p>
+      If you take one maltipoo characteristic away from this guide, make it this: a Maltipoo
+      wants company, and it wants it most of the day. It follows you room to room, naps against
+      your leg rather than across the room, and usually elects a favourite person while loving
+      the rest of the household on retainer. Owners describe it as a velcro dog, and that is
+      accurate rather than cute.
+    </p>
+    <p>
+      The Poodle side shows up as speed of learning. Toilet training lands quickly for a toy
+      breed, basic cues stick in days, and puzzle games tire it out as effectively as a walk
+      does. The flip side of clever is that a bored Maltipoo invents its own job, usually a
+      loud or chewy one. The
+      <a href="/maltipoo-temperament">temperament guide</a> maps which households this suits
+      and which it does not, and the
+      <a href="/maltipoo-vs-cavapoo">Maltipoo vs Cavapoo comparison</a> is the honest
+      side-by-side for anyone whose flat empties out on weekdays.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Maltipoo traits, condensed"
+      items={[
+        'Velcro attachment, favourite-person tendency',
+        'Quick to learn, quick to get bored',
+        'Alert-vocal rather than yappy',
+        'Gentle indoors, low exercise needs',
+        'Generally good with cats and other dogs',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="What a Maltipoo puppy is actually like" id="puppy">
+    <p>
+      A Maltipoo puppy goes home at about nine weeks here, after the vaccinations at weeks six
+      and eight, with the third at week twelve and an optional fourth at sixteen. Expect a dog
+      that weighs about a kilogram, sleeps enormously, and attaches to you within days. The
+      first night is the hard one; the <a href="/blog/maltipoo-first-week-home">first week
+      home guide</a> covers the pen setup that shortens it.
+    </p>
+    <p>
+      Two things surprise first-time owners. The first is how fast toilet training moves once
+      the routine is consistent, which is the Poodle brain earning its keep, though HDB living
+      adds the pee-pad-versus-downstairs decision covered in the
+      <a href="/blog/maltipoo-potty-training">potty training guide</a>. The second is the
+      teething bite: sharp, relentless, and entirely normal from roughly twelve to twenty weeks.
+      Neither is a temperament problem. The first professional groom is worth booking early too,
+      not for the haircut but so the puppy learns that clippers are boring.
+    </p>
+    <p>
+      Every puppy we place includes a first lesson with an AVS-certified trainer, which usually
+      ends with a sit, a recall and a very smug puppy. The
+      <a href="/maltipoo-training">training guide</a> and the
+      <a href="/blog/maltipoo-growth-stages">growth stages guide</a> pick up from there.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The Maltipoo puppy timeline"
+      items={[
+        'Vaccinations weeks 6, 8 and 12 (optional 16)',
+        'Home at about week 9, around 1kg',
+        'Teething bite: roughly weeks 12–20',
+        'First salon groom: after the vaccination course',
+        'Adult size: about 10–12 months',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Grooming and care in Singapore’s climate" id="grooming" reverse>
+    <p>
+      A low-shedding coat is not a low-maintenance coat, and Singapore makes that point harder
+      than most countries do. Hair that does not fall out gets caught in the coat instead, and
+      humidity plus a damp dog after a walk turns loose tangles into felt faster than owners
+      expect. A few minutes of brushing most days is the whole trick, plus drying properly
+      after every bath rather than letting the aircon do it.
+    </p>
+    <p>
+      Professional grooming runs every four to six weeks. Singapore salon rates for a toy-size
+      dog sit roughly in the $50 to $130 range depending on coat length and how far things have
+      been left, which is the biggest recurring cost of owning one. Light faces also show tear
+      staining, which is cosmetic far more often than it is medical. The
+      <a href="/maltipoo-grooming-haircuts">grooming and haircuts guide</a> covers the teddy
+      bear cut and the salon conversation; the
+      <a href="/blog/maltipoo-hypoallergenic-shedding">shedding and allergies guide</a> gives
+      the honest version of hypoallergenic, which is lower-allergen, not allergen-free.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The coat routine that works here"
+      items={[
+        'Brush most days, not weekly',
+        'Salon every 4–6 weeks',
+        'Singapore market rate: about $50–$130 a session',
+        'Dry thoroughly after every bath',
+        'Walk early or late, not midday',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Maltipoo health and lifespan" id="health" tinted>
+    <p>
+      Maltipoos are commonly cited as living 12 to 15 years, and plenty go beyond it. Small
+      dogs outlive large ones as a class, and the things that move the number are unglamorous:
+      keeping the dog lean, brushing its teeth from puppyhood, and not skipping the annual
+      check and booster.
+    </p>
+    <p>
+      The health issues worth knowing are the ones both parent breeds contribute. Luxating
+      patella, the slipping kneecap common in toy breeds, is the one to ask a vet about at the
+      first check. Dental disease is the quiet one, because small jaws crowd teeth and gum
+      trouble in a toy dog does not stay in the mouth. Eye and tear-duct irritation shows up on
+      light-coloured faces. None of this is a reason not to buy one; it is a reason to buy from
+      somewhere that will still take your call in year three. The
+      <a href="/maltipoo-lifespan-health">lifespan and health guide</a> goes through each of
+      these properly.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="What to watch for"
+      items={[
+        'Luxating patella — ask at the first vet check',
+        'Dental disease — brush from week one',
+        'Tear-duct irritation on light faces',
+        'Weight creep — the biggest lifespan lever',
+        'Annual booster from year one',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="The honest downsides of a Maltipoo" id="downsides">
+    <p>
+      Every breed page has a section like this and most of them are padding. Here is the real
+      list. The attachment that makes a Maltipoo wonderful does not switch off when you leave,
+      so a flat that is empty from morning to evening every weekday produces a stressed dog and
+      an unhappy corridor. That is the disqualifier, and it disqualifies more homes than people
+      expect.
+    </p>
+    <p>
+      After that: it is more vocal than the average small companion breed, so alert barking
+      needs training rather than tolerating. The coat costs real money and real minutes,
+      forever. At 2 to 4kg it is genuinely fragile, so toddlers need supervising more than the
+      dog does. Adult size is less predictable than in a pure breed. And it is not a cheap dog
+      to buy here, before you have spent a cent on grooming.
+    </p>
+    <p>
+      If several of those land badly, that is useful information, not a failed search. The
+      <a href="/compare-maltipoo">breed comparisons</a> exist for exactly that moment, and our
+      sister shop places Cavapoos for the households that need a dog to cope with a working day
+      alone. We would rather tell you that now than take your money.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="The trade-offs, plainly"
+      items={[
+        'Hates being alone all day — the real dealbreaker',
+        'More vocal than average',
+        'Grooming is a permanent cost',
+        'Toy size is delicate around toddlers',
+        'Adult size varies more than a pure breed',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Is a Maltipoo right for a Singapore home?" id="singapore" reverse>
+    <p>
+      The flat is almost never the problem. HDB’s approved list includes both parent breeds,
+      the Maltese at number 33 and the Toy Poodle at number 42, and a cross of two approved
+      small breeds is accepted. A 2 to 4kg dog also fits the one-dog HDB rule and the lift and
+      void-deck realities of block living without effort. The
+      <a href="/maltipoo-hdb-approved">HDB guide</a> sets out exactly what to say if anyone
+      questions it.
+    </p>
+    <p>
+      What decides the outcome is the weekday schedule inside the flat. Retirees, work-from-home
+      owners, families with a helper or a grandparent at home, households where someone comes
+      and goes through the day: these are where Maltipoos thrive, and they are most of our
+      {' '}{site.maltipoosPlaced} placements. The climate needs managing rather than fearing,
+      which mostly means early or late walks and drying the coat properly.
+    </p>
+    <p>
+      Cost, for completeness, sits in the <a href="/maltipoo-price-singapore">price guide</a>,
+      and the ongoing side, licence tiers and all, is in the
+      <a href="/blog/maltipoo-cost-ownership">real cost of ownership</a>. Neither is the
+      hardest question. The hardest question is who is home at 2pm on a Wednesday.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Singapore fit checklist"
+      items={[
+        'HDB: cross of two approved breeds — accepted',
+        'Maltese #33 · Toy Poodle #42 on the list',
+        'Size suits a flat and the one-dog rule',
+        'Someone home most of the day: essential',
+        'Early or late walks, dry the coat properly',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <section class="container-site py-10" id="library">
+    <h2 class="text-2xl md:text-3xl mb-2">The complete Maltipoo guide library</h2>
+    <p class="text-ink-soft max-w-[62ch] mb-6">
+      This page is the overview. Every question below has a guide of its own, written the same
+      way: Singapore figures, real placements, and the parts other sellers skip.
+    </p>
+    <div class="grid gap-5" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+      {guideLibrary.map((g) => (
+        <a href={g.href} class="pop pop-hover p-6 no-underline flex flex-col">
+          <span class="pill pill-tint mb-3 self-start">{g.tag}</span>
+          <h3 class="text-lg m-0 mb-2 text-ink">{g.h}</h3>
+          <p class="text-ink-soft text-sm m-0">{g.d}</p>
+        </a>
+      ))}
+    </div>
+    <p class="text-ink-soft mt-6">
+      Ready to look rather than read? See the
+      <a href="/puppies">available Maltipoo puppies</a> in the shop right now.
+    </p>
+  </section>
+
+  <FAQ heading="Maltipoo questions people actually ask" items={faqItems} />
+
+  <CtaClose
+    secondaryHeading="Not sure it is the right breed?"
+    secondaryText="Compare the Maltipoo against six other small breeds before you decide anything."
+    secondaryHref="/compare-maltipoo"
+    secondaryLabel="See the comparisons"
+  />
+</BaseLayout>

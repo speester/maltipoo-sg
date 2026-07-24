@@ -2,6 +2,7 @@
 // Blog post. Copy authored against briefs/male-vs-female-maltipoo.json (2026-07-13).
 // Evidence: standard chooser topic; names female 10/mo
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PawTrail from '../../components/PawTrail.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AnswerCapsule from '../../components/AnswerCapsule.astro';
 import FactsCard from '../../components/FactsCard.astro';
@@ -9,7 +10,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
-import featuredImg from '../../assets/site/35-two-maltipoos-meeting.webp';
+import featuredImg from '../../assets/site/40-maltipoo-pair-bandanas.webp';
 
 const title = 'Male or Female Maltipoo? The Small Differences | Maltipoo.sg';
 const description =
@@ -64,12 +65,20 @@ const schemas = [
 <BaseLayout title={title} description={description} path="/blog/male-vs-female-maltipoo" schemas={schemas}>
   <article>
     <section class="container-site pt-4">
-      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
         <Breadcrumb items={crumbs} bare class="mb-5" />
         <p class="eyebrow mb-2">Choosing</p>
         <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Male or female Maltipoo?</h1>
         <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
-      </div>
+      </div></div>
     </section>
 
     <AnswerCapsule question='Should you choose a male or female Maltipoo?'>
@@ -78,8 +87,8 @@ const schemas = [
 
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
-        <div class="text-ink-soft space-y-5 max-w-[68ch]">
-          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Two apricot Maltipoos of different shades sitting together" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
+        <div class="pop p-6 md:p-8 text-ink-soft space-y-5 max-w-[72ch]">
+          <img data-tilt src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Two apricot Maltipoos of different shades sitting side by side wearing olive and terracotta bandanas" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">The folklore versus the overlap</h2>
           <p>
             The folk wisdom says males are clingier and goofier, females more independent and quicker to mature, and across thousands of dogs the averages lean faintly that way. But in a breed where every individual is bred for devotion, the overlap swallows the difference: the cuddliest dog we have placed this year was a female, the most dignified a male.
@@ -101,7 +110,22 @@ const schemas = [
           <p>
             A note from the shop floor: buyers who arrive fixed on one sex and meet the litter usually leave with whichever puppy climbed into their lap first. We consider that the correct outcome.
           </p>
+          <h2 class="text-2xl text-ink">Does sex change size, coat or price?</h2>
+          <p>
+            Marginally, occasionally, and no. Males in a litter often finish a few hundred grams heavier, but within a 2 to 4kg toy breed the overlap swallows the difference; we have placed 2.2kg males and 3.8kg females without the world ending. Coat texture and colour follow the parents, not the sex, so an apricot female and her apricot brother grey out or deepen on the same schedule.
+          </p>
+          <p>
+            Price at our counter is set by expected adult size and colour within the $3,288 to $5,988 all-in range, never by sex. A shop quoting a premium "because female" is telling you about its marketing, not its dogs.
+          </p>
+          <h2 class="text-2xl text-ink">The behaviour myths, retired one by one</h2>
+          <p>
+            "Males mark indoors forever": intact males may experiment during adolescence; sterilised-early males in flats mostly never start, and the fix is the same <a href="/blog/maltipoo-potty-training">toilet system</a> either way. "Females are moodier": a female's twice-yearly season before sterilisation brings two clingy, nappy-wearing weeks, after it, temperament tracks the individual. "Males are more affectionate": in this breed everyone is; affection is the breed feature, not a sex feature.
+          </p>
+          <p>
+            The honest summary from a hundred-plus placements: the spread within each sex dwarfs the gap between them. Meet the litter, watch for the temperament you want, and let the folklore stay in the group chat.
+          </p>
         </div>
+        <div class="md:sticky md:top-24">
         <FactsCard
           heading='Male vs female card'
           items={[
@@ -112,6 +136,7 @@ const schemas = [
             "Pick temperament; let sex tiebreak"
           ]}
         />
+        </div>
       </div>
     </section>
 

@@ -1,6 +1,7 @@
 ---
 // Core page. Copy authored against briefs/toy-teacup-maltipoo.json (2026-07-13).
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PawTrail from '../components/PawTrail.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
 import CaptionedBlock from '../components/CaptionedBlock.astro';
@@ -58,7 +59,15 @@ const schemas = [
 
 <BaseLayout title={title} description={description} path="/toy-teacup-maltipoo" schemas={schemas}>
   <section class="container-site pt-4">
-    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
       <Breadcrumb items={crumbs} bare class="mb-5" />
       <p class="eyebrow mb-2">Sizes & labels</p>
       <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Toy, teacup and mini Maltipoos, honestly explained</h1>
@@ -67,7 +76,7 @@ const schemas = [
         price strategy. Sorting them out saves you thousands and the puppy a lot more.
       </p>
       <a href={whatsappLink('Hi! Could you explain the sizes of your available Maltipoo puppies?')} class="btn-cta">Ask about real sizes</a>
-    </div>
+    </div></div>
   </section>
 
   <AnswerCapsule question="What is the difference between toy, teacup and mini Maltipoos?">
@@ -168,6 +177,38 @@ const schemas = [
         'Healthy toys, 2 to 4kg, parents on record',
         'No teacup label, on cards or in chat',
         'Already the smallest dog in most lifts',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Living tiny in Singapore: transport, furniture, physics" id="tiny-living">
+    <p>
+      A 2 to 4kg toy Maltipoo is the easiest dog in Singapore to move: it fits every standard airline-style carrier, rides GrabPet without drama, and slips into cafes that would blink at a Cockapoo. Public trains and buses stay off-limits to pet dogs regardless of size, so the carrier-plus-Grab routine in our <a href="/blog/maltipoo-transport-singapore">transport guide</a> is the real playbook.
+    </p>
+    <p>
+      The physics cut the other way at home. A sofa jump that a 10kg dog shrugs off is a fracture risk at 2.5kg, so pet steps beside the bed and a no-launch house rule are day-one equipment, not accessories. The same maths powers the with-kids rules: floor-level play, no carrying while walking, and the <a href="/blog/maltipoo-with-kids">house rules</a> on the fridge.
+    </p>
+    <p>
+      Feeding tiny is its own discipline: small stomachs and quick metabolisms mean measured meals on schedule, and a puppy that skips two meals is a same-day call, not a wait-and-see. The <a href="/blog/maltipoo-food">feeding guide</a> carries the portions.
+    </p>
+    <p>
+      All of this is why our floor stays toy-first and teacup-never: the toy band keeps the convenience of small without buying the fragility of extreme small. That line is the whole page in one sentence.
+    </p>
+    <p>
+      Grooming tiny has one quirk worth knowing: small dogs lose heat fast when wet, so home baths are short, warm and followed by a proper blow-dry, never a damp air-dry under aircon. Salons handle toy breeds daily, but say the weight out loud when booking; a groomer who plans for 2.5kg schedules a gentler table.
+    </p>
+    <p>
+      Socialisation also scales down, in venue rather than in importance. A tiny puppy overwhelmed at a dog run learns fear, not friendship; padded-lap introductions, calm adult dogs and carrier-level city exposure through the vaccination window build the same confidence at toy scale. The <a href="/maltipoo-training">training guide</a> carries the schedule.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Tiny-dog day one"
+      items={[
+        "Fits all standard carriers; GrabPet easy",
+        "MRT/buses: no pet dogs, any size",
+        "Pet steps + no-launch rule from day one",
+        "Two skipped meals = same-day call",
+        "Toy band: small without fragile"
       ]}
     />
   </CaptionedBlock>

@@ -16,6 +16,10 @@ import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
 import { availablePups } from '../data/puppies';
 import heroImg from '../assets/site/1-maltipoo-puppy-hero-singapore.webp';
+import swCreamApricot from '../assets/site/2-maltipoo-card-cream-apricot-f.webp';
+import swApricot from '../assets/site/4-maltipoo-card-apricot-teddy.webp';
+import swDeepApricot from '../assets/site/8-maltipoo-card-deep-apricot-m.webp';
+import swApricotWhite from '../assets/site/10-maltipoo-card-apricot-white.webp';
 
 const title = 'Maltipoo Singapore | Toy Maltipoo Puppies | Maltipoo.sg';
 const description =
@@ -73,10 +77,10 @@ const schemas = [
 ];
 
 const coatSwatches = [
-  ['Cream apricot', '#f4e3c8'],
-  ['Apricot', '#e8b985'],
-  ['Deep apricot', '#d19158'],
-  ['Apricot & white', '#f7efe2'],
+  { name: 'Cream apricot', hex: '#f4e3c8', img: swCreamApricot },
+  { name: 'Apricot', hex: '#e8b985', img: swApricot },
+  { name: 'Deep apricot', hex: '#d19158', img: swDeepApricot },
+  { name: 'Apricot & white', hex: '#f7efe2', img: swApricotWhite },
 ];
 ---
 
@@ -114,7 +118,8 @@ const coatSwatches = [
     often described as a Maltese Poodle mix, typically 2 to 4kg full grown in the toy sizes we
     place, with a soft low-shedding coat that in Singapore is most often apricot. It pairs the Maltese devotion to its people with the
     Poodle's quick mind, which makes it a devoted lap dog for homes where someone is usually
-    around.
+    around. Our <a href="/what-is-a-maltipoo">full Maltipoo breed guide</a> covers the size,
+    coat, temperament and downsides in detail.
   </AnswerCapsule>
 
   <StatStrip
@@ -295,10 +300,13 @@ const coatSwatches = [
       <a href="/maltipoo-size">growth guide</a>.
     </p>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {coatSwatches.map(([name, hex]) => (
-        <div class="pop p-4 text-center">
-          <div class="rounded-[var(--radius-media)] w-full aspect-square mb-3" style={`background:${hex}`} aria-hidden="true"></div>
-          <p class="font-semibold m-0">{name}</p>
+      {coatSwatches.map((sw) => (
+        <div class="pop pop-hover p-4 text-center">
+          <img src={sw.img.src} width={sw.img.width} height={sw.img.height} alt={`${sw.name} Maltipoo puppy`} loading="lazy" class="rounded-[var(--radius-media)] w-full aspect-square object-cover mb-3" />
+          <p class="font-semibold m-0 flex items-center justify-center gap-2">
+            <span class="inline-block w-3.5 h-3.5 rounded-full border border-tint-300" style={`background:${sw.hex}`} aria-hidden="true"></span>
+            {sw.name}
+          </p>
         </div>
       ))}
     </div>

@@ -129,6 +129,59 @@ h1, h2, h3, h4 {
   .container-site { padding-inline: 2rem; }
 }
 
+/* ── decorative motion (fast, independent timing — not the content-reveal system) ── */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes float-y-soft {
+  0%, 100% { transform: translateY(0) rotate(var(--float-rot, 0deg)); }
+  50% { transform: translateY(-5px) rotate(var(--float-rot, 0deg)); }
+}
+@keyframes paw-march {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes wag {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise-in { animation: rise-in 0.7s ease-out both; }
+.float-slow { animation: float-y 4.5s ease-in-out infinite; }
+.float-soft { animation: float-y-soft 5.5s ease-in-out infinite; }
+.wag { animation: wag 1.2s ease-in-out infinite; transform-origin: 50% 90%; }
+
+/* section h2 accent — every prose section heading gets a designed underline */
+main section h2 {
+  position: relative;
+}
+main section h2::after {
+  content: '';
+  display: block;
+  width: 44px;
+  height: 5px;
+  margin-top: 8px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-cta), var(--color-primary));
+}
+main section details h2::after,
+main section .no-h2-accent h2::after {
+  display: none;
+}
+
+/* framed prose callout — for inherently textual sections */
+.callout {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  border-left: 8px solid var(--color-cta);
+  box-shadow: var(--shadow-pop-sm);
+  padding: 1.25rem 1.5rem;
+}
+
 /* anchor targets clear the sticky header */
 [id] { scroll-margin-top: 96px; }
 

@@ -1,0 +1,96 @@
+{
+  "out": "src/assets/site",
+  "style": "Photorealistic lifestyle photography, soft warm natural daylight, clean modern Singapore apartment interior with warm sage green, olive and cream textiles, gentle morning light, shallow depth of field, high detail fur texture, no text no watermark.",
+  "images": [
+    {
+      "n": 43,
+      "file": "43-maltipoo-card-white.webp",
+      "alt": "White Maltipoo puppy with a bright snowy coat sitting on a cream knit blanket",
+      "section": "colours palette card",
+      "aspect_ratio": "1:1",
+      "width": 800,
+      "prompt": "A tiny pure white maltipoo puppy with a soft fluffy snowy coat sitting on a cream knit blanket, big dark round eyes and black button nose, studio-like soft daylight."
+    },
+    {
+      "n": 44,
+      "file": "44-maltipoo-card-cream.webp",
+      "alt": "Cream Maltipoo puppy with a pale ivory coat sitting on a sage green cushion",
+      "section": "colours palette card",
+      "aspect_ratio": "1:1",
+      "width": 800,
+      "prompt": "A tiny pale cream ivory maltipoo puppy with soft wavy coat sitting on a sage green cushion, warm gentle window light, big dark eyes looking at camera."
+    },
+    {
+      "n": 45,
+      "file": "45-maltipoo-card-black.webp",
+      "alt": "Black Maltipoo puppy with a glossy dark curly coat sitting on a cream knit blanket",
+      "section": "colours palette card",
+      "aspect_ratio": "1:1",
+      "width": 800,
+      "prompt": "A tiny jet black maltipoo puppy with soft curly dark coat sitting on a cream knit blanket, bright soft daylight illuminating the black fur texture, warm brown eyes visible."
+    },
+    {
+      "n": 46,
+      "file": "46-maltipoo-card-brown.webp",
+      "alt": "Brown Maltipoo puppy with a rich chocolate coat sitting on a cream cushion",
+      "section": "colours palette card",
+      "aspect_ratio": "1:1",
+      "width": 800,
+      "prompt": "A tiny rich chocolate brown maltipoo puppy with soft wavy coat sitting on a cream cushion, warm soft daylight, deep amber eyes looking up at camera."
+    },
+    {
+      "n": 47,
+      "file": "47-maltese-vs-maltipoo.webp",
+      "alt": "Maltese and apricot Maltipoo sitting side by side on a light sofa for comparison",
+      "section": "compare hero: maltese-vs-maltipoo",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "A pure white silky-coated Maltese and an apricot wavy-coated toy maltipoo sitting side by side on a cream linen sofa facing the camera, clearly different coat textures, warm morning window light from the left, olive green wall behind."
+    },
+    {
+      "n": 48,
+      "file": "48-maltipoo-vs-cavapoo.webp",
+      "alt": "Apricot Maltipoo and blenheim Cavapoo sitting side by side on a light floor",
+      "section": "compare hero: maltipoo-vs-cavapoo",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "An apricot toy maltipoo and a chestnut-and-white blenheim cavapoo puppy sitting side by side on a light wooden floor facing the camera, both with soft wavy coats, warm afternoon light, sage green sofa blurred behind."
+    },
+    {
+      "n": 49,
+      "file": "49-maltipoo-vs-toy-poodle.webp",
+      "alt": "Apricot Maltipoo beside a red Toy Poodle with tight curls, sitting together",
+      "section": "compare hero: maltipoo-vs-poodle",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "An apricot toy maltipoo with loose wavy coat and a red toy poodle with tight dense curls sitting side by side on a cream rug facing the camera, contrast between the two coat types visible, soft warm daylight, olive green wall."
+    },
+    {
+      "n": 50,
+      "file": "50-maltipoo-vs-bichon-frise.webp",
+      "alt": "Apricot Maltipoo beside a white powder-puff Bichon Frise on a light sofa",
+      "section": "compare hero: maltipoo-vs-bichon-frise",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "An apricot toy maltipoo and a white bichon frise with a rounded powder-puff coat sitting side by side on a cream linen sofa facing the camera, size and coat difference visible, warm morning light."
+    },
+    {
+      "n": 51,
+      "file": "51-maltipoo-vs-shih-tzu.webp",
+      "alt": "Apricot Maltipoo beside a gold-and-white Shih Tzu sitting together on a rug",
+      "section": "compare hero: maltipoo-vs-shih-tzu",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "An apricot toy maltipoo with a teddy face and a gold-and-white shih tzu with a flat face and long silky coat sitting side by side on a woven jute rug facing the camera, warm soft daylight, sage cushions blurred behind."
+    },
+    {
+      "n": 52,
+      "file": "52-maltipoo-vs-cockapoo.webp",
+      "alt": "Small apricot Maltipoo beside a larger golden Cockapoo sitting together indoors",
+      "section": "compare hero: maltipoo-vs-cockapoo",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "A small apricot toy maltipoo sitting beside a noticeably larger golden cockapoo with a sporty wavy coat, both facing the camera on a light wooden floor, clear size difference, warm afternoon window light, olive green wall behind."
+    }
+  ]
+}

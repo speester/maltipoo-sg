@@ -1,6 +1,8 @@
 ---
 // Question-phrased heading + 30–60 word self-contained answer.
 // Required within the first 30% of every page (AI-search rule).
+// Design: mint framed callout with floating paw badge — visually distinct from
+// the white .pop cards around it (section-variety rule).
 interface Props {
   question: string;
   id?: string;
@@ -9,8 +11,39 @@ const { question, id } = Astro.props;
 ---
 
 <section class="container-site py-6" id={id}>
-  <div class="pop p-6 md:p-8 border-l-8 border-primary">
-    <h2 class="text-xl md:text-2xl mb-3">{question}</h2>
-    <p class="text-ink-soft max-w-[65ch] m-0"><slot /></p>
+  <div
+    class="relative rounded-[var(--radius-card)] bg-mint border-l-8 border-primary p-6 md:p-8 shadow-[0_6px_0_rgba(43,99,53,0.18)] overflow-hidden"
+  >
+    <svg
+      class="absolute -right-4 -bottom-5 w-28 h-28 text-mint-ink/10 float-soft"
+      style="--float-rot: -14deg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <ellipse cx="12" cy="15.5" rx="5" ry="4.2" />
+      <ellipse cx="5.4" cy="10.5" rx="2" ry="2.6" />
+      <ellipse cx="9.8" cy="7.4" rx="2" ry="2.7" />
+      <ellipse cx="14.2" cy="7.4" rx="2" ry="2.7" />
+      <ellipse cx="18.6" cy="10.5" rx="2" ry="2.6" />
+    </svg>
+    <div class="flex items-start gap-4">
+      <span
+        class="hidden md:inline-flex shrink-0 w-12 h-12 rounded-full bg-surface shadow-[var(--shadow-pop-sm)] items-center justify-center float-slow"
+        aria-hidden="true"
+      >
+        <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="currentColor">
+          <ellipse cx="12" cy="15.5" rx="5" ry="4.2" />
+          <ellipse cx="5.4" cy="10.5" rx="2" ry="2.6" />
+          <ellipse cx="9.8" cy="7.4" rx="2" ry="2.7" />
+          <ellipse cx="14.2" cy="7.4" rx="2" ry="2.7" />
+          <ellipse cx="18.6" cy="10.5" rx="2" ry="2.6" />
+        </svg>
+      </span>
+      <div class="relative">
+        <h2 class="text-xl md:text-2xl mb-3 text-mint-ink">{question}</h2>
+        <p class="text-ink-soft max-w-[65ch] m-0"><slot /></p>
+      </div>
+    </div>
   </div>
 </section>

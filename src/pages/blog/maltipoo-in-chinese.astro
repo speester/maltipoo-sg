@@ -2,6 +2,7 @@
 // Blog post. Copy authored against briefs/maltipoo-in-chinese.json (2026-07-13).
 // Evidence: 140/mo quirky local query, zero competitor coverage
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PawTrail from '../../components/PawTrail.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AnswerCapsule from '../../components/AnswerCapsule.astro';
 import FactsCard from '../../components/FactsCard.astro';
@@ -9,7 +10,7 @@ import FAQ from '../../components/FAQ.astro';
 import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
-import featuredImg from '../../assets/site/36-maltipoo-portrait-classic.webp';
+import featuredImg from '../../assets/site/42-maltipoo-heritage-tea-corner.webp';
 
 const title = 'What Is a Maltipoo Called in Chinese? | Maltipoo.sg';
 const description =
@@ -64,12 +65,20 @@ const schemas = [
 <BaseLayout title={title} description={description} path="/blog/maltipoo-in-chinese" schemas={schemas}>
   <article>
     <section class="container-site pt-4">
-      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
         <Breadcrumb items={crumbs} bare class="mb-5" />
         <p class="eyebrow mb-2">Local knowledge</p>
         <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">What is a Maltipoo called in Chinese?</h1>
         <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
-      </div>
+      </div></div>
     </section>
 
     <AnswerCapsule question='What is a Maltipoo called in Chinese?'>
@@ -78,8 +87,8 @@ const schemas = [
 
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
-        <div class="text-ink-soft space-y-5 max-w-[68ch]">
-          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Classic portrait of an apricot Maltipoo with a soft teddy face" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
+        <div class="pop p-6 md:p-8 text-ink-soft space-y-5 max-w-[72ch]">
+          <img data-tilt src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Apricot Maltipoo sitting on a wooden stool beside a ceramic tea set in a heritage-tiled Singapore home" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">The name, taken apart</h2>
           <p>
             Chinese breed names describe rather than transliterate blindly: 马尔济斯 (Mǎ'ěrjìsī) is the Maltese, 贵宾犬 (guìbīn quǎn, literally 'honoured-guest dog') is the Poodle, and stacking them gives 马尔济斯贵宾犬, the Maltese-Poodle. It reads formal because it is; this is the pet-shop-signage version.
@@ -101,7 +110,22 @@ const schemas = [
           <p>
             Locally, the terms help at Chinese-speaking groomers and clinics, and in family group chats where the puppy announcement lands better in the reader's first language. For the record, our shop answers happily in either.
           </p>
+          <h2 class="text-2xl text-ink">Saying it out loud, so the counter understands</h2>
+          <p>
+            Pinyin first: 马尔济斯贵宾犬 is Mǎ'ěrjìsī guìbīn quǎn, roughly "ma-er-jee-s gway-bin chuen". The mouthful is why everyone shortens it in speech; at a Chinese-speaking groomer, 贵宾 mix ("gway-bin mix") gets you understood in two syllables, and pointing at the dog does the rest.
+          </p>
+          <p>
+            摩天使 is mó tiānshǐ, "mo tyen-shr", and it is the one to teach the grandparents: two of its three characters mean angel, it rolls off the tongue, and it wins the family naming vote more often than any formal term. If a relative hears 天使 and melts, the breed's marketing department has done its work.
+          </p>
+          <h2 class="text-2xl text-ink">Chinese names Singapore Maltipoos actually wear</h2>
+          <p>
+            Once the breed name is settled, the dog still needs its own. The local favourites we hear at the shop split into food names, 布丁 (pudding), 麻糬 (mochi), 奶茶 (milk tea, painfully accurate for an apricot coat), and doubled affectionates like 豆豆 (Dòudou) or 米米 (Mǐmi), which follow the classic Chinese pet-name pattern of repeating a soft syllable.
+          </p>
+          <p>
+            A practical tip from a hundred-plus placements: pick a name with a hard consonant somewhere, whatever the language. A 2 to 4kg dog at the park responds faster to a crisp "Dou-dou!" than to a puddle of soft vowels, and recall is the one command a <a href="/blog/maltipoo-separation-anxiety">velcro breed</a> should never fumble.
+          </p>
         </div>
+        <div class="md:sticky md:top-24">
         <FactsCard
           heading='The name card'
           items={[
@@ -112,6 +136,7 @@ const schemas = [
             "Best search term: \u9a6c\u5c14\u6d4e\u65af\u8d35\u5bbe"
           ]}
         />
+        </div>
       </div>
     </section>
 

@@ -2,6 +2,7 @@
 // Blog post. Copy authored against briefs/maltipoo-adolescence.json (2026-07-13).
 // Evidence: r/Maltipoo confidence/nervousness threads; local plan set
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PawTrail from '../../components/PawTrail.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AnswerCapsule from '../../components/AnswerCapsule.astro';
 import FactsCard from '../../components/FactsCard.astro';
@@ -64,12 +65,20 @@ const schemas = [
 <BaseLayout title={title} description={description} path="/blog/maltipoo-adolescence" schemas={schemas}>
   <article>
     <section class="container-site pt-4">
-      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
         <Breadcrumb items={crumbs} bare class="mb-5" />
         <p class="eyebrow mb-2">Behaviour</p>
         <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Surviving Maltipoo adolescence</h1>
         <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
-      </div>
+      </div></div>
     </section>
 
     <AnswerCapsule question='What happens during Maltipoo adolescence?'>
@@ -78,8 +87,8 @@ const schemas = [
 
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
-        <div class="text-ink-soft space-y-5 max-w-[68ch]">
-          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Adolescent Maltipoo practising a sit during a training session" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
+        <div class="pop p-6 md:p-8 text-ink-soft space-y-5 max-w-[72ch]">
+          <img data-tilt src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Adolescent Maltipoo practising a sit during a training session" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">What changes, and when</h2>
           <p>
             The teenage dog phase arrives quietly. Somewhere around six months the puppy that came when called develops selective hearing, and the confident explorer suddenly startles at a bin it has passed fifty times. Fear periods, boundary testing and energy spikes arrive in waves through roughly the eighteenth month, earlier and milder in toy breeds than large ones.
@@ -102,6 +111,7 @@ const schemas = [
             Sterilisation typically lands in this window, from around seven months per most vets, and doubles as the moment your <a href="/maltipoo-price-singapore">licence fee drops</a>. Many owners report the wildest edges softening in the months after.
           </p>
         </div>
+        <div class="md:sticky md:top-24">
         <FactsCard
           heading='Adolescence survival card'
           items={[
@@ -112,6 +122,7 @@ const schemas = [
             "Settled adult arrives on the other side"
           ]}
         />
+        </div>
       </div>
     </section>
 

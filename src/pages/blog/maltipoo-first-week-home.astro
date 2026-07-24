@@ -2,6 +2,7 @@
 // Blog post. Copy authored against briefs/maltipoo-first-week-home.json (2026-07-13).
 // Evidence: week-9 canonical + r/Maltipoo first-night loneliness threads
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PawTrail from '../../components/PawTrail.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import AnswerCapsule from '../../components/AnswerCapsule.astro';
 import FactsCard from '../../components/FactsCard.astro';
@@ -56,12 +57,20 @@ const schemas = [
 <BaseLayout title={title} description={description} path="/blog/maltipoo-first-week-home" schemas={schemas}>
   <article>
     <section class="container-site pt-4">
-      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+      <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
         <Breadcrumb items={crumbs} bare class="mb-5" />
         <p class="eyebrow mb-2">New owners</p>
         <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[26ch]">Bringing your Maltipoo home at 9 weeks</h1>
         <p class="text-sm text-ink-soft m-0">By {site.owners}, AVS licensed pet shop owners · Updated 13 July 2026</p>
-      </div>
+      </div></div>
     </section>
 
     <AnswerCapsule question='What should the first week with a Maltipoo look like?'>
@@ -70,8 +79,8 @@ const schemas = [
 
     <section class="container-site py-6">
       <div class="grid md:grid-cols-[1.6fr_1fr] gap-8 items-start">
-        <div class="text-ink-soft space-y-5 max-w-[68ch]">
-          <img src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Portrait of an apricot Maltipoo puppy newly home at nine weeks" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
+        <div class="pop p-6 md:p-8 text-ink-soft space-y-5 max-w-[72ch]">
+          <img data-tilt src={featuredImg.src} width={featuredImg.width} height={featuredImg.height} alt="Portrait of an apricot Maltipoo puppy newly home at nine weeks" loading="lazy" class="rounded-[var(--radius-media)] w-full h-auto shadow-[var(--shadow-pop)]" />
           <h2 class="text-2xl text-ink">Day one: less is more</h2>
           <p>
             Homecoming day is a whirlwind for a puppy that woke up with littermates: new smells, new humans, no siblings. Bring it straight to the prepared pen zone, offer the toilet spot, and let it explore one room at its own pace. Save the neighbours, relatives and enthusiastic children for week two.
@@ -93,7 +102,22 @@ const schemas = [
           <p>
             Book the vet meet-and-greet for the week-12 vaccination now, note the 5-day bring-back window (any sickness in the first five days comes back to us, in writing), and message the WhatsApp thread with every stupid question; they are all questions we have answered before, happily.
           </p>
+          <h2 class="text-2xl text-ink">The shopping you can skip, and the one thing you cannot</h2>
+          <p>
+            The 30-item starter kit covers the pen, crate, bed, pads, food and grooming basics, so resist the homecoming-eve Shopee spree. What no kit ships is a decided family rulebook: which rooms are open, who feeds, what the dog is called, and whether sofa access is a yes. Agree before the puppy arrives, because a nine-week-old learns the household's real rules in about three days, including the unofficial ones the softest family member is running.
+          </p>
+          <p>
+            The one purchase worth making early is a proper harness for a 2kg frame; collars and toy-breed tracheas are a bad pairing, and the habit is easier to set now than to unlearn at eight months.
+          </p>
+          <h2 class="text-2xl text-ink">What normal looks like, so you stop refreshing Google at midnight</h2>
+          <p>
+            Week-one normal includes: hiccups after meals, a few skipped kibbles while the world is this new, one or two soft stools as the water changes, snoring, twitchy dream-running, and an evening zoomie lap at 9pm sharp. None of these need a vet.
+          </p>
+          <p>
+            The genuine flags are different animals: refusing two consecutive meals, lethargy that outlasts a nap, vomiting more than once, or diarrhoea past 24 hours. A 2 to 4kg puppy has small reserves, so those get a same-day call, to us within the 5-day window, to your vet after. Everything else gets photographed, laughed about, and posted to the family chat.
+          </p>
         </div>
+        <div class="md:sticky md:top-24">
         <FactsCard
           heading='Week-one checklist'
           items={[
@@ -104,6 +128,7 @@ const schemas = [
             "5-day bring-back window: in writing"
           ]}
         />
+        </div>
       </div>
     </section>
 

@@ -1,0 +1,60 @@
+{
+  "out": "src/assets/site",
+  "style": "Photorealistic lifestyle photography, soft warm natural daylight, clean modern Singapore apartment interior with warm sage green, olive and cream textiles, gentle morning light, shallow depth of field, high detail fur texture, no text no watermark.",
+  "images": [
+    {
+      "n": 37,
+      "file": "37-maltipoo-night-sleep.webp",
+      "alt": "Apricot Maltipoo puppy fast asleep in its bedroom crate at night under a warm lamp glow",
+      "section": "blog hero: maltipoo-sleep",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "A tiny apricot toy maltipoo puppy curled up fast asleep on a cream cushion inside an open wire crate in a dim bedroom at night, one warm bedside lamp casting a soft amber glow, sage green blanket draped over half the crate, deep restful pose with nose tucked into paw, quiet nighttime atmosphere."
+    },
+    {
+      "n": 38,
+      "file": "38-maltipoo-brushed-coat-fluff.webp",
+      "alt": "Apricot Maltipoo with freshly brushed low-shedding wavy coat beside a slicker brush and a tiny pile of loose fluff",
+      "section": "blog hero: maltipoo-hypoallergenic-shedding",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "A fluffy apricot toy maltipoo sitting proudly on a cream towel on a wooden table after grooming, soft wavy freshly brushed coat catching window light, a metal slicker brush and a very small wisp of loose apricot fluff beside it, bright airy room with olive green wall behind."
+    },
+    {
+      "n": 39,
+      "file": "39-maltipoo-child-gentle-pet.webp",
+      "alt": "Apricot Maltipoo being gently stroked by a young child sitting cross-legged on a living room rug",
+      "section": "blog hero: maltipoo-with-kids",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "A young child around eight years old, face shoulders and torso fully in frame, short dark hair and a cream t-shirt, sitting cross-legged on a woven jute rug gently stroking a small apricot toy maltipoo with one calm flat hand, the puppy relaxed and leaning in, sage green sofa in the background of a bright family living room."
+    },
+    {
+      "n": 40,
+      "file": "40-maltipoo-pair-bandanas.webp",
+      "alt": "Two apricot Maltipoos of different shades sitting side by side wearing olive and terracotta bandanas",
+      "section": "blog hero: male-vs-female-maltipoo",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "Two toy maltipoos sitting side by side on a cream linen sofa facing the camera, one pale cream-apricot wearing a small olive green bandana, one deeper apricot wearing a small terracotta bandana, both with soft wavy coats and dark round eyes, warm morning light from a window on the left."
+    },
+    {
+      "n": 41,
+      "file": "41-maltipoo-doorway-waiting-home.webp",
+      "alt": "Apricot Maltipoo nestled in a soft blanket by a home doorway, looking up hopefully",
+      "section": "blog hero: maltipoo-adoption-singapore",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "A small apricot toy maltipoo nestled in a soft cream and sage knitted blanket on the wooden floor near a bright apartment entryway, chin resting on the blanket edge, big dark hopeful eyes looking up toward the light, gentle afternoon sun across the floorboards, quiet tender mood."
+    },
+    {
+      "n": 42,
+      "file": "42-maltipoo-heritage-tea-corner.webp",
+      "alt": "Apricot Maltipoo sitting on a wooden stool beside a small ceramic tea set in a heritage-tiled Singapore home",
+      "section": "blog hero: maltipoo-in-chinese",
+      "aspect_ratio": "16:9",
+      "width": 1376,
+      "prompt": "An apricot toy maltipoo sitting upright on a low dark wooden stool beside a small round table holding a plain ceramic teapot and two small teacups, ornate green and cream patterned heritage floor tiles, warm afternoon light through timber window shutters in a Singapore shophouse interior, soft wavy coat and alert friendly expression."
+    }
+  ]
+}

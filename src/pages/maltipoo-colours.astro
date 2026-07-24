@@ -1,6 +1,7 @@
 ---
 // Core page. Copy authored against briefs/maltipoo-colours.json (2026-07-13).
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PawTrail from '../components/PawTrail.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
 import CaptionedBlock from '../components/CaptionedBlock.astro';
@@ -10,6 +11,14 @@ import CtaClose from '../components/CtaClose.astro';
 import { whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
 import featuredImg from '../assets/site/16-maltipoo-colours-group.webp';
+import swCreamApricot from '../assets/site/2-maltipoo-card-cream-apricot-f.webp';
+import swApricot from '../assets/site/4-maltipoo-card-apricot-teddy.webp';
+import swDeepApricot from '../assets/site/8-maltipoo-card-deep-apricot-m.webp';
+import swWhite from '../assets/site/43-maltipoo-card-white.webp';
+import swCream from '../assets/site/44-maltipoo-card-cream.webp';
+import swBlack from '../assets/site/45-maltipoo-card-black.webp';
+import swBrown from '../assets/site/46-maltipoo-card-brown.webp';
+import swApricotWhite from '../assets/site/10-maltipoo-card-apricot-white.webp';
 
 const title = 'Maltipoo Colours in Singapore: Apricot First | Maltipoo.sg';
 const description =
@@ -56,20 +65,28 @@ const schemas = [
 ];
 
 const swatches = [
-  ['Cream apricot', '#f4e3c8'],
-  ['Apricot', '#e8b985'],
-  ['Deep apricot', '#d19158'],
-  ['White', '#faf7f0'],
-  ['Cream', '#f1e7d0'],
-  ['Black', '#2e2b28'],
-  ['Brown', '#7a5236'],
-  ['Apricot & white', '#f7efe2'],
+  { name: 'Cream apricot', hex: '#f4e3c8', img: swCreamApricot },
+  { name: 'Apricot', hex: '#e8b985', img: swApricot },
+  { name: 'Deep apricot', hex: '#d19158', img: swDeepApricot },
+  { name: 'White', hex: '#faf7f0', img: swWhite },
+  { name: 'Cream', hex: '#f1e7d0', img: swCream },
+  { name: 'Black', hex: '#2e2b28', img: swBlack },
+  { name: 'Brown', hex: '#7a5236', img: swBrown },
+  { name: 'Apricot & white', hex: '#f7efe2', img: swApricotWhite },
 ];
 ---
 
 <BaseLayout title={title} description={description} path="/maltipoo-colours" schemas={schemas}>
   <section class="container-site pt-4">
-    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12">
+    <div class="rounded-[var(--radius-panel)] bg-tint-200 px-6 py-10 md:px-12 relative overflow-hidden rise-in">
+        <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <svg class="absolute -top-8 -right-8 w-44 h-44 text-white/40" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <svg class="absolute top-6 right-[22%] w-9 h-9 text-primary/25 float-soft" style="--float-rot: 14deg" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute bottom-5 right-[10%] w-7 h-7 text-primary/20 float-soft" style="--float-rot: -10deg; animation-delay: -2.6s" viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          <svg class="absolute -bottom-10 -left-10 w-40 h-40 text-primary/8" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="50" /></svg>
+          <div class="absolute bottom-2 left-0 right-0 opacity-30"><PawTrail /></div>
+        </div>
+        <div class="relative">
       <Breadcrumb items={crumbs} bare class="mb-5" />
       <p class="eyebrow mb-2">Colours</p>
       <h1 class="text-[clamp(1.9rem,4vw,2.8rem)] mb-3 max-w-[24ch]">Maltipoo colours in Singapore</h1>
@@ -78,7 +95,7 @@ const swatches = [
         the colour-change truth most listings skip.
       </p>
       <a href={whatsappLink('Hi! Which Maltipoo colours do you currently have available?')} class="btn-cta">Ask about colours</a>
-    </div>
+    </div></div>
   </section>
 
   <AnswerCapsule question="What colours do Maltipoos come in?">
@@ -107,10 +124,13 @@ const swatches = [
       less often.
     </p>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {swatches.map(([name, hex]) => (
-        <div class="pop p-4 text-center">
-          <div class="rounded-[var(--radius-media)] w-full aspect-square mb-3" style={`background:${hex}`} aria-hidden="true"></div>
-          <p class="font-semibold m-0">{name}</p>
+      {swatches.map((sw) => (
+        <div class="pop pop-hover p-4 text-center">
+          <img src={sw.img.src} width={sw.img.width} height={sw.img.height} alt={`${sw.name} Maltipoo puppy`} loading="lazy" class="rounded-[var(--radius-media)] w-full aspect-square object-cover mb-3" />
+          <p class="font-semibold m-0 flex items-center justify-center gap-2">
+            <span class="inline-block w-3.5 h-3.5 rounded-full border border-tint-300" style={`background:${sw.hex}`} aria-hidden="true"></span>
+            {sw.name}
+          </p>
         </div>
       ))}
     </div>
@@ -181,6 +201,38 @@ const swatches = [
         'Tear stains: visible most on light faces',
         'Grooming: identical routine, all colours',
         'Temperament: no colour link, at all',
+      ]}
+    />
+  </CaptionedBlock>
+
+  <CaptionedBlock heading="Predicting adult colour, and what colour cannot tell you" id="predicting">
+    <p>
+      Can adult colour be predicted? Within a shade family, yes; to a paint swatch, no. The reliable signals stack in this order: the parents' adult coats first, the puppy's ear and muzzle tone second (colour holds longest there), and the eight-week body coat a distant third. An apricot puppy with deep-toned ears usually keeps more warmth than its paler littermate.
+    </p>
+    <p>
+      The mechanism is the Poodle-side progressive fading gene: many Maltipoo coats lighten steadily through the first two years, which is why we walk buyers to the parents rather than promise a shade from a photo. Deep apricot that stays deep is the exception worth paying for, not the default.
+    </p>
+    <p>
+      What colour cannot tell you is anything about the dog inside. Temperament tracks the individual and its parents, not the coat; a black Maltipoo is not more aloof, a white one not calmer, whatever the forum thread claims. Choose colour with your eyes and temperament with your <a href="/maltipoo-temperament">temperament homework</a>.
+    </p>
+    <p>
+      Colour does earn one practical vote: lighter faces show tear staining more, so a white or cream buyer should budget the daily thirty-second <a href="/blog/maltipoo-tear-stains">eye wipe</a> from week one. It is cosmetic, it is manageable, and it is the only care line colour actually changes.
+    </p>
+    <p>
+      A note on the rare end of the wardrobe: black and brown Maltipoos usually carry more Poodle in the mix, which can mean a slightly curlier, denser coat and a firmer grooming schedule. Parti coats (apricot and white patches) are pure lottery, the pattern a puppy wears at eight weeks is roughly the pattern it keeps, even as the shades inside it soften.
+    </p>
+    <p>
+      And because we are asked weekly: no, there is no premium worth paying for "rare grey" or "blue" in this cross. Coats that read grey are usually heavy fading in progress, charming, but a phase, not a colour. The honest colour menu in Singapore is the one on this page.
+    </p>
+    <FactsCard
+      slot="side"
+      heading="Prediction order"
+      items={[
+        "1. Parents' adult coats",
+        "2. Puppy ear + muzzle tone",
+        "3. Eight-week body coat (weakest)",
+        "Fading gene lightens coats to year two",
+        "Colour never predicts temperament"
       ]}
     />
   </CaptionedBlock>

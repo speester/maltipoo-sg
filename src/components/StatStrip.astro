@@ -1,15 +1,28 @@
 ---
 // Verified proof numbers only — values come from src/data/site.ts, never literals.
+// Design: each stat card gets its own rotating tint dot so the strip reads as a
+// designed set, not four identical white boxes.
 interface Props {
   stats: { value: string; label: string }[];
 }
 const { stats } = Astro.props;
+const tones = ['bg-mint text-mint-ink', 'bg-butter text-butter-ink', 'bg-blush text-blush-ink', 'bg-tint-200 text-primary-700'];
 ---
 
 <section class="container-site py-6">
   <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-    {stats.map((s) => (
-      <div class="pop p-5 text-center">
+    {stats.map((s, i) => (
+      <div class="pop pop-hover p-5 text-center relative overflow-hidden">
+        <span class:list={['absolute top-0 left-1/2 -translate-x-1/2 h-1.5 w-16 rounded-b-full', tones[i % 4].split(' ')[0]]} aria-hidden="true" />
+        <span class:list={['inline-flex w-9 h-9 rounded-full items-center justify-center mb-2', tones[i % 4]]} aria-hidden="true">
+          <svg class="w-4.5 h-4.5" viewBox="0 0 24 24" fill="currentColor">
+            <ellipse cx="12" cy="15.5" rx="5" ry="4.2" />
+            <ellipse cx="5.4" cy="10.5" rx="2" ry="2.6" />
+            <ellipse cx="9.8" cy="7.4" rx="2" ry="2.7" />
+            <ellipse cx="14.2" cy="7.4" rx="2" ry="2.7" />
+            <ellipse cx="18.6" cy="10.5" rx="2" ry="2.6" />
+          </svg>
+        </span>
         <p class="text-2xl md:text-3xl font-bold text-primary m-0" style="font-family: var(--font-display);">{s.value}</p>
         <p class="text-sm text-ink-soft m-0 mt-1">{s.label}</p>
       </div>
