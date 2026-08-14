@@ -65,7 +65,8 @@ export function webPageSchema(opts: {
   datePublished: string;
   dateModified?: string;
 }) {
-  const url = `${site.domain}${opts.path}`;
+  const path = opts.path.endsWith('/') ? opts.path : `${opts.path}/`;
+  const url = `${site.domain}${path}`;
   return {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
@@ -90,7 +91,7 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
       '@type': 'ListItem',
       position: i + 1,
       name: item.name,
-      item: `${site.domain}${item.url}`,
+      item: `${site.domain}${item.url.endsWith('/') ? item.url : `${item.url}/`}`,
     })),
   };
 }

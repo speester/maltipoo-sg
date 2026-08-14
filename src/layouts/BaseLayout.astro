@@ -17,7 +17,8 @@ interface Props {
 }
 
 const { title, description, path, ogImage, schemas = [], noindex = false } = Astro.props;
-const canonical = `${site.domain}${path}`;
+const normalizedPath = path.endsWith('/') ? path : `${path}/`;
+const canonical = `${site.domain}${normalizedPath}`;
 const ogImageUrl = `${site.domain}${ogImage ?? site.defaultOgImage}`;
 const allSchemas = [organizationSchema(), personSchema(), websiteSchema(), ...schemas];
 ---
