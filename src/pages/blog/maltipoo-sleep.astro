@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/37-maltipoo-night-sleep.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'Where Should Your Maltipoo Sleep? | Maltipoo.sg';
 const description =
@@ -127,6 +128,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/maltipoo-sleep" />
 
     <CtaClose
       secondaryHeading='First nights, supported'

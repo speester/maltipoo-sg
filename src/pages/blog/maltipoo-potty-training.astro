@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/27-maltipoo-pee-pad.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'Potty Training a Maltipoo in Singapore | Maltipoo.sg';
 const description =
@@ -127,6 +128,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/maltipoo-potty-training" />
 
     <CtaClose
       secondaryHeading='The pen does half the work'

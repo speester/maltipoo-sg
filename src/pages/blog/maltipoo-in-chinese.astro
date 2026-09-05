@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/42-maltipoo-heritage-tea-corner.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'What Is a Maltipoo Called in Chinese? | Maltipoo.sg';
 const description =
@@ -141,6 +142,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/maltipoo-in-chinese" />
 
     <CtaClose
       secondaryHeading='Ask in either language'

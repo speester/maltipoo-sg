@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/22-maltipoo-tear-stain-wipe.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'Maltipoo Tear Stains: What Works in Singapore | Maltipoo.sg';
 const description =
@@ -144,6 +145,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/maltipoo-tear-stains" />
 
     <CtaClose
       secondaryHeading="Meet our apricot Maltipoos"

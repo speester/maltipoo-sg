@@ -1,0 +1,38 @@
+---
+// Sibling cross-links for cluster pages (comparisons, guide sets). Keeps every
+// page in a cluster above the internal-inbound-link floor that Google's crawl
+// budget appears to respect on a young domain.
+import type { ClusterLink } from '../data/clusters';
+
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  items: ClusterLink[];
+}
+
+const {
+  eyebrow = 'Keep comparing',
+  heading = 'Other Maltipoo comparisons',
+  items,
+} = Astro.props;
+---
+
+<section class="container-site py-8">
+  <p class="eyebrow mb-2">{eyebrow}</p>
+  <h2 class="text-xl md:text-2xl mb-5">{heading}</h2>
+  <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 list-none p-0 m-0">
+    {items.map((item) => (
+      <li>
+        <a href={item.href} class="pop pop-hover p-4 no-underline flex items-center gap-3 h-full">
+          <span class="min-w-0">
+            <span class="block font-semibold text-sm">{item.label}</span>
+            <span class="block text-xs text-ink-soft mt-0.5">{item.note}</span>
+          </span>
+          <svg class="w-4 h-4 ml-auto shrink-0 text-ink-soft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+            <path d="m9 6 6 6-6 6" />
+          </svg>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>

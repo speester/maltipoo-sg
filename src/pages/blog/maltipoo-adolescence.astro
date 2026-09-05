@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/19-maltipoo-training-sit.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'Surviving Maltipoo Adolescence | Maltipoo.sg';
 const description =
@@ -127,6 +128,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/maltipoo-adolescence" />
 
     <CtaClose
       secondaryHeading='Ask us mid-crisis'

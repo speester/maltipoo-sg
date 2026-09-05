@@ -11,6 +11,8 @@ import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
 import featuredImg from '../assets/site/50-maltipoo-vs-bichon-frise.webp';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { comparisons } from '../data/clusters';
 
 const title = 'Maltipoo vs Bichon Frise: Puff or Velcro | Maltipoo.sg';
 const description =
@@ -206,6 +208,8 @@ const schemas = [
   </CaptionedBlock>
 
   <FAQ items={faqItems} />
+
+  <RelatedLinks items={comparisons.filter((c) => c.href !== '/maltipoo-vs-bichon-frise')} />
 
   <CtaClose
     secondaryHeading="Compare more breeds"

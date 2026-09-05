@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/38-maltipoo-brushed-coat-fluff.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'Are Maltipoos Hypoallergenic? Do They Shed? | Maltipoo.sg';
 const description =
@@ -127,6 +128,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/maltipoo-hypoallergenic-shedding" />
 
     <CtaClose
       secondaryHeading='Come do the real test'

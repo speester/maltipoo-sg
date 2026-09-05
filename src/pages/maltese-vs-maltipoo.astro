@@ -11,6 +11,8 @@ import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
 import featuredImg from '../assets/site/47-maltese-vs-maltipoo.webp';
+import RelatedLinks from '../components/RelatedLinks.astro';
+import { comparisons } from '../data/clusters';
 
 const title = 'Maltese vs Maltipoo: What the Poodle Changes | Maltipoo.sg';
 const description =
@@ -215,6 +217,8 @@ const schemas = [
   </CaptionedBlock>
 
   <FAQ items={faqItems} />
+
+  <RelatedLinks items={comparisons.filter((c) => c.href !== '/maltese-vs-maltipoo')} />
 
   <CtaClose
     secondaryHeading="Compare more breeds"

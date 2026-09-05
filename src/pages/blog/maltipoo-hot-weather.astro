@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/32-maltipoo-morning-walk.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'Keeping a Maltipoo Cool in Singapore Heat | Maltipoo.sg';
 const description =
@@ -127,6 +128,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/maltipoo-hot-weather" />
 
     <CtaClose
       secondaryHeading='Built for flat life'

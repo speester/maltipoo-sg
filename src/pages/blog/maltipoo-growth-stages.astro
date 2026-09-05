@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/13-maltipoo-size-adult-puppy.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'Maltipoo Growth From Puppy to Adult | Maltipoo.sg';
 const description =
@@ -128,6 +129,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/maltipoo-growth-stages" />
 
     <CtaClose
       secondaryHeading='Watch a stage in person'

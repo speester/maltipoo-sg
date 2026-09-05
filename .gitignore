@@ -34,3 +34,6 @@ briefs/
 seo-audits/
 seo-audit-reports/
 claude-seo/
+
+src/data/build-id.json
+scripts/__pycache__/

@@ -1,0 +1,22 @@
+---
+// Sibling cross-links for blog posts. Without this every post's only internal
+// inbound link was its /blog index entry, which is not enough reach for a young
+// domain's crawl budget (see src/data/posts.ts).
+import RelatedLinks from './RelatedLinks.astro';
+import { relatedPosts } from '../data/posts';
+
+interface Props {
+  current: string;
+  count?: number;
+}
+
+const { current, count = 4 } = Astro.props;
+
+const items = relatedPosts(current, count).map((post) => ({
+  href: post.href,
+  label: post.label,
+  note: post.tag,
+}));
+---
+
+<RelatedLinks eyebrow="Keep reading" heading="More Maltipoo guides" items={items} />

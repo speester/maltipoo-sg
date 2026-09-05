@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
+# Cloudflare Email Obfuscation rewrites the footer mailto: into
+# /cdn-cgi/l/email-protection, which 404s to crawlers on Pages.
+Disallow: /cdn-cgi/
+
 Sitemap: https://maltipoo.sg/sitemap-index.xml

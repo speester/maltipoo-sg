@@ -11,6 +11,7 @@ import CtaClose from '../../components/CtaClose.astro';
 import { site } from '../../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
 import featuredImg from '../../assets/site/40-maltipoo-pair-bandanas.webp';
+import RelatedPosts from '../../components/RelatedPosts.astro';
 
 const title = 'Male or Female Maltipoo? The Small Differences | Maltipoo.sg';
 const description =
@@ -141,6 +142,8 @@ const schemas = [
     </section>
 
     <FAQ items={faqItems} />
+
+    <RelatedPosts current="/blog/male-vs-female-maltipoo" />
 
     <CtaClose
       secondaryHeading='Meet the litter'
