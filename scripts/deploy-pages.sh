@@ -27,7 +27,11 @@ cd "$ROOT"
 # project-config.md values carry trailing `# ...` comments. Not stripping one put the
 # whole comment into --project-name, so the deploy would have targeted a project that
 # does not exist. The --dry-run form is what surfaced it.
-PROJECT="$(grep -E '^CLOUDFLARE_PROJECT:' config/project-config.md | head -1 | sed 's/^[^:]*:[[:space:]]*//' | sed 's/[[:space:]]*#.*//' | sed 's/[[:space:]]*$//' | tr -d '')"
+# 2026-09-05: the key is written as a markdown bullet on most projects
+# (`- **CLOUDFLARE_PROJECT:** name`). The anchored, plain-key grep matched nothing, and
+# because `set -e` kills the script when a command substitution's grep exits 1, the whole
+# deploy - dry run included - ended SILENTLY with status 1 and no message at all.
+PROJECT="$(grep -E '^[[:space:]]*[-*]?[[:space:]]*(\*\*)?CLOUDFLARE_PROJECT(\*\*)?[[:space:]]*[:=]' config/project-config.md | head -1 | sed 's/^[^:=]*[:=][[:space:]]*//' | sed 's/[[:space:]]*#.*//' | sed 's/\*\*//g' | sed 's/^[[:space:]]*//' | tr -d '\r' | sed 's/[[:space:]]*$//' || true)"
 [ -n "$PROJECT" ] || { echo "FAIL: CLOUDFLARE_PROJECT missing from config/project-config.md"; exit 1; }
 
 [ -d dist ] || { echo "FAIL: dist/ does not exist — run 'npm run build' first"; exit 1; }
@@ -38,10 +42,18 @@ PROJECT="$(grep -E '^CLOUDFLARE_PROJECT:' config/project-config.md | head -1 | s
 # LIVE project it demands the very header that would noindex the production site, and the
 # obvious way to "fix" the failure is to add one. Branch on LAUNCH_STATUS, and on a LIVE
 # project assert the OPPOSITE - that no blanket noindex is about to ship.
-LAUNCH_STATUS="$(grep -E '^LAUNCH_STATUS:' config/project-config.md | head -1 | sed 's/^[^:]*:[[:space:]]*//' | sed 's/[[:space:]]*#.*//' | tr -d '
-')"
+LAUNCH_STATUS="$(grep -E '^[[:space:]]*[-*]?[[:space:]]*(\*\*)?LAUNCH_STATUS(\*\*)?[[:space:]]*[:=]' config/project-config.md | head -1 | sed 's/^[^:=]*[:=][[:space:]]*//' | sed 's/[[:space:]]*#.*//' | sed 's/\*\*//g' | sed 's/^[[:space:]]*//' | tr -d '
+' | awk '{print $1}' || true)"
 if [ "${LAUNCH_STATUS:-}" = "LIVE" ]; then
-  if [ -f dist/_headers ] && grep -qE 'X-Robots-Tag:[[:space:]]*[^[:space:]]*noindex' dist/_headers; then
+  # SCOPE MATTERS (2026-09-05). A correct _headers file noindexes the PREVIEW hosts
+  # (*.pages.dev) and nothing else. The old grep was file-wide, so it read that correct
+  # block as "the production site is about to be de-indexed" and blocked every deploy of
+  # every live project - and the obvious way to satisfy it is to delete the one noindex
+  # that should be there. Only a noindex OUTSIDE a pages.dev block is the danger.
+  if [ -f dist/_headers ] && awk '
+      /^[^[:space:]#]/ { block = $0 }
+      /X-Robots-Tag:.*noindex/ { if (block !~ /pages\.dev/) { found = 1 } }
+      END { exit(found ? 0 : 1) }' dist/_headers; then
     echo "FAIL: LAUNCH_STATUS is LIVE but dist/_headers carries a noindex X-Robots-Tag."
     echo "      Deploying this would de-index the production site. Remove it, or set"
     echo "      LAUNCH_STATUS back if this project is not actually live."
@@ -53,14 +65,26 @@ else
   grep -q 'X-Robots-Tag' dist/_headers || { echo "FAIL: dist/_headers carries no X-Robots-Tag"; exit 1; }
 fi
 
+# --branch <name> (2026-09-05): this project's staging lives on the `smoke` branch, and the
+# only way to reach it was to bypass this script and run wrangler by hand - which skips every
+# pre-check the script exists to run. A named branch is now a first-class argument, and
+# --dry-run composes with it instead of forcing main.
 BRANCH="preview"
 DRY=0
-case "${1:-}" in
-  --preview) BRANCH="preview" ;;
-  --production|"") BRANCH="main" ;;
-  --dry-run) BRANCH="main"; DRY=1 ;;
-  *) echo "FAIL: unknown argument '$1'"; exit 1 ;;
-esac
+BRANCH_SET=0
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --preview) BRANCH="preview"; BRANCH_SET=1 ;;
+    --production) BRANCH="main"; BRANCH_SET=1 ;;
+    --branch) shift; [ -n "${1:-}" ] || { echo "FAIL: --branch needs a name"; exit 1; }
+              BRANCH="$1"; BRANCH_SET=1 ;;
+    --dry-run) DRY=1 ;;
+    "") : ;;
+    *) echo "FAIL: unknown argument '$1'"; exit 1 ;;
+  esac
+  shift || true
+done
+[ "$BRANCH_SET" = 1 ] || BRANCH="main"
 
 SHA="$(node -e "process.stdout.write(require('./src/data/build-id.json').id)")"
 

@@ -33,12 +33,27 @@ function blueprintRows() {
   return map;
 }
 
+// LAST RESORT for a description: the one the BUILT page actually ships. A page whose
+// frontmatter description is a template literal has no readable value in the source, and
+// the shipped <meta name="description"> is the honest text — never invent one.
+function builtDescription(route) {
+  const f = route === '/' ? 'dist/index.html' : `dist${route}index.html`;
+  try {
+    const m = fs.readFileSync(f, 'utf8').match(/<meta\s+name="description"\s+content="([^"]*)"/i);
+    return m ? m[1].replace(/&amp;/g, '&').replace(/&#39;|&apos;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>') : '';
+  } catch { return ''; }
+}
+
 function frontmatter(file) {
   const src = fs.readFileSync(file, 'utf8');
   const out = {};
   for (const key of ['title', 'description', 'kicker', 'draft']) {
     const m = src.match(new RegExp(`^\\s*(?:const\\s+)?${key}\\s*[:=]\\s*(['"\`])([\\s\\S]*?)\\1`, 'm'));
-    if (m) out[key] = m[2];
+    // A backtick frontmatter value is TEMPLATE SOURCE, not text: `${range}` read out of
+    // the file is an unevaluated expression, and shipping it put "${site.license.avsNumber}"
+    // in the RSS feed. Treat any value that still carries ${...} as unresolved so the
+    // caller falls back to the blueprint's own copy.
+    if (m) out[key] = /\$\{/.test(m[2]) ? '' : m[2];
     else if (key === 'draft' && /^\s*draft\s*[:=]\s*true/m.test(src)) out.draft = 'true';
   }
   out.noindex = /noindex/.test(src);
@@ -53,8 +68,11 @@ const entries = pageFiles()
     return {
       path: route,
       file: file.replace(/\\/g, '/'),
-      title: fm.title ?? b.title ?? '',
-      description: fm.description ?? '',
+      // `??` only falls through on null/undefined, so a page whose title is a template
+      // literal - which the frontmatter reader returns as '' - never reached the
+      // blueprint fallback and was reported as having no title at all. (RTP Fix 2026-09-05)
+      title: fm.title || b.title || '',
+      description: fm.description || b.description || builtDescription(route) || '',
       kicker: fm.kicker ?? '',
       tier: b.tier ?? '',
       hub: b.hub ?? '',

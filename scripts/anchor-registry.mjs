@@ -33,7 +33,15 @@ function cfg() {
   return out;
 }
 const BRAND = (cfg().BUSINESS_NAME || '').toLowerCase();
-const COMPLIANCE = /^(privacy|terms|cookie|disclosure|editorial policy|accessibility|contact us)$/i;
+// 2026-09-05: the list held the bare nouns only, so the way these links are ACTUALLY
+// written - "privacy policy", "terms of service", an editorial-correction invitation -
+// was graded as ordinary body-link over-optimisation. A compliance link is site-wide by
+// design and its anchor must not be varied for SEO; match the phrasings people use.
+// 2026-09-05 (oncurio.com): the list still missed the two commonest real phrasings -
+// a leading "our/the", and the affiliate/advertising qualifier a publisher is
+// REQUIRED to put in front of "disclosure". Both were graded as over-optimisation
+// on a site that must link them from every review page.
+const COMPLIANCE = /^(our |the )?(privacy( policy| notice)?|terms( of (service|use))?|cookie[s]?( policy)?|(affiliate |advertising |ad )?disclosure( policy| statement)?|editorial (policy|standards|guidelines)|accessibility|contact us|tell us and we will correct it)$/i;
 
 function walk(d, out = []) {
   if (!existsSync(d)) return out;

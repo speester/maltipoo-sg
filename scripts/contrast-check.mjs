@@ -52,12 +52,24 @@ const DISPLAY_TOKENS = new Set(['display', 'hero-title']);
  *  A flat regex over the whole file cannot tell a light declaration from a dark one. */
 function ruleBlocks(css) {
   const out = [];
+  // COMMENTS ARE NOT SELECTORS (2026-09-05). A comment sitting between two blocks stays glued
+  // to the next selector, so `/* ... */ @media (prefers-color-scheme: dark) {` no longer
+  // STARTS with '@' - the media query was parsed as an ordinary rule, its theme read as
+  // "both", and every dark value overwrote the light palette. That is how a light-mode page
+  // measured ink 0.225 against paper 0.17 and reported 1.12:1 on a site whose light theme is
+  // cream. Strip comments before parsing anything.
+  css = css.replace(/\/\*[\s\S]*?\*\//g, ' ');
   const parse = (text, media) => {
     let i = 0;
     while (i < text.length) {
       const open = text.indexOf('{', i);
       if (open < 0) break;
-      const sel = text.slice(i, open).trim();
+      // A STATEMENT at-rule (`@tailwind base;`, `@charset`, a bare `@import`) ends in a
+      // semicolon and carries no block, so it stays glued to the NEXT selector. That made
+      // sel `@tailwind base; ... :root`, which starts with '@' and was discarded as an
+      // at-rule — the whole first :root block, i.e. the entire palette, went unparsed and
+      // every text token read as "not declared". Keep only the text after the last ';'.
+      const sel = text.slice(i, open).split(';').pop().trim();
       let depth = 1, j = open + 1;
       while (j < text.length && depth) { if (text[j] === '{') depth++; else if (text[j] === '}') depth--; j++; }
       const body = text.slice(open + 1, j - 1);
@@ -108,7 +120,13 @@ function inlineImports(file, seen = new Set()) {
 
 function parseTokens() {
   if (!fs.existsSync(CSS)) { console.error(`FAIL ${CSS} not found`); process.exit(1); }
-  const css = inlineImports(CSS);
+  // tokens.css DECLARES the vocabulary; global.css declares the shell classes, and the
+  // kit ships no @import between them - the layout imports both. Reading global.css
+  // alone therefore reported all 18 text tokens as "not declared" on a project whose
+  // palette was complete (Insight User Conference, 2026-09-05). Every stylesheet the
+  // site loads is a stylesheet this gate must read declarations from.
+  const TOKENS = path.join(path.dirname(CSS), 'tokens.css');
+  const css = (fs.existsSync(TOKENS) ? inlineImports(TOKENS) + String.fromCharCode(10) : '') + inlineImports(CSS);
   const light = {}, dark = {};
   for (const b of ruleBlocks(css)) {
     const theme = blockTheme(b);
@@ -247,7 +265,12 @@ async function runPages() {
     res.writeHead(200, { 'Content-Type': types[path.extname(file)] ?? 'application/octet-stream' });
     res.end(fs.readFileSync(file));
   });
-  await new Promise((r) => server.listen(8793, r));
+  // EPHEMERAL PORT (2026-09-05, oncurio.com). A hard-coded 8793 meant a leftover
+  // listener from an earlier or concurrent run crashed this gate with EADDRINUSE, and
+  // the runner recorded a FAILING contrast check on a site whose 53 pages all pass.
+  // Ask the OS for a free port and read back what it gave us.
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  const PORT = server.address().port;
 
   const routes = [];
   const walk = (dir) => {
@@ -272,7 +295,7 @@ async function runPages() {
   for (const route of targets) {
     for (const theme of THEMES) {
     const page = await (await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: theme })).newPage();
-    await page.goto('http://127.0.0.1:8793' + route, { waitUntil: 'load' });
+    await page.goto(`http://127.0.0.1:${PORT}` + route, { waitUntil: 'load' });
     await page.emulateMedia({ colorScheme: theme });
     await page.waitForTimeout(150);
     const found = await page.evaluate((sels) => {
@@ -283,7 +306,14 @@ async function runPages() {
           if (c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent') return c;
           n = n.parentElement;
         }
-        return getComputedStyle(document.body).backgroundColor;
+        // The walk stops at <html>. If body AND html are both transparent the browser
+        // still paints white, and returning the transparent value made every ratio a
+        // measurement against BLACK - 126 false failures on one site.
+        for (const n2 of [document.body, document.documentElement]) {
+          const c = getComputedStyle(n2).backgroundColor;
+          if (c && c !== 'rgba(0, 0, 0, 0)' && c !== 'transparent') return c;
+        }
+        return 'rgb(255, 255, 255)';
       };
       const out = [];
       for (const sel of sels) {

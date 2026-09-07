@@ -54,6 +54,13 @@ const strip = (h) => h
   .replace(/<script[\s\S]*?<\/script>/gi, ' ')
   .replace(/<style[\s\S]*?<\/style>/gi, ' ')
   .replace(/<(header|footer|nav|aside)\b[\s\S]*?<\/\1>/gi, ' ')
+  // VERBATIM QUOTED TEXT IS NOT THIS SITE'S PROSE. A customer review or an expert
+  // quotation is reproduced word for word; grading its opener as machine-written slop
+  // asks the site to rewrite what someone else actually said, which is falsification,
+  // not editing. Quotations are dropped before the prose measures run.
+  // (RTP Fix 2026-09-05: a real 5-star review opening "Overall, ..." failed this gate.)
+  .replace(/<blockquote[\s\S]*?<\/blockquote>/gi, ' ')
+  .replace(/<[^>]*data-(review|quote)[^>]*>[\s\S]*?<\/[a-z]+>/gi, ' ')
   // Block boundaries END a sentence. Without this an <h1> fuses with the paragraph that
   // follows it, so a page's "first sentence" is really heading+prose — which silently
   // defeated both the stock-opener check and the capsule-pattern measure below.

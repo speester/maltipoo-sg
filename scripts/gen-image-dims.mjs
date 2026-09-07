@@ -52,7 +52,14 @@ for (const f of files) {
       const m = await sharp(f).metadata();
       if (!m.width || !m.height) { problems.push(`${f}: no intrinsic size`); continue; }
       dims[key] = { width: m.width, height: m.height, type: ext.slice(1) };
-      if (RASTER.has(ext) && fs.statSync(f).size < 4096) problems.push(`${f}: suspiciously small (${fs.statSync(f).size} B) — possible blank capture`);
+      // A FLAT 4KB FLOOR flags a legitimately small file (2026-09-05: a real 480x268 WebP
+      // variant at 3,480 B, full tonal range, downscaled by gen-image-variants). What the
+      // check is actually for is a BLANK capture, so scale the floor with the pixel count:
+      // roughly 0.005 bytes per pixel is far below any real photographic WebP and still
+      // catches an empty or single-colour image at any size.
+      const bytes = fs.statSync(f).size;
+      const floor = Math.max(1024, Math.round(m.width * m.height * 0.005));
+      if (RASTER.has(ext) && bytes < floor) problems.push(`${f}: suspiciously small (${bytes} B for ${m.width}x${m.height}, floor ${floor} B) — possible blank capture`);
     } else if (ext === '.svg') {
       const txt = fs.readFileSync(f, 'utf8');
       const vb = txt.match(/viewBox="([\d.\s-]+)"/);

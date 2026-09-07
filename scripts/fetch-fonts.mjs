@@ -122,6 +122,11 @@ for (const [idx, spec] of specs.entries()) {
   if (!faces.length) fail(`no @font-face returned for "${family}".`);
   // The API emits one face per unicode-range subset. Keep the LATIN ones: a Cyrillic
   // subset nobody on this site can read is bytes on the critical path.
+  // A VARIABLE font answers every requested weight with the SAME file. Downloading it
+  // once per weight wrote four identical 35 KB copies on one site and blew the 120 KB
+  // budget with 76 KB of real bytes. Group the latin faces by source URL, download each
+  // file once, and emit ONE @font-face carrying the weight RANGE it covers.
+  const byUrl = new Map();
   for (const face of faces) {
     const range = (face.match(/unicode-range:\s*([^;]+);/) || [, ''])[1];
     const isLatin = !range || /U\+0000-00FF|U\+0100-024F/i.test(range);
@@ -130,7 +135,15 @@ for (const [idx, spec] of specs.entries()) {
     const style = (face.match(/font-style:\s*([^;]+);/) || [, 'normal'])[1].trim();
     const url = (face.match(/url\((https:[^)]+\.woff2)\)/) || [, ''])[1];
     if (!url) continue;
-    const slug = `${family.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${weight}${style === 'italic' ? '-italic' : ''}.woff2`;
+    const key = `${url}|${style}`;
+    if (!byUrl.has(key)) byUrl.set(key, { url, style, range, weights: [] });
+    byUrl.get(key).weights.push(weight);
+  }
+  for (const { url, style, range, weights } of byUrl.values()) {
+    const nums = weights.flatMap((w) => w.split(/\s+/).map(Number)).filter((n) => !Number.isNaN(n));
+    const lo = Math.min(...nums), hi = Math.max(...nums);
+    const weight = lo === hi ? String(lo) : `${lo} ${hi}`;
+    const slug = `${family.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${lo === hi ? lo : `${lo}-${hi}`}${style === 'italic' ? '-italic' : ''}.woff2`;
     const bin = await fetch(url, { headers: { 'User-Agent': UA } });
     if (!bin.ok) fail(`could not download ${url} (${bin.status}).`);
     fs.writeFileSync(path.join(OUTDIR, slug), Buffer.from(await bin.arrayBuffer()));

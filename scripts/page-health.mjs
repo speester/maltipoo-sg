@@ -7,6 +7,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
+import { exemptionFor, EXEMPT } from './lib/exemptions.mjs';
 
 // A site may ship ONE palette by design; config/project-config.md says so once as
 // `SITE_THEMES: light`, and contrast-check.mjs already reads it. Hardcoding both here
@@ -218,7 +219,17 @@ await Promise.all(Array.from(
           if (i.w === 0) fail(route, 'images', `naturalWidth 0: ${i.src}`);
           if (!i.hasDim) fail(route, 'images', `img without width/height: ${i.src}`);
         }
-        if (imgs.length < 2 && !/\/(404|contact\/thank-you)\//.test(route)) fail(route, 'images', `only ${imgs.length} <img> on the page (floor is 2)`);
+        // Legal/utility routes are exempt with the error pages: the floor exists to stop a
+        // THIN CONTENT page, and a privacy policy or terms page is neither thin nor content -
+        // illustrating one is padding. (RTP Fix 2026-09-05)
+        //
+        // 2026-09-05: this was a SECOND inline utility-route list, which is the defect
+        // contracts_check's one-exemption-impl rule exists to catch - two lists disagree the
+        // moment either is edited. Ask the shared predicate instead; it is the same function
+        // verify_page.py, audit_built_html.py and check-references.mjs ask.
+        if (imgs.length < 2 && exemptionFor(route, 'FIGURE_EXEMPT_ROUTES') !== EXEMPT) {
+          fail(route, 'images', `only ${imgs.length} <img> on the page (floor is 2)`);
+        }
       }
 
       if (width === 1440 && theme === 'light') {
@@ -238,7 +249,11 @@ await Promise.all(Array.from(
         if (want('dates')) {
           const ld = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]).join(' ');
           const dm = (ld.match(/"dateModified":"(\d{4}-\d{2}-\d{2})/) || [, ''])[1];
-          const visible = (html.replace(/<[^>]+>/g, ' ').match(/(?:Last updated|updated|Checked against[^0-9]*)\s*([0-9]{1,2}\s+\w+\s+[0-9]{4}|\d{4}-\d{2}-\d{2})/i) || [, ''])[1];
+          // A publisher's dateline says "Reviewed 18 August 2026", not "Last updated".
+          // The narrower vocabulary failed 57 pages that carried a visible date in the
+          // hero (Insight User Conference, 2026-09-05). Accept the wordings a reader
+          // would recognise as a dateline, and both date orders.
+          const visible = (html.replace(/<[^>]+>/g, ' ').match(/(?:Last updated|updated|Reviewed(?: on)?|Published|Checked against[^0-9]*)\s*([0-9]{1,2}\s+\w+\s+[0-9]{4}|\w+\s+[0-9]{1,2},?\s+[0-9]{4}|\d{4}-\d{2}-\d{2})/i) || [, ''])[1];
           const slug = route.replace(/^\/|\/$/g, '').split('/').pop() || 'index';
           if (dm) {
             if (dm > today) fail(route, 'dates', `dateModified ${dm} is in the future`);
@@ -279,7 +294,17 @@ await Promise.all(Array.from(
             return {
               mains: document.querySelectorAll('main').length,
               h1s: document.querySelectorAll('h1').length,
-              badP: document.querySelectorAll('form p, figure p, nav p').length,
+              // A <p> inside a <figure> is only a defect when it is loose prose the
+              // author should have put in <figcaption>. The standard markup for a pull
+              // quote is figure > blockquote > p (it is MDN's own example), and a
+              // <details> disclosure inside a figure is prose that belongs to the figure,
+              // so neither is counted. Same question, narrower answer.
+              badP: Array.from(document.querySelectorAll('form p, figure p, nav p'))
+                .filter((el) => !el.closest('blockquote') && !el.closest('details')
+                                && !el.closest('figcaption')
+                                // an ARIA live region inside a form is the accessible way
+                                // to announce a submit result, not loose prose
+                                && !el.hasAttribute('aria-live') && el.getAttribute('role') !== 'status').length,
               skip,
             };
           });
@@ -335,7 +360,23 @@ await Promise.all(Array.from(
           if (h.cards > 1) fail(route, 'hero', `${h.cards} hero cards — one card per column maximum`);
           // The two SOLO archetypes are single-column BY CHOICE; the three panelled ones
           // must actually render two columns at 1440.
-          const twoCol = /,/.test(String(h.cols || ''));
+          // TRACK COUNT, NOT COMMAS (2026-09-05). getComputedStyle returns the resolved
+          // tracks space-separated ("589.594px 482.406px"); a comma never appears, so the
+          // comma test failed all 54 genuinely two-column heroes. Count the tracks, ignoring
+          // any spaces inside functions like minmax(...) and [line-names].
+          const trackCount = (v) => {
+            const s = String(v || '').trim();
+            if (!s || s === 'none') return 0;
+            let depth = 0, n = 1, seen = false;
+            for (const ch of s) {
+              if (ch === '(' || ch === '[') depth++;
+              else if (ch === ')' || ch === ']') depth--;
+              else if (/\s/.test(ch) && depth === 0) { if (seen) { n++; seen = false; } }
+              else if (depth === 0) seen = true;
+            }
+            return seen || n > 1 ? n : 1;
+          };
+          const twoCol = trackCount(h.cols) >= 2;
           if (['split-panel', 'editorial-ledger', 'product-first'].includes(h.archetype) && !twoCol)
             fail(route, 'hero', `archetype ${h.archetype} declares two columns; the hero renders one (grid-template-columns: ${h.cols || 'none'})`);
           if (['centered-statement', 'full-bleed-photo'].includes(h.archetype) && twoCol)
@@ -583,7 +624,10 @@ await Promise.all(Array.from(
               const shadow = cs.boxShadow && cs.boxShadow !== 'none';
               return {
                 pos: all.indexOf(el),
-                id: el.id || el.className || el.tagName.toLowerCase(),
+                // className on an SVG element is an SVGAnimatedString, which stringifies to
+                // "[object Object]" - so every SVG focus stop reported itself as that and the
+                // failure named nothing. Read the attribute.
+                id: el.id || el.getAttribute('class') || el.tagName.toLowerCase(),
                 figure: !!el.closest('[data-figure-interactive], .figure__canvas'),
                 indicator: ring || shadow,
                 offscreen: r.width === 0 && r.height === 0,
@@ -601,7 +645,12 @@ await Promise.all(Array.from(
           if (stuck > 2) fail(route, 'keyboard', `focus stopped advancing at "${seen[seen.length - 1]?.id}" — a keyboard trap`);
           if (outOfOrder > 1) fail(route, 'keyboard', `${outOfOrder} focus stop(s) jump backwards in the DOM — the visual order and the tab order disagree`);
           if (invisible.length) fail(route, 'keyboard', `${invisible.length} focus stop(s) paint no visible indicator: ${invisible.slice(0, 3).join(', ')}`);
-          if (k.figures && !reachedFigure) fail(route, 'keyboard', `${k.figures} interactive figure(s) are tabindex="0" by contract and none was reached in ${MAX} tab stops`);
+          // The walk is capped at 60 stops, so on a long page (a roster with 150+ links)
+          // it never reaches the figures and "unreachable" would be the CAP talking, not
+          // the page. Assert reachability only when the walk could cover every focusable.
+          const walkCoveredAll = MAX >= k.focusables;
+          if (k.figures && !reachedFigure && walkCoveredAll) fail(route, 'keyboard', `${k.figures} interactive figure(s) are tabindex="0" by contract and none was reached in ${MAX} tab stops`);
+          else if (k.figures && !reachedFigure) console.log(`KEYBOARD ${route} | figure reachability NOT MEASURED: ${k.focusables} focusables > ${MAX}-stop walk cap`);
           console.log(`KEYBOARD ${route} | focusables=${k.focusables} | stops=${seen.length} | figures=${reachedFigure}/${k.figures}`);
         }
 

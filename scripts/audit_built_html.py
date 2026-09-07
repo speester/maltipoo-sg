@@ -16,6 +16,8 @@ import csv, datetime as _dt, html as H, json, os, re, subprocess, sys
 # line, so the whole run reports nothing. Measured 2026-09-05: this killed
 # verify_page.py on 22 of 29 projects, which is why the pipeline looked like it
 # only ran on six. Degrade the CHARACTER, never the run.
+import sys  # the encoding guard below USES sys; without this the
+           # NameError was swallowed by its own except and the guard never applied.
 try:
     sys.stdout.reconfigure(errors="replace")
     sys.stderr.reconfigure(errors="replace")

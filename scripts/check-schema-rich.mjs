@@ -115,11 +115,37 @@ for (const { route, html } of pages) {
   const main = (html.split('<main')[1] || '').split('</main>')[0] || '';
   const text = main.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ');
   const hrefs = new Set([...main.matchAll(/href="([^"#?]+)"/g)].map((m) => m[1].replace(/^https?:\/\/[^/]+/, '')));
+  // IN-PAGE ANCHORS. The href harvest above drops anything carrying a fragment, so an
+  // ItemList whose rows point at sections of THIS page (a five-stage process, a glossary)
+  // could never match a link the page really carries (Insight User Conference, 2026-09-06).
+  const fragments = new Set([...main.matchAll(/href="#([A-Za-z0-9_-]+)"/g)].map((m) => m[1]));
+  for (const f of fragments) hrefs.add(route + '#' + f);
 
   const lists = of('ItemList');
   const products = of('Product');
   const services = of('Service');
-  const offers = [...products, ...services].filter((n) => n.offers);
+  // Offers nested inside an ItemList row are still this page's offers. Reading only the
+  // TOP-LEVEL graph nodes reported "68 data-price elements and no Offer node" on a
+  // listing page whose every row carries one.
+  const nested = [];
+  const walkNodes = (v) => {
+    if (Array.isArray(v)) return v.forEach(walkNodes);
+    if (v && typeof v === 'object') {
+      if (v.offers) nested.push(v);
+      // AN OfferCatalog HOLDS ITS OFFERS IN itemListElement, NOT IN `offers` (2026-09-06).
+      // The walker recognised only the `offers` PROPERTY, so a graph built the catalogue way
+      // -- Organization -> hasOfferCatalog -> OfferCatalog -> itemListElement[Offer] -- read
+      // as a page with no offers at all. thesuperpanel.com ships 23 Offer nodes on / and 23
+      // on /pricing/ and this gate reported "33 element(s) marked data-price and no Offer
+      // node" on both. It is the same defect the comment above records for ItemList rows,
+      // one level further out: count the Offer NODE wherever it lives, not the property.
+      const t = Array.isArray(v['@type']) ? v['@type'] : [v['@type']];
+      if (t.includes('Offer')) nested.push(v);
+      Object.values(v).forEach(walkNodes);
+    }
+  };
+  walkNodes(nodes);
+  const offers = [...new Set([...products, ...services].filter((n) => n.offers).concat(nested))];
 
   // ---- (a) ITEMLIST -------------------------------------------------------------------
   const isHub = HUB.test(route) || typeOf(nodes.find((n) => String(n['@id'] || '').endsWith('#webpage')) || {}).includes('CollectionPage');
@@ -139,7 +165,10 @@ for (const { route, html } of pages) {
     const positions = items.map((i) => Number(i.position));
     if (positions.some((p, i) => p !== i + 1)) fail(route, 'ItemList positions are not 1..n in order');
     for (const it of items) {
-      const url = String(it.url || it.item?.['@id'] || it.item || '').replace(/^https?:\/\/[^/]+/, '');
+      // A ListItem may carry its URL directly, or wrap a node that carries `url` or `@id`.
+      // Reading `it.item` last stringified the node itself as "[object Object]" and failed
+      // every row on a correctly shaped ItemList.
+      const url = String(it.url || it.item?.url || it.item?.['@id'] || (typeof it.item === 'string' ? it.item : '') || '').replace(/^https?:\/\/[^/]+/, '');
       if (!url) { fail(route, `ItemList row "${it.name || '?'}" has no url`); continue; }
       // The listed row must be a link the READER can click on this page. A listing that
       // declares ten children and renders three is a claim about a page that does not exist.
@@ -168,7 +197,11 @@ for (const { route, html } of pages) {
   }
   // 2. A MARKED PRICE BINDS. `data-price` is how a money page renders its own figure; an
   //    element carrying it with no Offer behind it is the text-only failure, measured.
-  const marked = [...main.matchAll(/data-price(?:=["'][^"']*["'])?/g)].length;
+  // WORD BOUNDARY, OR EVERY data-price-* ATTRIBUTE IS A PRICE (2026-09-05). PriceTable's
+  // provenance line carries `data-price-source`, which says where a THIRD PARTY's figure was
+  // read -- the opposite of "this site is selling something". The unbounded pattern counted
+  // it and demanded an Offer node for a price this publisher does not charge.
+  const marked = [...main.matchAll(/data-price(?![-\w])(?:=["'][^"']*["'])?/g)].length;
   if (!noindex && marked && !offers.length) {
     fail(route, `${marked} element(s) marked data-price and no Offer node — the money page's own price is invisible to the SERP`);
   }
@@ -186,14 +219,25 @@ for (const { route, html } of pages) {
     const list = Array.isArray(o) ? o : [o];
     for (const off of list) {
       if (!off.priceCurrency) fail(route, `Offer on "${n.name || '?'}" has no priceCurrency`);
-      if (off.price === undefined && !off.priceRange) fail(route, `Offer on "${n.name || '?'}" declares neither price nor priceRange`);
-      if (off.price !== undefined && !text.includes(String(off.price).replace(/\.00$/, ''))) {
+      // An AggregateOffer prices a RANGE (lowPrice/highPrice) and never carries `price`;
+      // demanding one failed every correctly-shaped breed listing on a marketplace site.
+      const aggregate = String(off['@type'] || '').includes('AggregateOffer');
+      const priced = off.price !== undefined || off.priceRange
+        || (aggregate && off.lowPrice !== undefined && off.highPrice !== undefined);
+      if (!priced) fail(route, `Offer on "${n.name || '?'}" declares neither price nor priceRange`);
+      // The page writes prices for humans ("$4,988"); the offer writes them for machines
+      // (4988). Comparing the raw strings failed every correctly-priced page on this site, so
+      // both sides are compared with thousands separators removed.
+      const plainText = text.replace(/(\d),(?=\d{3})/g, '$1');
+      if (off.price !== undefined && !plainText.includes(String(off.price).replace(/\.00$/, ''))) {
         fail(route, `Offer price ${off.price} appears nowhere in the rendered page — schema and copy disagree`);
       }
       if (typeOf(n).includes('Product') && !off.priceValidUntil) {
         warn(route, `Product offer has no priceValidUntil — Google downgrades the result once the price is stale`);
       }
-      if (off.availability && !/schema\.org\/(InStock|OutOfStock|PreOrder|LimitedAvailability|SoldOut)$/.test(off.availability)) {
+      // The full schema.org ItemAvailability enum. The short list rejected BackOrder, which is
+      // exactly what a waitlisted breed with no puppy at the farm today should declare.
+      if (off.availability && !/schema\.org\/(InStock|InStoreOnly|OnlineOnly|OutOfStock|PreOrder|PreSale|BackOrder|LimitedAvailability|SoldOut|Discontinued|MadeToOrder|Reserved)$/.test(off.availability)) {
         fail(route, `Offer availability "${off.availability}" is not a schema.org enum URL`);
       }
     }

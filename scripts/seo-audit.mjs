@@ -322,7 +322,11 @@ function auditPage(file) {
   const unsized = [...html.matchAll(/<img\s[^>]*>/gi)]
     .filter((m) => !(/width="\d+"/.test(m[0]) && /height="\d+"/.test(m[0]))).length;
   if (unsized) F('HIGH', '4.4', route, 'unsized <img>', `${unsized}`, '0');
-  if (/\u2014/.test(bodyTxt)) F('HIGH', 'EMDASH', route, 'em dash in rendered body');
+  // A verbatim quotation keeps the punctuation the source published: everything inside
+  // <blockquote> is exempt, everything outside it is the site's own prose and is not.
+  // Worded to match scripts/check-content.mjs and scripts/verify_page.py.
+  const proseTxt = blockText(stripChrome(html.replace(/<blockquote[\s\S]*?<\/blockquote>/gi, ' ')));
+  if (/—/.test(proseTxt)) F('HIGH', 'EMDASH', route, 'em dash in rendered body (outside verbatim quotations)');
   const glued = (html.match(/\w<a\s/g) || []).length + (html.match(/<\/a>\w/g) || []).length;
   if (glued) F('HIGH', '4.14', route, 'anchor glued to a word (build trimmed the whitespace)', `${glued}`, '0');
   if (!/<main[\s>]/i.test(html) && !noindex) F('MEDIUM', 'LANDMARK', route, 'no <main> landmark');
@@ -334,7 +338,7 @@ function auditPage(file) {
   // The shipped component is ExpertQuote.astro, which emits class="expert-quote" and
   // data-quote-key. Matching only data-quotecard/quote-card reported "no quote on the page"
   // for pages carrying four of them, because the two scripts were written to different names.
-  const quotes = (html.match(/data-quotecard|data-quote-key|class="[^"]*(?:quote-card|expert-quote)/gi) || []).length;
+  const quotes = (html.match(/data-quotecard|data-quote-key|data-expert-quote|class="[^"]*(?:quote-card|expert-quote)/gi) || []).length;
   if (quotes < 1 && contentTier)
     F('HIGH', 'QUOTE', route, 'no ExpertQuote/QuoteCard on the page (sme-extract quote missing)');
   // count a figure either by its /figures/*.svg source or by the data-figure marker
@@ -355,7 +359,12 @@ function auditPage(file) {
   if (!hasOg && !noindex)
     F('HIGH', 'IMAGE-OG', route, 'no og:image (under IMAGE_POLICY=figure this IS the page\'s one required raster)', '0', '1');
   if (brief?.schema_plan) {
-    const planned = [].concat(brief.schema_plan.types ?? brief.schema_plan);
+    // schema_plan rows are objects ({type, notes}) in every brief in this project; a bare
+    // string is also accepted. Read the type off the row before comparing, or every planned
+    // type stringifies to [object Object] and reports as missing.
+    const planned = [].concat(brief.schema_plan.types ?? brief.schema_plan)
+      .map((x) => (typeof x === 'string' ? x : x?.type ?? x?.name ?? ''))
+      .filter(Boolean);
     const missing = planned.filter((x) => !types.includes(x));
     if (missing.length) F('HIGH', '3.30c', route, `schema_plan types not emitted: ${missing.join(', ')}`);
   }
@@ -446,7 +455,31 @@ function overlap(contentRoutes) {
     // either a keyword-stuffing artifact or a component leaking its whole content into
     // every page; both invalidate the uniqueness number measured above.
     const norm = (x) => String(x || '').toLowerCase().replace(/\s+/g, ' ').trim();
-    const HIDDEN_RX = /<([a-z][\w-]*)\b[^>]*(?:\bhidden\b|aria-hidden=["']true["']|style=["'][^"']*(?:display\s*:\s*none|visibility\s*:\s*hidden)[^"']*["']|class=["'][^"']*\b(?:sr-only|visually-hidden|screen-reader-text)\b[^"']*["'])[^>]*>([\s\S]*?)<\/\1>/gi;
+    // CANDIDATE tags first, then a real attribute test. The 1.0 regex asked for `\bhidden\b`
+    // anywhere inside the tag, so every Tailwind utility that merely CONTAINS the word --
+    // `hidden md:flex`, `[&_summary::-webkit-details-marker]:hidden` -- counted as hidden
+    // text. On one site that was 400 of 400 findings, all of them the desktop nav.
+    const HIDDEN_RX = /<([a-z][\w-]*)\b([^>]*(?:hidden|sr-only|visually-hidden|screen-reader-text|display\s*:\s*none)[^>]*)>([\s\S]*?)<\/\1>/gi;
+    const isHiddenAttrs = (attrs) => {
+      // The bare `hidden` ATTRIBUTE, not the letters. `\b` treats the hyphen in
+      // `aria-hidden` as a boundary, so this test matched the very attribute the note below
+      // puts out of scope, and the aria-hidden exclusion never took effect: rule 3.22 went on
+      // firing HIGH on 16 sibling pages for a ticker every visitor can watch scroll past.
+      // Strip aria-hidden and data-*-hidden attribute NAMES before asking.
+      const bare = String(attrs).replace(/=\s*("[^"]*"|'[^']*')/g, '=""')
+        .replace(/[\w-]+-hidden\b/gi, ' ');
+      if (/\bhidden\b/.test(bare)) return true;
+      // aria-hidden is NOT this rule's subject. It hides a node from assistive technology
+      // while leaving it fully visible on screen and fully indexable - which is the correct
+      // marking for a decorative marquee, an icon, or a duplicated visual label. Rule 3.22 is
+      // about text a READER cannot see, and treating aria-hidden as invisible fired HIGH on
+      // 16 sibling pages for a ticker every visitor can watch scroll past. Where aria-hidden
+      // really does accompany hidden text, the display:none, hidden and sr-only predicates
+      // around this line still catch it.
+      if (/style=["'][^"']*(?:display\s*:\s*none|visibility\s*:\s*hidden)/i.test(attrs)) return true;
+      const cls = (attrs.match(/class=["']([^"']*)["']/i) || [])[1] || '';
+      return /(?:^|\s)(?:sr-only|visually-hidden|screen-reader-text)(?:\s|$)/.test(cls);
+    };
     const seenTitle = new Map();
     const seenH1 = new Map();
     const seenKw = new Map();
@@ -454,6 +487,15 @@ function overlap(contentRoutes) {
     for (let i = 0; i < routes.length; i++) {
       const file = routes[i] === '/' ? 'dist/index.html' : `dist${routes[i]}index.html`;
       const raw = readFileSync(file, 'utf8');
+      // CHROME is shared by construction: a header, a nav drawer and a footer repeat on
+      // every page of the site, and their sr-only / aria-hidden labels repeating is what
+      // chrome IS, not keyword stuffing. Rule 3.22 is about page COPY, so the hidden-text
+      // scan below reads the document with the chrome regions removed. Without this the
+      // rule fired 400 times on one site, every one of them the mobile menu.
+      const body = raw
+        .replace(/<header[\s\S]*?<\/header>/gi, ' ')
+        .replace(/<footer[\s\S]*?<\/footer>/gi, ' ')
+        .replace(/<nav[\s\S]*?<\/nav>/gi, ' ');
       const t = norm(title(raw));
       const h = norm(h1s(raw)[0] ?? '');
       const kw = norm(rowFor(routes[i])?.target_keyword);
@@ -461,8 +503,9 @@ function overlap(contentRoutes) {
       if (h) { if (seenH1.has(h)) collisions.push({ kind: 'h1', value: h.slice(0, 70), routes: [seenH1.get(h), routes[i]] }); else seenH1.set(h, routes[i]); }
       if (kw) { if (seenKw.has(kw)) collisions.push({ kind: 'target_keyword', value: kw.slice(0, 70), routes: [seenKw.get(kw), routes[i]] }); else seenKw.set(kw, routes[i]); }
       const chunks = [];
-      for (const m of raw.matchAll(HIDDEN_RX)) {
-        const text = decodeEntities(m[2].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+      for (const m of body.matchAll(HIDDEN_RX)) {
+        if (!isHiddenAttrs(m[2])) continue;
+        const text = decodeEntities(m[3].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
         // Ignore short strings: an sr-only "Menu" label is chrome, not hidden copy.
         if (text.split(' ').length >= 8) chunks.push(text);
       }

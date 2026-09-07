@@ -31,7 +31,14 @@ const sisterCfg = argv.includes('--sister') ? (argv[argv.indexOf('--sister') + 1
 
 const ex = p => { try { fs.accessSync(p); return true; } catch { return false; } };
 const rd = p => fs.readFileSync(p, 'utf8').replace(/^\uFEFF/, '');
-const norm = s => String(s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+// A typographic apostrophe is the SAME WORD as a straight one, and the house style
+// requires the typographic form in UI labels while a keyword is stored with the
+// straight one. Comparing the two raw made "Garage Door Won’t Close" fail to contain
+// "garage door won't close" - a title that is correct twice over, failed for punctuation
+// (2026-09-05). Fold the curly quotes before comparing; nothing else changes.
+const norm = s => String(s || '').toLowerCase()
+  .replace(/[’‘]/g, "'").replace(/[“”]/g, '"')
+  .replace(/\s+/g, ' ').trim();
 const unesc = s => String(s || '').replace(/&amp;/g, '&').replace(/&lt;/g, '<')
   .replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&nbsp;/g, ' ');
 const days = iso => { const t = Date.parse(iso); return Number.isNaN(t) ? Infinity : (Date.now() - t) / 86400000; };
@@ -269,7 +276,21 @@ if (mode === 'routes' || mode === 'coverage') {
   const titles = new Map(), h1s = new Map();
   for (const r of rows) {
     const kw = kwOf(r);
-    if (kw && r.page_tier !== 'utility') {
+    // A DELIBERATE title/H1 split - the title carrying the plural head phrase while the H1
+    // keeps the singular so the two do not compete - is a live experiment on some sites, not
+    // drift. It is allowed only as a WAIVER, to the same standard as check 14: a real reason,
+    // an owner, and a date. Everything else in this check still applies to the row.
+    const splitWaiver = (() => {
+      const m = /title-h1-split:\s*(.+)$/i.exec(r.notes || '');
+      if (!m) return false;
+      const tail = m[1];
+      const dm = /approved_on:\s*(20\d\d-[01]\d-[0-3]\d)/.exec(tail);
+      const reason = tail.replace(/approved_by:\s*owner/ig, '')
+        .replace(/approved_on:\s*20\d\d-[01]\d-[0-3]\d/ig, '').trim();
+      return reason.length >= 12 && /approved_by:\s*owner/i.test(tail) && !!dm
+        && dm[1] <= new Date().toISOString().slice(0, 10);
+    })();
+    if (kw && r.page_tier !== 'utility' && !splitWaiver) {
       if (!norm(r.title).includes(norm(kw))) { noKw++; f(r.url_slug, `title does not contain "${kw}"`); }
       if (!norm(r.h1).includes(norm(kw))) { noKwH1++; f(r.url_slug, `h1 does not contain "${kw}"`); }
     }
@@ -388,13 +409,22 @@ const inbound = new Map(rows.map(r => [r.url_slug, new Set()]));
   const f = check(10, 'required rows');
   const TIERS = ['core','outer','utility','compare','monetization','functional'];  // contracts.md §1a lists SIX page_tier values; 'functional' (live roster) was missing here, so a correctly-tiered roster row failed check 10.
   for (const r of rows) if (!TIERS.includes(r.page_tier)) f(r.url_slug, `page_tier "${r.page_tier}" not in ${TIERS.join('|')}`);
-  const need = ['/', '/about/', '/contact/', '/contact/thank-you/', '/privacy/', '/terms/', '/404', '/blog/'];
+  // A WhatsApp-first or phone-first site has no form, so it has no thank-you page to require
+  // (same key and vocabulary as check-form-sync.mjs). Requiring one asks it to build a route
+  // that could only ever 404 from the outside.
+  const FORMLESS_SITE = ['whatsapp', 'phone', 'none'].includes(cfg('LEAD_CAPTURE', 'form').toLowerCase());
+  const need = ['/', '/about/', '/contact/', '/privacy/', '/terms/', '/404', '/blog/'];
+  if (!FORMLESS_SITE) need.push('/contact/thank-you/');
   if (/affiliate|sponsor/.test(MONETIZATION)) need.push('/disclosure/');
   if (ARCHETYPE && ARCHETYPE !== 'local-service') need.push('/editorial-policy/');
   const mon = [];
   if (/guest-post|guest post|sponsor/.test(MONETIZATION)) mon.push('/write-for-us/', '/guest-post-guidelines/', '/advertise/');
   if (/affiliate/.test(MONETIZATION)) mon.push('/reviews/');
   const ALIAS = { '/contact/': ['/contact-us/'], '/contact/thank-you/': ['/thank-you/', '/contact-us/thank-you/'],
+    // '/disclosure/' is the contract name; '/affiliate-disclosure/' is what an
+    // affiliate publisher actually ships and what its live URL already is. Without
+    // the alias the gate asks a site to rename an indexed page to satisfy a label.
+    '/disclosure/': ['/affiliate-disclosure/'],
     '/privacy/': ['/privacy-policy/'], '/terms/': ['/terms-and-conditions/', '/terms-of-service/'] };
   const missU = need.filter(s => !bySlug.has(s) && !(ALIAS[s] || []).some(a => bySlug.has(a)));
   const missM = mon.filter(s => !bySlug.has(s));
@@ -459,10 +489,25 @@ const inbound = new Map(rows.map(r => [r.url_slug, new Set()]));
     let reg; try { reg = JSON.parse(rd('config/anchor-registry.json')); } catch { reg = null; f('config/anchor-registry.json', 'not valid JSON'); }
     if (reg) {
       if (!reg._scope || !reg._chrome) f('config/anchor-registry.json', 'missing _scope and/or _chrome keys');
-      const body = Object.entries(reg).filter(([k]) => !k.startsWith('_'));
+      // READ THE REGISTRY'S REAL SHAPE. anchor-registry.mjs writes
+      // { anchors: {anchor: [pages]}, over_soft_cap: [...], ...metadata }, but this
+      // walked the TOP level as if it were {anchor: [pages]}. The only top-level value
+      // that is an array is `over_soft_cap`, so the check graded the metadata key as an
+      // anchor "planned on 5 pages" and never examined a single real anchor
+      // (oncurio.com, 2026-09-05). Fall back to the flat shape for older registries.
+      const anchorMap = (reg.anchors && typeof reg.anchors === 'object' && !Array.isArray(reg.anchors))
+        ? reg.anchors
+        : Object.fromEntries(Object.entries(reg).filter(([k, v]) => !k.startsWith('_') && Array.isArray(v)));
+      const body = Object.entries(anchorMap);
       if (body.length === 0) f('config/anchor-registry.json', 'unseeded — seed every planned body anchor from the link contract');
       else seeded = 'seeded';
+      // A brand or compliance anchor is site-wide BY DESIGN and anchor-registry.mjs
+      // exempts it. Counting it here made the two instruments disagree about one rule.
+      const exempt = new Set((reg.over_soft_cap || [])
+        .filter((o) => o && o.reason && o.reason !== 'other')
+        .map((o) => o.anchor));
       for (const [anchor, slugs] of body) {
+        if (exempt.has(anchor)) continue;
         const uniq = [...new Set(Array.isArray(slugs) ? slugs : [])];
         if (uniq.length > 3) { overCap++; f(anchor, `planned on ${uniq.length} pages (cap 3)`); }
       }
@@ -513,9 +558,13 @@ const inbound = new Map(rows.map(r => [r.url_slug, new Set()]));
   const f = check(15, 'forms');
   let ids = null;
   if (ex('config/forms.json')) { try { ids = new Set((JSON.parse(rd('config/forms.json')).forms || []).map(x => x.id)); } catch { f('config/forms.json', 'not valid JSON'); } }
+  // A WhatsApp-first or phone-first site has no form to register, and demanding a form_id
+  // on every money row would fail it for a conversion path it chose deliberately. Same key
+  // and same vocabulary as check-form-sync.mjs / gen-formaloo-map.mjs.
+  const FORMLESS = ['whatsapp', 'phone', 'none'].includes(cfg('LEAD_CAPTURE', 'form').toLowerCase());
   let unregistered = 0;
   for (const r of rows) {
-    const needsForm = ['core', 'monetization', 'functional'].includes(r.page_tier) || r.url_slug === '/contact/';
+    const needsForm = !FORMLESS && (['core', 'monetization', 'functional'].includes(r.page_tier) || r.url_slug === '/contact/');
     if (needsForm && !r.form_id) f(r.url_slug, 'form_id empty on a form-bearing page');
     if (r.form_id && ids && !ids.has(r.form_id)) { unregistered++; f(r.url_slug, `form_id "${r.form_id}" is not in config/forms.json`); }
   }

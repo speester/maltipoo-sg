@@ -214,21 +214,38 @@ function auditPage(html, route) {
     }
     if (naked && !isLegal) fail(route, `${naked} naked section(s) — headings + <p> with no treatment`);
 
-    if (/\/blog\//.test(route) || /data-treatment="prose"/.test(html)) {
+    if (/\/blog\//.test(route) || /data-treatment="prose/.test(html)) {
       const text = html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
       const words = text ? text.split(' ').length : 0;
       // A CTA band is a designed non-prose block: it renders <section class="ctaband">
       // with its own tone and treatment. It was not counted, so adding one to a page
       // sitting on the threshold RAISED `need` (its copy adds words) without raising
       // `nonProse` — the density gate failed a page that had just got better.
-      const nonProse = (html.match(/<figure\b|<table\b|<blockquote\b|data-answer-capsule|class="[^"]*(?:callout|ctaband)/g) || []).length;
+      // A facts card and a stat strip are designed non-prose blocks by exactly the
+      // same argument the CTA band was added under: each renders its own container,
+      // its own treatment and its own reading job, and each BREAKS a wall of prose.
+      // Counting a band's copy toward `words` while refusing to count the band made
+      // the gate punish the pages carrying the most furniture.
+      // A grid of picture cards is the strongest non-prose block a hub page has, and
+      // it was the one the hubs were built from: /blog/ measured 1 block for 2,606
+      // words while carrying six card grids.
+      const nonProse = (html.match(/<figure\b|<table\b|<blockquote\b|data-answer-capsule|data-facts-card|data-card-grid|data-stat-strip|class="[^"]*(?:callout|ctaband)/g) || []).length;
       const need = Math.max(1, Math.floor(words / 350));
       if (nonProse < need) fail(route, `article density: ${nonProse} non-prose block(s) for ${words} words (need >= ${need})`);
     }
   }
 
   if (want('tilt')) {
-    const heroTilt = /<(section|header)[^>]*class="[^"]*hero[^"]*"[\s\S]{0,4000}?data-tilt/.test(html);
+    // Search the HERO ELEMENT, not a fixed window after its opening tag. The 4000-character
+    // proxy failed heroes whose centerpiece slot (a disclosure banner, chips, a comparison
+    // strip) pushes the tilt panel further down the markup — the panel was there, just past
+    // the window (Insight User Conference, 2026-09-06).
+    const heroOpen = html.search(/<(section|header)[^>]*class="[^"]*hero[^"]*"/);
+    const heroSlice = heroOpen < 0 ? '' : html.slice(heroOpen, (() => {
+      const end = html.indexOf('</section>', heroOpen);
+      return end < 0 ? heroOpen + 20000 : end;
+    })());
+    const heroTilt = /data-tilt/.test(heroSlice);
     if (!heroTilt && !/\/(404|contact\/thank-you)\//.test(route)) fail(route, 'hero has no [data-tilt] element');
   }
 
@@ -260,7 +277,11 @@ function auditPage(html, route) {
           fail(route, `table #${ti} row carries ${names.length} entity names in one cell ("${names.join('", "')}") — one entity per row`);
         }
         const guess = names[0] ? '/' + names[0].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '/' : null;
-        if (guess && ALL_ROUTES.has(guess) && !/<a\s/.test(cell)) {
+        // A cell naming THIS page is not a missing link: a page does not link to itself
+        // (Insight User Conference, 2026-09-06 — /digital-marketing-strategy/ has a row for
+        // its own subject in its own trend table).
+        const selfRef = guess && guess.replace(/\/+$/, '') === String(route).replace(/\/+$/, '');
+        if (guess && !selfRef && ALL_ROUTES.has(guess) && !/<a\s/.test(cell)) {
           fail(route, `table #${ti}: "${names[0]}" has a built route ${guess} but the cell is not a link`);
         }
       }
@@ -269,7 +290,13 @@ function auditPage(html, route) {
 
   // CHROME — the archetype header/footer shape, measured on dist.
   if (want('chrome')) {
-    const footer = (html.match(/<footer[\s\S]*?<\/footer>/) || [''])[0];
+    // The PAGE footer is the LAST <footer> in the document, not the first: a page that
+    // carries an inner <footer> (a blockquote attribution, an article byline) otherwise
+    // has that element measured as the site chrome, and every chrome assertion below is
+    // then made against markup that is not the chrome at all. Measured on chihuahua.sg
+    // 2026-09-05: ExpertQuote's <footer> shadowed the site footer on 44 of 46 routes.
+    const footerAll = html.match(/<footer[\s\S]*?<\/footer>/g) || [];
+    const footer = footerAll.length ? footerAll[footerAll.length - 1] : '';
     if (footer) {
       const note = (footer.match(/<p[^>]*data-footer-footnote[\s\S]*?<\/p>/) || [''])[0];
       if (!note) fail(route, 'footer has no [data-footer-footnote] bar — Privacy/Terms live only there');
@@ -447,7 +474,14 @@ async function livePass(pages) {
           // upside-down divider itself, and it is invisible to every colour check: BTO
           // Renovation SG emitted the attribute, passed the fill check, and still shipped
           // every seam on the flip side because `flip` was a separate optional prop.
-          if ((edge === 'top') !== flipped) L.divider_not_mirrored++;
+          // WHICH EDGE THE PATH WAS AUTHORED FOR IS A FACT ABOUT THE COMPONENT, NOT A
+          // CONSTANT (2026-09-05). The kit's shapes are authored as a BOTTOM edge, so a
+          // top-edge divider must be mirrored -- but a project that authors its own
+          // dividers as TOP edges is then failed for every seam it ships, and the only way
+          // to "fix" it is to turn a correct design upside down. The component declares its
+          // own convention; absent a declaration the kit's assumption still holds.
+          const authored = d.getAttribute('data-path-origin') === 'top' ? 'top' : 'bottom';
+          if ((edge !== authored) !== flipped) L.divider_not_mirrored++;
           const variant = d.getAttribute('data-seam') || 'x';
           (mirrorByVariant[variant] = mirrorByVariant[variant] || {})[edge] = flipped;
         }
@@ -562,8 +596,20 @@ async function livePass(pages) {
           const cur = bands[i].getBoundingClientRect();
           if (Math.abs(cur.top - prev.bottom) > 1) continue;
           if (bgOf(bands[i - 1]) === bgOf(bands[i])) continue;
+          // A seam BETWEEN two bands is the kit's own shape: SectionDivider.astro renders a
+          // sibling `[data-seam]` element between the sections, not a child of either. This
+          // check looked only INSIDE the two bands, so every seam the kit ships was invisible
+          // to it and correctly-separated pages reported butted joins (Insight User
+          // Conference, 2026-09-06). Look between them as well, which is what the message
+          // has always claimed to measure.
+          const between = bands[i].previousElementSibling;
           const seam = bands[i - 1].querySelector(':scope > .section-divider') ||
-                       bands[i].querySelector(':scope > .section-divider');
+                       bands[i].querySelector(':scope > .section-divider') ||
+                       (between && between !== bands[i - 1] &&
+                        (between.matches('.section-divider, [data-seam], [data-band-seam]') ||
+                         between.querySelector(':scope > .section-divider, :scope > [data-seam], :scope > [data-band-seam]'))) ||
+                       bands[i - 1].querySelector(':scope > [data-seam], :scope > [data-band-seam]') ||
+                       bands[i].querySelector(':scope > [data-seam], :scope > [data-band-seam]');
           if (!seam) L.butted_joins++;
         }
         for (const b of Array.from(document.querySelectorAll('main [data-treatment]'))) {
@@ -642,7 +688,12 @@ async function livePass(pages) {
             const r = el.getBoundingClientRect();
             if (!r.height) continue;
             const top = r.top + window.scrollY;
-            const isVisual = /^(FIGURE|IMG|TABLE|SVG)$/.test(el.tagName) ||
+            // tagName is NOT uppercase for SVG elements - an inline <svg> reports the
+            // literal 'svg' - so an uppercase-only test never matched one, and every
+            // figure drawn as inline SVG was counted as another block of text. Measured
+            // on chihuahua.sg 2026-09-05: a page whose every band carried a motif still
+            // reported 6.7 viewport-heights of "unbroken text".
+            const isVisual = /^(FIGURE|IMG|TABLE|SVG)$/.test(el.tagName.toUpperCase()) ||
                              el.matches('[data-card], .card');
             if (isVisual) {
               if (runStart !== null) longest = Math.max(longest, top - runStart);
@@ -657,10 +708,26 @@ async function livePass(pages) {
           // How much of the scroll sits on a tone OTHER than the page ground. A page
           // painted entirely in --paper reads as a document, not a designed page.
           const ground = getComputedStyle(document.body).backgroundColor;
+          // THE TONE A READER SEES IS THE PAINTED SURFACE, WHEREVER IT IS SET (2026-09-05).
+          // Reading only the band's own computed background counted a band as untoned when
+          // the treatment paints its INNER -- which is how every filled treatment on a
+          // ProseBand site works, because the padding lives on the inner. A child that
+          // covers essentially the whole band IS the band's surface; a small panel inside
+          // it is not, so require it to cover 80% of both axes.
           let toned = 0;
           for (const b of Array.from(main.querySelectorAll('section, [data-treatment]'))) {
             const r = b.getBoundingClientRect();
-            if (r.height > 0 && bgOf(b) !== ground) toned += r.height;
+            if (r.height <= 0) continue;
+            let painted = bgOf(b) !== ground;
+            if (!painted) {
+              for (const c of Array.from(b.children)) {
+                const cr = c.getBoundingClientRect();
+                if (cr.height >= r.height * 0.8 && cr.width >= r.width * 0.8
+                    && getComputedStyle(c).backgroundColor !== ground
+                    && getComputedStyle(c).backgroundColor !== 'rgba(0, 0, 0, 0)') { painted = true; break; }
+              }
+            }
+            if (painted) toned += r.height;
           }
           L.tone_share = Math.round((toned / H) * 100) / 100;
         }
@@ -774,6 +841,14 @@ async function livePass(pages) {
         // 720px". A card wider than the screen is the horizontal-scroll report.
         for (const c of Array.from(document.querySelectorAll('[data-card], .card, article[class*="card"]'))) {
           const r = c.getBoundingClientRect();
+          // Same rail exemption as the 375 pass: a card in a horizontal scroller sits past
+          // the right edge on purpose.
+          let rail = false;
+          for (let n = c.parentElement; n && n !== document.body; n = n.parentElement) {
+            const ov = getComputedStyle(n).overflowX;
+            if (ov === 'auto' || ov === 'scroll') { rail = true; break; }
+          }
+          if (rail) continue;
           if (r.width && (r.width > W || r.right > W + 1 || r.left < -1)) N.cards_too_wide++;
         }
         // MEASURE: the floor at 320 is legibility, not line length — text under 15px and
@@ -833,8 +908,19 @@ async function livePass(pages) {
           const r = f.getBoundingClientRect();
           if (r.width && (r.right > window.innerWidth + 1 || r.left < -1)) formOverflow++;
         }
+        const inHorizontalScroller = (el) => {
+          for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) {
+            const ov = getComputedStyle(n).overflowX;
+            if (ov === 'auto' || ov === 'scroll') return true;
+          }
+          return false;
+        };
         for (const c of Array.from(document.querySelectorAll('[data-card], .card'))) {
           const r = c.getBoundingClientRect();
+          // A card inside a horizontal scroll rail is SUPPOSED to sit past the right edge:
+          // that is what makes the rail scrollable. Page overflow is measured separately by
+          // scrollWidth above (Insight User Conference, 2026-09-06).
+          if (inHorizontalScroller(c)) continue;
           if (r.width && r.right > window.innerWidth + 1) cardOverflow++;
         }
         // A023 at 375: the fold that actually matters.
@@ -894,14 +980,18 @@ async function livePass(pages) {
           visible.push(a ? a.getAttribute('href') : 'group:' + (sum.textContent || '').trim());
           if (el.getBoundingClientRect().height < 44) smallTargets++;
         }
-        const toggles = Array.from(header.querySelectorAll('button[aria-expanded], [data-nav-toggle]')).filter(vis).length;
+        // A NATIVE <details>/<summary> IS A DISCLOSURE CONTROL (2026-09-05). Looking only for
+        // button[aria-expanded] or [data-nav-toggle] reported "the header exposes NO disclosure
+        // control below 900px" on a header whose burger is a <summary> -- the pattern the
+        // platform recommends, requiring no script and no aria bookkeeping. Count it.
+        const toggles = Array.from(header.querySelectorAll('button[aria-expanded], [data-nav-toggle], details > summary')).filter(vis).length;
         return { visible, smallTargets, toggles };
       });
       const before = await navProbe();
       let after = before;
       let tapped = false;
       if (before.visible.length < (data.navDesktop?.hrefs?.length ?? 0)) {
-        const toggle = await page.$('[data-site-header] [data-nav-toggle], [data-site-header] button[aria-expanded], header button[aria-expanded]');
+        const toggle = await page.$('[data-site-header] [data-nav-toggle], [data-site-header] button[aria-expanded], [data-site-header] details > summary, header button[aria-expanded], header details > summary');
         if (toggle) {
           try { await toggle.click(); tapped = true; await page.waitForTimeout(200); after = await navProbe(); } catch {}
         }

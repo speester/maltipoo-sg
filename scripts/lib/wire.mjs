@@ -28,6 +28,12 @@ export function pageFiles(root = path.join('src', 'pages')) {
       const p = path.join(dir, e.name);
       if (e.isDirectory()) { walk(p); continue; }
       if (!e.name.endsWith('.astro')) continue;
+      // Astro never routes an underscore-prefixed file (_patterns.astro is the kit's
+      // pattern gallery), and a [param] file is a TEMPLATE whose concrete routes come
+      // from getStaticPaths — listing either as a page made every downstream generator
+      // report "/[breed]/ missing a title" and "not in the blueprint" forever.
+      if (e.name.startsWith('_')) continue;
+      if (e.name.includes('[')) continue;
       let rel = path.relative(root, p).replace(/\\/g, '/').replace(/\.astro$/, '');
       rel = rel.replace(/\/index$/, '').replace(/^index$/, '');
       out.push({ file: p, route: canonicalPath('/' + rel) });

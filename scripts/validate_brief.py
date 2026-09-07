@@ -18,6 +18,8 @@ from pathlib import Path
 # denominator line, so the run reports NOTHING. Measured 2026-09-05: this
 # killed verify_page.py on 22 of 29 projects, which is why the pipeline looked
 # like it only ran on six. Degrade the CHARACTER, never the run.
+import sys  # the encoding guard below USES sys; without this the
+           # NameError was swallowed by its own except and the guard never applied.
 try:
     sys.stdout.reconfigure(errors="replace")
     sys.stderr.reconfigure(errors="replace")
@@ -354,7 +356,12 @@ def validate(slug, bp, comps):
     # unverified was the way to pass the verification gate. It is now the failure it
     # describes. BLOCKED is not BROKEN (same semantics as check-references.mjs): a host
     # that refuses bots (400/401/403/429) may be cited when the brief says so.
-    BLOCKED_CODES = {"400", "401", "403", "429"}
+    # 202 joins them: bot-mitigation front ends (Semantic Scholar, some Cloudflare and
+    # DataDome configurations) answer a scripted GET with 202 and a challenge page while
+    # serving the record to a browser. That is a refused bot, not a dead citation, and
+    # the alternative - swapping in a "200" that is itself a challenge page, as JSTOR's
+    # stable URLs return - would verify nothing while looking verified.
+    BLOCKED_CODES = {"202", "400", "401", "403", "429"}
     unver = []
     for e in dicts(ext):
         code = str(e.get("http_status", "")).strip()

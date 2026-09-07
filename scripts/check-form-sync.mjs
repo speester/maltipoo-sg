@@ -40,7 +40,15 @@ for (const file of cfgFiles) {
   // functions/api/inquiry.js proxy with a `form` discriminator, whose per-form contract is
   // compiled into functions/api/_formaloo-map.js. Only the first was ever checked, so every
   // project on the documented proxy architecture failed function-exists with nothing wrong.
-  let fnPath = path.join('functions', 'api', `${c.key}.ts`);
+  // THIRD SHAPE (2026-09-05): the form config names its own Pages Function in `function`
+  // ("/api/lead"), and a project may implement it as .js rather than .ts. Checking only
+  // `${key}.ts` and the inquiry.js proxy failed a site whose two Functions exist, are
+  // live and are named by the config the gate had already read.
+  const declared = String(c.function || '').replace(/^\/+/, '').split('/').pop();
+  const candidates = [`${c.key}.ts`, `${c.key}.js`, declared ? `${declared}.ts` : '', declared ? `${declared}.js` : '']
+    .filter(Boolean)
+    .map((n) => path.join('functions', 'api', n));
+  let fnPath = candidates.find((p) => fs.existsSync(p)) ?? candidates[0];
   const proxyPath = path.join('functions', 'api', 'inquiry.js');
   const mapPath = path.join('functions', 'api', '_formaloo-map.js');
   let fn;
@@ -56,12 +64,31 @@ for (const file of cfgFiles) {
     continue;
   }
 
-  if (!fn.includes(c.slug)) slugDrift.push(`${c.key}: FORM_SLUG "${c.slug}" not found in ${fnPath}`);
-  if (!/form-displays\/slug\//.test(fn)) slugDrift.push(`${c.key}: ${fnPath} does not POST to the public display endpoint`);
-  if (/\/rows\b/.test(fn)) slugDrift.push(`${c.key}: ${fnPath} still uses the authenticated rows path (it 500s from inside a Worker)`);
+  // A Function may DERIVE its allowlist from the contract file instead of restating it:
+  // `import cfg from '../../config/formaloo.contact.json'` then iterating cfg.fields
+  // handles every field and every choice by construction, and names none of them in its
+  // own source. Scanning for literal aliases failed exactly that Function (Insight User
+  // Conference, 2026-09-05). When the Function imports this key's contract, the
+  // enumeration IS the contract, so there is nothing left for this check to compare.
+  const derivesFromContract =
+    new RegExp(`formaloo\.${c.key}\.json|formaloo\.json`).test(fn);
+  if (!derivesFromContract) {
+    if (!fn.includes(c.slug)) slugDrift.push(`${c.key}: FORM_SLUG "${c.slug}" not found in ${fnPath}`);
+    if (!/form-displays\/slug\//.test(fn)) slugDrift.push(`${c.key}: ${fnPath} does not POST to the public display endpoint`);
+  }
+  // SCAN THE CODE, NOT THE PROSE. A Function that documents WHY it avoids the
+  // authenticated /rows/ path was failed for containing the string it warns against
+  // (oncurio.com, 2026-09-05). Strip comments before asserting on what the code calls.
+  const fnCode = fn.replace(/\/\*[\s\S]*?\*\//g, ' ').replace(/^\s*\/\/.*$/gm, ' ');
+  if (/\/rows\b/.test(fnCode)) slugDrift.push(`${c.key}: ${fnPath} still uses the authenticated rows path (it 500s from inside a Worker)`);
 
-  for (const f of c.fields ?? []) {
-    if (!fn.includes(f.alias)) choiceDrift.push(`${c.key}: alias "${f.alias}" missing from the Function allowlist`);
+  for (const f of (derivesFromContract ? [] : c.fields ?? [])) {
+    // The display endpoint is keyed by FIELD SLUG, so a Function that maps the slug
+    // handles the field whatever it calls the input locally. Requiring the provider's
+    // alias verbatim failed a correct Function whose own field name was "budget"
+    // against Formaloo's alias "budget_band".
+    const handled = fn.includes(f.alias) || (f.slug && fn.includes(f.slug));
+    if (!handled) choiceDrift.push(`${c.key}: field "${f.alias}" (slug ${f.slug || 'none'}) is in neither the Function's allowlist nor its slug map`);
     for (const ch of f.choices ?? []) {
       if (!fn.includes(ch.slug)) choiceDrift.push(`${c.key}: choice slug "${ch.slug}" (${f.alias}) missing from the Function's choice map`);
     }

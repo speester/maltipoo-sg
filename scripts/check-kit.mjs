@@ -90,7 +90,12 @@ if (fs.existsSync(distDir)) {
 const BUILT = builtCss.length > 0;
 if (BUILT) {
   // Escaped selectors in built CSS: `.\!bg-white\/60`, `.-bottom-12`, `.lg\:flex`.
-  for (const c of builtCss.match(new RegExp("[.](?:\\\\.|[a-zA-Z0-9_!-])(?:\\\\.|[^\\s{,:>+~()\\[\\]])*", 'g')) ?? []) {
+  // 2026-09-05: the tail class excluded "{" but not "}" or ";", so a match beginning
+  // mid-declaration (".15s}" in `transition-duration:.15s}.transition-colors{`) ran straight
+  // through the rule boundary and swallowed the NEXT selector — every class whose rule
+  // follows a decimal value read as undeclared. Close the boundary, and require a selector
+  // to start with a letter, "_", "!" or "-" so a numeric fragment is not read as a class.
+  for (const c of builtCss.match(new RegExp("[.](?:\\\\.|[a-zA-Z_!-])(?:\\\\.|[^\\s{},;:>+~()\\[\\]])*", 'g')) ?? []) {
     declared.add(c.slice(1).split('\\').join(''));
   }
 }
@@ -115,9 +120,29 @@ for (const f of componentFiles) {
   }
 }
 
+// A kit component the project never places renders nothing, so its class names are not
+// "rendered by a kit component" on THIS site - they are dead code in a file nobody imports.
+// When a build exists, the built HTML is the honest register of what ships: only a class that
+// actually appears in dist/ can be an unresolved class.
+const builtHtml = BUILT
+  ? (() => {
+      const out = [];
+      const walk = (d) => {
+        for (const e of fs.readdirSync(d, { withFileTypes: true })) {
+          const p = path.join(d, e.name);
+          if (e.isDirectory()) walk(p);
+          else if (e.name.endsWith('.html')) out.push(read(p));
+        }
+      };
+      try { walk('dist'); } catch { /* no dist */ }
+      return out.join(String.fromCharCode(10));
+    })()
+  : '';
+
 const unresolved = [];
 for (const [c, files] of used) {
   if (declared.has(c) || isTailwind(c)) continue;   // built CSS first, allowlist as the no-build fallback
+  if (BUILT && builtHtml && !builtHtml.includes(c)) continue;   // not shipped: not this site's class
   unresolved.push(`${c} (${[...files].sort().slice(0, 3).join(', ')})`);
 }
 
@@ -129,6 +154,21 @@ if (fs.existsSync(tokensPath)) {
 } else {
   console.log('FAIL check-kit: src/styles/tokens.css missing — it owns the token vocabulary');
   process.exit(1);
+}
+
+// A PROJECT MAY DECLARE ITS TOKENS IN global.css (2026-09-05). tokens.css owns the kit
+// vocabulary, but a pre-kit project's own palette lives in the stylesheet it always had,
+// and that stylesheet is loaded on every page — so the var() resolves. Harvesting
+// declarations only from tokens.css reported 17 live, resolving tokens as undeclared.
+// Every stylesheet this gate SCANS is also a stylesheet it must read declarations from.
+// A declaration is a declaration wherever it sits. Anchoring this harvest to the start
+// of a line missed every token declared inside a one-line rule — `[data-tilt] { --tilt-x:
+// 0deg; }` in global.css read as undeclared while the var() that used it was found, so
+// the gate reported a live, resolving token as a gap (Insight User Conference,
+// 2026-09-05). The component harvest below already uses the unanchored form; these two
+// must agree.
+for (const f of styleFiles) {
+  for (const m of read(f).matchAll(/(--[\w-]+)\s*:/g)) tokenNames.add(m[1]);
 }
 
 const undeclaredVars = new Map(); // name -> Set(file)
