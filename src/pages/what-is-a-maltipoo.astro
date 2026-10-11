@@ -14,12 +14,13 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema } from '../lib/schema';
+const MODIFIED = '2026-10-11';
 import featuredImg from '../assets/site/36-maltipoo-portrait-classic.webp';
 import sizeImg from '../assets/site/13-maltipoo-size-adult-puppy.webp';
 
-const title = 'What Is a Maltipoo? The Complete Breed Guide | Maltipoo.sg';
+const title = 'Maltipoo: Size, Lifespan & Singapore Price | Maltipoo.sg';
 const description =
-  'A Maltipoo is a Maltese and Toy Poodle cross: 2 to 4kg, low-shedding, devoted. Singapore’s complete breed guide, downsides included.';
+  'Maltipoo: a Maltese and Toy Poodle cross, 2 to 4kg full grown, 12 to 15 years, HDB approved. Singapore price, comparison table and honest downsides.';
 
 const crumbs = [
   { name: 'Home', url: '/' },
@@ -49,7 +50,7 @@ const guideLibrary = [
 
 const faqItems = [
   {
-    q: 'Is a Maltipoo a good dog to have?',
+    q: 'Is a Maltipoo a good dog?',
     a: 'For the right routine, one of the best small companions you can own: gentle indoors, quick to learn, small enough for an HDB flat and low-shedding. The condition is company. Households where someone is usually home get a devoted dog; flats that empty out all day get a stressed, vocal one.',
   },
   {
@@ -65,7 +66,7 @@ const faqItems = [
     a: 'It does not like being alone, it is more vocal than the average small companion breed, the coat needs brushing at home plus a salon visit every four to six weeks, and at toy size it is physically delicate around toddlers. As a cross, adult size is also less predictable than in a pure breed.',
   },
   {
-    q: 'Is a Maltipoo high maintenance?',
+    q: 'Are Maltipoos high maintenance?',
     a: 'Grooming, yes: a few minutes of brushing most days and a professional groom every four to six weeks, which in Singapore runs roughly $50 to $130 a session depending on coat length and salon. Exercise, no: two short walks and indoor play suit a toy dog. Company is the real maintenance cost.',
   },
   {
@@ -85,7 +86,7 @@ const faqItems = [
     a: 'Commonly cited at 12 to 15 years, with well-cared-for dogs going beyond. Small breeds outlive large ones as a class. Weight control, daily tooth brushing from puppyhood and keeping up with annual vet checks move that number more than anything you can buy.',
   },
   {
-    q: 'How big does a Maltipoo get?',
+    q: 'How big are Maltipoos full grown?',
     a: 'The toy Maltipoos we place finish at 2 to 4kg and roughly 20 to 30cm at the shoulder, usually by about ten to twelve months. Crosses using a Miniature Poodle parent instead of a Toy run larger. Ask about the Poodle side before you ask about the Maltese side.',
   },
   {
@@ -93,9 +94,25 @@ const faqItems = [
     a: 'No. A Maltipoo is a deliberate cross of two pure breeds, the Maltese and the Toy or Miniature Poodle, and is not recognised as a breed by kennel clubs. That is a description, not a criticism: it is bred as a companion, and it is judged by how it lives with people rather than by a standard.',
   },
   {
-    q: 'How much is a Maltipoo in Singapore?',
+    q: 'How much does a Maltipoo puppy cost in Singapore?',
     a: `Ours are ${site.pricing.range} all-in, which covers vaccinations to date, microchipping, the licence transfer, a health check and the first trainer lesson. Other Singapore shops advertise from around $3,288 to just under $5,000, though what is bundled into that figure varies a great deal.`,
   },
+  {
+    q: 'Are Maltipoos HDB approved?',
+    a: 'Yes. HDB’s approved list names the Maltese and the Toy Poodle, and it approves a cross of any two listed breeds, so a Maltipoo qualifies outright. One dog per flat, licensed with AVS, and kept to considerate-ownership standards. Our HDB guide sets out the rule and what to say if anyone questions it.',
+  },
+  {
+    q: 'Are boy or girl Maltipoos better?',
+    a: 'Neither, as a rule. Within this cross the personality overlap between males and females is far bigger than the average difference. The real distinctions are practical and pre-sterilisation: marking in males, seasons in females, and both fade once the dog is sterilised. Pick the individual puppy’s temperament, not the sex.',
+  },
+];
+
+const compareRows = [
+  { breed: 'Maltipoo', href: null, weight: '2–4kg (toy)', coat: 'Low-shedding, wavy to curly', temperament: 'Devoted, clever, wants company', hdb: 'Yes (approved cross)' },
+  { breed: 'Maltese', href: '/maltese-vs-maltipoo', weight: '2–4kg', coat: 'Low-shedding, long and silky', temperament: 'Gentle, alert watchdog streak', hdb: 'Yes' },
+  { breed: 'Toy Poodle', href: '/maltipoo-vs-poodle', weight: '2–5kg', coat: 'Low-shedding, tight curl', temperament: 'Sharp, energetic, very trainable', hdb: 'Yes' },
+  { breed: 'Cavapoo', href: '/maltipoo-vs-cavapoo', weight: '3–5kg (toy)', coat: 'Low-shedding, wavy', temperament: 'Easy-going, copes better alone', hdb: 'Yes (approved cross)' },
+  { breed: 'Shih Tzu', href: '/maltipoo-vs-shih-tzu', weight: '4–7kg', coat: 'Long double coat', temperament: 'Regal, more independent', hdb: 'Yes' },
 ];
 
 const schemas = [
@@ -105,10 +122,21 @@ const schemas = [
     description,
     aboutName: 'Maltipoo dog breed',
     datePublished: '2026-07-24',
-    dateModified: '2026-07-24',
+    dateModified: MODIFIED,
   }),
   breadcrumbSchema(crumbs),
   faqSchema(faqItems),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ImageObject',
+    '@id': `${site.domain}/what-is-a-maltipoo#primaryimage`,
+    contentUrl: `${site.domain}${featuredImg.src}`,
+    url: `${site.domain}${featuredImg.src}`,
+    width: featuredImg.width,
+    height: featuredImg.height,
+    caption: 'Apricot Maltipoo sitting in a bright Singapore living room, full body portrait',
+    representativeOfPage: true,
+  },
 ];
 ---
 
@@ -163,6 +191,41 @@ const schemas = [
       { value: site.pricing.from, label: 'All-in, in Singapore' },
     ]}
   />
+
+  <section class="container-site py-8" id="compare">
+    <h2 class="text-2xl md:text-3xl mb-2">Maltipoo vs similar small breeds</h2>
+    <p class="text-ink-soft mb-4 max-w-[65ch]">
+      How the Maltipoo compares with the breeds Singapore buyers weigh it against. Weights are
+      typical adult ranges for the sizes seen here; each row links to the full comparison.
+      Updated <time datetime={MODIFIED}>11 October 2026</time>.
+    </p>
+    <div class="overflow-x-auto rounded-[var(--radius-panel)] bg-surface shadow-[var(--shadow-pop)]">
+      <table class="w-full text-left text-sm md:text-base text-ink">
+        <thead class="bg-tint-200">
+          <tr>
+            <th scope="col" class="p-3">Breed</th>
+            <th scope="col" class="p-3">Adult weight</th>
+            <th scope="col" class="p-3">Coat</th>
+            <th scope="col" class="p-3">Temperament</th>
+            <th scope="col" class="p-3">HDB approved</th>
+          </tr>
+        </thead>
+        <tbody>
+          {compareRows.map((r) => (
+            <tr class="border-t border-black/10">
+              <th scope="row" class="p-3 font-semibold">
+                {r.href ? <a href={r.href}>{r.breed}</a> : r.breed}
+              </th>
+              <td class="p-3">{r.weight}</td>
+              <td class="p-3">{r.coat}</td>
+              <td class="p-3">{r.temperament}</td>
+              <td class="p-3">{r.hdb}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
 
   <CaptionedBlock heading="Where the Maltipoo comes from" id="origins">
     <p>
