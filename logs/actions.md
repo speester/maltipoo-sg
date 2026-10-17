@@ -11,3 +11,4 @@
 | date | kind | what changed | ref | sha | outcome |
 |---|---|---|---|---|---|
 | 2026-09-05 | deploy | deploy_site.py direct-upload -> c6e0c04 | c6e0c04 | c6e0c04 | pending |
+| 2026-10-11 | deploy | deploy_site.py direct-upload -> 4c7cc16 | 4c7cc16 | 4c7cc16 | pending |
