@@ -2,23 +2,22 @@
 // Puppies showcase page (owner standard from build #1). Targets "available maltipoo
 // puppies singapore" intent; framed as live availability, never a stale fixed inventory.
 // Hero image added at Phase E imggen.
-import BaseLayout from '../layouts/BaseLayout.astro';
-import PawTrail from '../components/PawTrail.astro';
-import Breadcrumb from '../components/Breadcrumb.astro';
-import AnswerCapsule from '../components/AnswerCapsule.astro';
-import ListingGrid from '../components/ListingGrid.astro';
-import CaptionedBlock from '../components/CaptionedBlock.astro';
-import FactsCard from '../components/FactsCard.astro';
-import FAQ from '../components/FAQ.astro';
-import CtaClose from '../components/CtaClose.astro';
-import { site, whatsappLink } from '../data/site';
-import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
-import featuredImg from '../assets/site/11-maltipoo-puppies-litter.webp';
-import { availablePups } from '../data/puppies';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PawTrail from '../../components/PawTrail.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import AnswerCapsule from '../../components/AnswerCapsule.astro';
+import LivePuppies from '../../components/LivePuppies.astro';
+import CaptionedBlock from '../../components/CaptionedBlock.astro';
+import FactsCard from '../../components/FactsCard.astro';
+import FAQ from '../../components/FAQ.astro';
+import CtaClose from '../../components/CtaClose.astro';
+import { site, whatsappLink } from '../../data/site';
+import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../../lib/schema';
+import featuredImg from '../../assets/site/11-maltipoo-puppies-litter.webp';
 
 const title = 'Available Maltipoo Puppies in Singapore | Maltipoo.sg';
 const description =
-  'Available Maltipoo puppies in Singapore, updated weekly: current apricot litters and ages, all-in pricing from $3,288, and how to reserve and meet them at.';
+  'Available Maltipoo puppies in Singapore, updated every morning: current apricot litters and ages, all-in pricing from $3,288, and how to reserve and meet them.';
 
 const crumbs = [
   { name: 'Home', url: '/' },
@@ -27,8 +26,8 @@ const crumbs = [
 
 const faqItems = [
   {
-    q: 'Why is the gallery not a full inventory with prices?',
-    a: 'Because toy Maltipoo litters are small and reserve quickly, a fixed inventory goes stale within weeks. This gallery shows what we genuinely place; the live answer, with photos and the exact all-in price, comes on WhatsApp the same day you ask.',
+    q: 'Is this the full list of Maltipoo puppies you have?',
+    a: 'Yes, for the Singapore shop. Every card above is read from the shop stock list each morning, so each one carries a real photo, an age and the exact all-in price. Toy litters are small and reserve quickly, so a puppy can be reserved between two updates. WhatsApp +65 8220 6408 and we confirm what is still open the same day.',
   },
   {
     q: 'How do I reserve a Maltipoo puppy?',
@@ -111,16 +110,17 @@ const schemas = [
     />
   </section>
 
-  <ListingGrid heading="Available Maltipoo puppies" items={availablePups} mode="available" />
+  <LivePuppies heading="Available Maltipoo puppies" id="available" fallback="placed" />
 
   <CaptionedBlock heading="How availability actually works here" id="how" tinted>
     <p>
       Most listings that rank for Maltipoo puppies for sale in Singapore show a fixed grid that
-      went stale weeks ago. A toy Maltipoo litter is often two or three puppies, and most are
-      reserved within a couple of weeks of arriving. Rather than pretend a webpage can keep up,
-      we run it live:
-      message us and we reply with what is genuinely here, what arrives soon, and honest
-      timing if your preferred shade from the
+      went stale weeks ago. We do the opposite. This page reads straight from the shop stock list
+      and rebuilds itself every morning, so the cards above carry today's puppies, their real ages
+      and the exact all-in price. A toy Maltipoo litter is often two or three puppies and most are
+      reserved within a couple of weeks of arriving, so when a card disappears that puppy has been
+      reserved or placed. If nothing is listed, the waitlist is the honest answer: we message you
+      with photos of the next litter, and honest timing if your preferred shade from the
       <a href="/maltipoo-colours">apricot colour range</a> needs a wait.
     </p>
     <p>
@@ -140,7 +140,7 @@ const schemas = [
         'Home at ~week 9, fully set up by us',
       ]}
     />
-      <p>Availability moves faster than this page does. The shop keeps a live list of the <a href="https://curioustails.sg/puppies/maltipoo/" rel="noopener">Maltipoo puppies available in Singapore right now</a>, with each one’s colour, age and all-in price beside it, which is the quickest way to see whether the litter you want is still open.</p>
+      <p>Because the sync runs once a morning, the list can lag a same-day reserve by a few hours. If timing matters, message us and we will tell you what is open right now, including puppies that arrive before they reach this page.</p>
   </CaptionedBlock>
 
   <FAQ items={faqItems} />

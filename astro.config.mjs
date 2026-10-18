@@ -6,6 +6,7 @@ import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import { puppyRedirects, soldPagePaths } from './scripts/lib/puppy-redirects.mjs';
 
 const pagesDir = new URL('./src/pages/', import.meta.url);
 
@@ -26,6 +27,11 @@ function sitemapLastmod(item) {
       // not this shape; try the next candidate
     }
   }
+
+  // Puppy pages (/puppies/<slug>) are data-driven: their content changes when the
+  // feed sync rewrites src/data/available-puppies.json, not when the route file is
+  // edited, so the route mtime would be a fabricated date. No lastmod.
+  if (/^puppies\/[^/]+$/.test(path)) return item;
 
   // Dynamic route (e.g. areas/dog-grooming-[slug].astro): no file matches the
   // URL, but the route file is still the source that produced the page, so its
@@ -52,6 +58,8 @@ function sitemapLastmod(item) {
   return item;
 }
 
+const soldPages = soldPagePaths();
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://maltipoo.sg',
@@ -63,6 +71,13 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
-  integrations: [sitemap({ serialize: sitemapLastmod })]
+  integrations: [
+    sitemap({
+      serialize: sitemapLastmod,
+      // A placed pup's page stays up for 90 days with noindex: keep it out.
+      filter: (page) => !soldPages.has(new URL(page).pathname.replace(/\/$/, '')),
+    }),
+    puppyRedirects(),
+  ]
 });
 

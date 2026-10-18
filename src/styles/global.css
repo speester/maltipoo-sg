@@ -19,6 +19,7 @@
   --color-blush: #fbe7dc;
   --color-blush-ink: #a34d20;
   --color-wa: #25d366;
+  --color-accent: #a34d20;       /* deep terracotta — eyebrows, links, focus (legible on sage paper) */
 
   --font-display: 'Bricolage Grotesque', 'Trebuchet MS', sans-serif;
   --font-body: 'Quicksand', 'Segoe UI', sans-serif;

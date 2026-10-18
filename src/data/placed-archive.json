@@ -1,0 +1,27 @@
+{
+  "_note": "Written by scripts/sync-puppies.mjs, never rebuilt from scratch: puppies that left the available list. status: placed (sold evidence; page stays up, noindex, \"Found a loving home\"), withdrawn (no evidence; no page, URL 301s to /puppies/), expired (past the 90-day retention; URL 301s). placedAt = the day the sync first saw it gone (SGT); lastListed = the last day it was listed. Do not hand-edit; to mark a sale, add the id to sold-overrides.json and re-run the sync.",
+  "lastSync": {
+    "at": "2026-10-18T09:43:54.597Z",
+    "listed": [
+      {
+        "id": 2938,
+        "name": "Biscuit",
+        "color": "Apricot",
+        "gender": "Female",
+        "age": "2 months",
+        "image": "2938-1-1f575126.webp",
+        "images": [
+          "2938-1-1f575126.webp",
+          "2938-2-41d245a7.webp",
+          "2938-3-27954ad0.webp",
+          "2938-4-3fa4ec7d.webp"
+        ],
+        "location": "Balestier Area",
+        "origin": "Local",
+        "size": "Miniature",
+        "hdbApproved": true
+      }
+    ]
+  },
+  "pups": []
+}

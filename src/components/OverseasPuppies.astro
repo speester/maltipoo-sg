@@ -1,0 +1,102 @@
+---
+// Australia reservation puppies (src/data/overseas-puppies.json, `npm run sync:overseas`).
+// Owner rule 2026-10-18: shown ONLY when no local Balestier puppy of this breed is
+// listed, and always in its own section, never inside "available".
+// The cards are the Bakery Box shape with an accent awning and an "In Australia"
+// status, so a reader can never mistake one for a pup they can visit this week.
+import { Image } from 'astro:assets';
+import { whatsappLink } from '../data/site';
+import overseas from '../data/overseas-puppies.json';
+import feedCfg from '../../scripts/puppy-feed.json';
+
+interface Props {
+  id?: string;
+}
+const { id = 'australia' } = Astro.props;
+
+interface OsPup {
+  id: string;
+  listingId: string | null;
+  breedLabel: string;
+  gender: 'Male' | 'Female' | null;
+  age: string | null;
+  canFly: boolean | null;
+  price: number | null;
+  deposit: number | null;
+  image: string | null;
+}
+const photos = import.meta.glob<ImageMetadata>('../assets/overseas/*.webp', { eager: true, import: 'default' });
+const imgFor = (f: string | null) => (f ? photos[`../assets/overseas/${f}`] : undefined);
+const pups = ((overseas as { pups?: OsPup[] }).pups ?? []).filter((p) => imgFor(p.image));
+const breed = feedCfg.breedName;
+const half = (g: OsPup['gender']) => (g === 'Female' ? 'Girl' : g === 'Male' ? 'Boy' : 'Puppy');
+const money = (n: number | null) => (typeof n === 'number' ? `$${n.toLocaleString('en-SG')}` : null);
+const ask = (p: OsPup) =>
+  whatsappLink(
+    `Hi, I'd like to reserve the ${breed} ${half(p.gender).toLowerCase()} from Australia${p.listingId ? ` (Listing ID ${p.listingId})` : ''}${p.price ? `, ${money(p.price)} all-in` : ''}. How does the import work?`,
+  );
+---
+
+{pups.length > 0 && (
+  <section class="container-site py-10" id={id}>
+    <div class="rounded-[var(--radius-card)] border border-tint-300 border-l-8 border-l-accent/70 bg-tint-200/70 px-6 py-4 mb-8">
+      <h2 class="text-2xl md:text-3xl m-0">Reserve a {breed} from Australia</h2>
+      <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">
+        No {breed} is in our Balestier shop today. These puppies are in Australia now and are reservation only: a 50% deposit starts the import, and the balance is due before your puppy flies to Singapore. Every price is all-in to Singapore.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-9 items-start">
+      {pups.map((p) => {
+        const who = `${breed} ${half(p.gender).toLowerCase()} in Australia${p.price ? `, ${money(p.price)} all-in` : ''}`;
+        return (
+          <article class="os">
+            <div class="awn" aria-hidden="true"></div>
+            <div class="body">
+              <div class="top">
+                <div class="ph">
+                  <Image src={imgFor(p.image)!} alt={`${breed} ${half(p.gender).toLowerCase()} puppy in Australia, for reservation`} width={280} height={280} fit="cover" loading="lazy" decoding="async" />
+                  {p.gender && <span class:list={['sex', p.gender === 'Female' ? 'f' : 'm']} aria-hidden="true">{p.gender === 'Female' ? '♀' : '♂'}</span>}
+                </div>
+                <div class="nm">
+                  <div class="st"><i></i>In Australia · Reserve</div>
+                  <h3 class="pname">{breed} {half(p.gender)}</h3>
+                  {p.age && <div class="br">{p.age} old</div>}
+                  {money(p.price) && <div class="pr">{money(p.price)} <small>all-in</small></div>}
+                </div>
+              </div>
+              <ul class="facts">
+                {money(p.deposit) && <li><b>{money(p.deposit)}</b> deposit to reserve</li>}
+                <li>{p.canFly ? 'Old enough to fly now' : 'Flies once 3 months old'}</li>
+                {p.listingId && <li>Listing ID <b>{p.listingId}</b></li>}
+              </ul>
+              <a class="wa" href={ask(p)} data-wa-source={`overseas:${p.id}`} aria-label={`WhatsApp to reserve the ${who}`}>💬 Reserve this puppy</a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+)}
+
+<style>
+  .os { font-family: var(--font-body); color: var(--color-ink); filter: drop-shadow(0 10px 16px rgba(74, 46, 26, 0.16)); }
+  .awn { --a: var(--color-accent); height: 26px; background: repeating-linear-gradient(90deg, var(--a) 0 26px, #fff 26px 52px); border-radius: 16px 16px 0 0; position: relative; }
+  .awn::after { content: ''; position: absolute; left: 0; right: 0; bottom: -9px; height: 10px; background: radial-gradient(circle at 13px 0, var(--a) 9px, transparent 9.5px) 0 0 / 26px 10px repeat-x; }
+  .body { background: var(--color-surface); border: 3px solid var(--color-tint-300); border-top: 0; border-radius: 0 0 22px 22px; padding: 18px 12px 12px; display: flex; flex-direction: column; gap: 10px; }
+  .top { display: grid; grid-template-columns: 140px 1fr; gap: 12px; align-items: center; }
+  .ph { width: 140px; height: 140px; border-radius: 50%; border: 4px dotted var(--color-accent); padding: 3px; background: #fff; position: relative; }
+  .ph :global(img) { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+  .sex { position: absolute; right: 2px; bottom: 6px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; font-size: 15px; color: #fff; border: 3px solid #fff; line-height: 1; }
+  .sex.f { background: #c63c74; }
+  .sex.m { background: #3f6fd1; }
+  .nm { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .st { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; }
+  .st i { width: 8px; height: 8px; margin: 0 3px; border-radius: 50%; background: #3f6fd1; box-shadow: 0 0 0 3px rgba(63, 111, 209, 0.2); }
+  .pname { font-family: var(--font-display); font-weight: 800; font-size: 21px; line-height: 1.05; margin: 4px 0 0; color: var(--color-primary-700); overflow-wrap: anywhere; }
+  .br { font-size: 12.5px; font-weight: 800; color: var(--color-ink-soft); }
+  .pr { font-family: var(--font-display); font-weight: 800; font-size: 21px; color: var(--color-primary); line-height: 1.1; margin-top: 3px; }
+  .pr small { font-family: var(--font-body); font-size: 11px; color: var(--color-ink-soft); font-weight: 800; }
+  .facts { list-style: none; margin: 0; padding: 8px 0 0; border-top: 2px dashed var(--color-tint-300); display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--color-ink-soft); }
+  .wa { display: flex; align-items: center; justify-content: center; min-height: 44px; border-radius: 12px; font-size: 14px; font-weight: 900; text-decoration: none; background: var(--color-wa); color: #073d20; box-shadow: 0 3px 0 #1a9e4c; }
+  .wa:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 2px; }
+</style>

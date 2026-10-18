@@ -1,0 +1,331 @@
+---
+// One page per live Maltipoo: /puppies/<id>-<colour>-<girl|boy> (build.format "file")
+// (PLAN-dachshund-live-listings.md, 2026-10-14). Driven by
+// src/data/available-puppies.json; the slug comes from src/lib/pup-slug.mjs, the
+// same function every card links with.
+//
+// A puppy that found its home (src/data/placed-archive.json, status "placed")
+// keeps its page for 90 days (plan D1): "Found a loving home", no price, no
+// booking, noindex, a SoldOut Offer, and the CTA "Ask about a similar puppy".
+// After that, or for a pup withdrawn without sold evidence, the URL 301s to
+// /puppies/ (scripts/lib/puppy-redirects.mjs).
+import { Image, getImage } from 'astro:assets';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PupFacts from '../../components/PupFacts.astro';
+import PerkStickers from '../../components/PerkStickers.astro';
+import LivePuppies from '../../components/LivePuppies.astro';
+import { site } from '../../data/site';
+import { breadcrumbSchema, pupProductSchema } from '../../lib/schema';
+import { perkIcon } from '../../lib/perk-icons';
+import {
+  type Pup,
+  WA_VARIANT,
+  breedLong,
+  breedShort,
+  displayName,
+  half,
+  livePups,
+  originOf,
+  photoFor,
+  placedArchivePups,
+  priceLabel,
+  pupContext,
+  pupPageHref,
+  pupPageSlug,
+  viewingAt,
+  waBookLink,
+  waLink,
+  waPhotosLink,
+  waSimilarLink,
+} from '../../lib/puppy-cards';
+
+export function getStaticPaths() {
+  const paths: { params: { slug: string }; props: { pup: Pup; sold: boolean } }[] = [];
+  for (const pup of livePups()) {
+    if (!photoFor(pup.image)) continue; // a page needs a real photo
+    paths.push({ params: { slug: pupPageSlug(pup) }, props: { pup, sold: false } });
+  }
+  const live = new Set(paths.map((p) => p.params.slug));
+  for (const pup of placedArchivePups()) {
+    const slug = pupPageSlug(pup);
+    if (!live.has(slug)) paths.push({ params: { slug }, props: { pup, sold: true } });
+  }
+  return paths;
+}
+
+const { pup, sold } = Astro.props as { pup: Pup; sold: boolean };
+
+const name = displayName(pup);
+const path = pupPageHref(pup);
+const g = half(pup.gender);
+const gl = g.toLowerCase();
+const price = priceLabel(pup);
+const where = viewingAt(pup);
+const origin = originOf(pup.origin);
+const he = pup.gender === 'Female' ? 'she' : pup.gender === 'Male' ? 'he' : 'this puppy';
+const He = he.charAt(0).toUpperCase() + he.slice(1);
+const him = pup.gender === 'Female' ? 'her' : pup.gender === 'Male' ? 'him' : 'them';
+const colourNoun = [pup.color, breedLong(pup), gl === 'puppy' ? 'puppy' : gl].filter(Boolean).join(' ');
+// Prose form: "apricot Maltipoo girl" (the breed keeps its capital).
+const colourNounLc = [pup.color?.toLowerCase(), breedLong(pup), gl === 'puppy' ? 'puppy' : gl].filter(Boolean).join(' ');
+// "4 months" -> "4-month-old", "9 weeks" -> "9-week-old".
+const ageAdj = pup.age ? pup.age.replace(/^(\d+)\s+(month|week)s?$/i, '$1-$2-old') : null;
+// "a" or "an" for the word that follows: an 8-week-old, an isabella piebald.
+const an = (w: string) => (/^(8|11|18)|^[aeiou]/i.test(w) ? 'an' : 'a');
+const ageColour = `${ageAdj ? `${ageAdj} ` : ''}${colourNounLc}`;
+const who = pupContext(pup, { price: !sold });
+const waSource = sold ? `sold:${pup.id}` : `pup:${pup.id}`;
+
+const files = (pup.images?.length ? pup.images : [pup.image]).filter((f): f is string => !!photoFor(f));
+const metas = files.map((f) => photoFor(f)!);
+const fulls = await Promise.all(metas.map((m) => getImage({ src: m, width: 800, format: 'webp' })));
+const hero = fulls[0];
+const alt = (i: number) =>
+  `${colourNoun.charAt(0).toUpperCase() + colourNoun.slice(1)} ${name}${sold ? ', who found a loving home in Singapore' : ', available in Singapore'}, photo ${i + 1} of ${files.length}`;
+
+const titleCore = `${name}, ${[pup.color, breedShort(pup), g].filter(Boolean).join(' ')}`;
+const title = sold ? `${titleCore}, Found a Home | Maltipoo.sg` : `${titleCore} | Maltipoo.sg`;
+// Meta description: first candidate that lands in the 140-158 band the health
+// gate enforces; otherwise the longest one that still fits under 158.
+const fit = (cands: string[]) =>
+  cands.find((c) => c.length >= 140 && c.length <= 158) ??
+  [...cands].filter((c) => c.length <= 158).sort((x, y) => y.length - x.length)[0] ??
+  cands[cands.length - 1].slice(0, 155).replace(/\s+\S*$/, '') + '.';
+const perks = `${pup.hdbApproved ? 'HDB-approved, ' : ''}vaccinated, microchipped and vet-checked`;
+const priceAll = price ? `${price} all-in` : 'All-in price';
+const description = sold
+  ? fit([
+      `${name}, ${an(colourNounLc)} ${colourNounLc}, found a loving Singapore home. See the Maltipoos available now from our AVS-licensed shop.`,
+      `${name}, ${an(colourNounLc)} ${colourNounLc}, found a loving Singapore home. See the Maltipoos available now, every price all-in.`,
+      `${name} found a loving Singapore home. See the Maltipoos available now from our AVS-licensed shop, every price all-in.`,
+    ])
+  : fit([
+      `Meet ${name}, ${an(ageColour)} ${ageColour}${where ? ` at ${where}` : ''}. ${priceAll}, ${perks}. Ask on WhatsApp.`,
+      `Meet ${name}, ${an(ageColour)} ${ageColour}${where ? ` at ${where}` : ''}. ${priceAll}, ${perks}.`,
+      `Meet ${name}, ${an(colourNounLc)} ${colourNounLc}${where ? ` at ${where}` : ''}. ${priceAll}, ${perks}.`,
+      `Meet ${name}, ${an(colourNounLc)} ${colourNounLc}. ${priceAll}, ${perks}.`,
+    ]);
+
+const schemas = [
+  pupProductSchema({
+    name: `${name}, ${colourNoun}`,
+    description,
+    url: path,
+    image: hero.src,
+    sku: String(pup.id),
+    color: pup.color,
+    price: pup.price,
+    soldOut: sold,
+  }),
+  breadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Puppies', url: '/puppies' },
+    { name, url: path },
+  ]),
+];
+
+// Attribute-derived copy only: nothing here is invented about the puppy.
+const aboutParas = sold
+  ? [
+      `<strong>${name}</strong> is ${an(colourNounLc)} ${colourNounLc} who found ${pup.gender === 'Female' ? 'her' : pup.gender === 'Male' ? 'his' : 'their'} Singapore family through our shop. Like every puppy we place, ${he} went home vaccinated, microchipped and vet-checked, with the free 30-item starter kit.`,
+      `Hoping for a Maltipoo like ${him}? Litters are small and move quickly. WhatsApp us and we will send photos of similar Maltipoos available now or due soon, with an honest wait time.`,
+    ]
+  : [
+      `<strong>${name}</strong> is ${an(ageColour)} ${ageColour}${origin ? `, bred in ${origin.name}` : ''}${where ? `, and you can meet ${him} at ${where}` : ''}. ${He} is vaccinated, microchipped and vet-checked, and goes home with our free 30-item starter kit.`,
+      `${pup.hdbApproved ? `The shop has marked ${him} HDB-approved, so ${he} can live in a flat. ` : ''}${price ? `The ${price} price is all-in: vaccinations to date, microchip and licensing are included, with nothing added at the shop.` : 'Ask us for the all-in price.'}`,
+    ];
+
+const caption =
+  `These photos are from the shop’s own listing for ${name} (ID ${pup.id}). ` +
+  (files.length > 1 ? 'Tap a thumbnail to see it larger, or ask' : 'Ask') +
+  ` on WhatsApp for more photos${sold ? ' of similar puppies' : ''}.`;
+
+const guides = [
+  { href: '/maltipoo-hdb-approved', title: 'HDB rules for Maltipoos', note: 'What HDB approval means for a toy Maltipoo in a flat.' },
+  { href: '/maltipoo-price-singapore', title: 'Maltipoo price guide', note: 'What “all-in” covers, line by line.' },
+  { href: '/blog/maltipoo-first-week-home', title: 'Your first week at home', note: 'Sleep, feeding and potty routines from day one.' },
+];
+---
+
+<BaseLayout title={title} description={description} path={path} ogImage={hero.src} schemas={schemas} noindex={sold}>
+  <section class="container-site pt-6 pb-10">
+    <Breadcrumb bare items={[{ name: 'Home', url: '/' }, { name: 'Puppies', url: '/puppies' }, { name, url: path }]} />
+
+    <div class="pup-hero mt-6">
+      <div class="head">
+        <p class="eyebrow m-0">{sold ? 'Found a loving home' : `Available now · Puppy ID ${pup.id}`}</p>
+        <h1 class="pname">{name}</h1>
+        <p class="sub">{colourNoun.charAt(0).toUpperCase() + colourNoun.slice(1)}</p>
+
+        {pup.hdbApproved === true && <p class="hdbl"><Fragment set:html={perkIcon('hdb')} />HDB approved</p>}
+
+        {sold ? (
+          <div class="sold-box">
+            <p class="m-0 font-bold">{name} is no longer available.</p>
+            <p class="m-0 mt-1">{He} has found a loving home. Ask us about a similar puppy and we will send photos of who is available now.</p>
+          </div>
+        ) : (
+          <div class="pricebox">
+            <span class="st"><i></i>Available</span>
+            {price && <span class="pr">{price} <small>all-in</small></span>}
+          </div>
+        )}
+      </div>
+
+      <figure class="gallery m-0">
+        <span class="main">
+          <img id="pup-main" src={hero.src} width={hero.attributes.width} height={hero.attributes.height} alt={alt(0)} fetchpriority="high" decoding="async" />
+          {sold && <span class="sold-badge">Found a loving home</span>}
+        </span>
+        {files.length > 1 && (
+          <div class="thumbs">
+            {metas.map((m, i) => (
+              <button type="button" class:list={['thumb', i === 0 && 'on']} data-full={fulls[i].src} data-alt={alt(i)} aria-label={`Show photo ${i + 1} of ${files.length} of ${name}`} aria-pressed={i === 0 ? 'true' : 'false'}>
+                <Image src={m} alt="" width={200} height={200} fit="cover" loading="lazy" />
+              </button>
+            ))}
+          </div>
+        )}
+        <figcaption class="cap">{caption}</figcaption>
+      </figure>
+
+      <div class="info">
+        <PupFacts pup={pup} large />
+        <div class="mt-4"><PerkStickers large /></div>
+
+        {where && !sold && (
+          <p class="where">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" fill="currentColor" /></svg>
+            Viewing at: <strong>{where}</strong>
+          </p>
+        )}
+
+        <div class="ctas">
+          {sold ? (
+            <>
+              <a class="btn-wa w-full" href={waSimilarLink(pup)} data-wa-source={waSource} data-wa-variant={WA_VARIANT} aria-label={`WhatsApp to ask about a puppy similar to ${who}`}>💬 Ask about a similar puppy</a>
+              <a class="btn-outline w-full" href="/puppies">See puppies available now</a>
+            </>
+          ) : (
+            <>
+              <a class="btn-wa w-full" href={waLink(pup)} data-wa-source={waSource} data-wa-variant={WA_VARIANT} aria-label={`WhatsApp to check if ${who} is still available`}>💬 Is {name} still available?</a>
+              <div class="row">
+                {pup.bookHref ? (
+                  <a class="btn-outline" href={pup.bookHref} target="_blank" rel="noopener" aria-label={`Book a visit to meet ${who}`}>📅 Book a visit</a>
+                ) : (
+                  <a class="btn-outline" href={waBookLink(pup)} data-wa-source={waSource} data-wa-variant={WA_VARIANT} aria-label={`Book a visit to meet ${who}`}>📅 Book a visit</a>
+                )}
+                {pup.video ? (
+                  <a class="btn-outline" href={pup.video} target="_blank" rel="noopener" aria-label={`Watch a video of ${who}`}>▶ Watch video</a>
+                ) : (
+                  <a class="btn-outline" href={waPhotosLink(pup)} data-wa-source={waSource} data-wa-variant={WA_VARIANT} aria-label={`Ask on WhatsApp for more photos of ${who}`}>📸 More photos</a>
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-site py-8" id="about">
+    <div class="grid md:grid-cols-[1.4fr_1fr] gap-6 items-start rounded-[var(--radius-panel)] bg-tint-200 p-6 md:p-10">
+      <div>
+        <h2 class="text-2xl md:text-3xl mb-4">{sold ? `${name} found a home` : `About ${name}`}</h2>
+        <div class="text-ink-soft max-w-[65ch] space-y-4">
+          {aboutParas.map((p) => <p set:html={p} />)}
+        </div>
+      </div>
+      <div class="rounded-[var(--radius-card)] bg-surface border border-[var(--color-tint-300)] p-5">
+        <h3 class="text-lg mb-3">Before you meet {sold ? 'a Maltipoo' : name}</h3>
+        <ul class="list-none p-0 m-0 space-y-3">
+          {guides.map((x) => (
+            <li>
+              <a href={x.href} class="font-semibold text-primary-700 underline underline-offset-2">{x.title}</a>
+              <span class="block text-[15px] text-ink-soft">{x.note}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <LivePuppies heading={sold ? 'Maltipoos available now' : 'Other Maltipoos available now'} id="others" exclude={pup.id} max={3} fallback="hide" band />
+</BaseLayout>
+
+<script>
+  // Thumbnail -> main photo swap. Without JS every photo is still on the page.
+  const main = document.getElementById('pup-main') as HTMLImageElement | null;
+  document.querySelectorAll<HTMLButtonElement>('.thumb').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (!main || !btn.dataset.full) return;
+      main.src = btn.dataset.full;
+      main.alt = btn.dataset.alt ?? main.alt;
+      document.querySelectorAll('.thumb').forEach((t) => {
+        t.classList.remove('on');
+        t.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('on');
+      btn.setAttribute('aria-pressed', 'true');
+    });
+  });
+</script>
+
+<style>
+  /* Mobile reads name + price, then the photos, then facts and CTAs; from md the
+     photos take the left column and everything else stacks on the right. */
+  .pup-hero { display: grid; gap: 1.25rem; grid-template-areas: 'head' 'gallery' 'info'; }
+  .pup-hero .head { grid-area: head; }
+  .pup-hero .gallery { grid-area: gallery; }
+  .pup-hero .info { grid-area: info; }
+  @media (min-width: 768px) {
+    .pup-hero { grid-template-columns: 1fr 1fr; grid-template-areas: 'gallery head' 'gallery info'; grid-template-rows: auto 1fr; column-gap: 2rem; row-gap: 1rem; align-items: start; }
+  }
+  /* Not .pop: the site's GSAP reveal hides .pop until scrolled, and this is the LCP image. */
+  .main { display: block; position: relative; overflow: hidden; padding: 0.5rem; background: var(--color-surface); border: 1px solid var(--color-tint-300); border-radius: var(--radius-card); box-shadow: var(--shadow-pop); }
+  .main img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-media); display: block; }
+  @media (min-width: 768px) { .main img { aspect-ratio: 1 / 1; } }
+  .sold-badge {
+    position: absolute;
+    left: 1.25rem;
+    bottom: 1.25rem;
+    background: var(--color-surface);
+    color: var(--color-primary-700);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    box-shadow: var(--shadow-pop-sm);
+  }
+  .cap { margin-top: 0.75rem; font-size: 15px; line-height: 1.5; color: var(--color-ink-soft); max-width: 60ch; }
+  .thumbs { margin-top: 0.75rem; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem; }
+  .thumb {
+    padding: 0;
+    border: 3px solid transparent;
+    border-radius: var(--radius-media);
+    overflow: hidden;
+    background: var(--color-surface);
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .thumb.on { border-color: var(--color-primary); }
+  .thumb:focus-visible { outline: 3px solid var(--color-primary-700); outline-offset: 2px; }
+  .thumb :global(img) { width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; display: block; }
+
+  .pname { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1; margin: 0.4rem 0 0; color: var(--color-primary-700); overflow-wrap: anywhere; }
+  .sub { margin: 0.35rem 0 0; font-weight: 700; color: var(--color-ink-soft); }
+  .hdbl { display: flex; align-items: center; gap: 6px; margin: 0.75rem 0 0; font-weight: 800; color: #1f6b4a; }
+  .hdbl :global(.ic) { width: 20px; height: 20px; }
+  .pricebox { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.5rem 1rem; margin-top: 1rem; padding: 0.75rem 0; border-block: 2px dashed var(--color-tint-300); }
+  .st { display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 0.95rem; }
+  .st i { width: 9px; height: 9px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2); }
+  .pr { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.9rem, 4vw, 2.4rem); color: var(--color-primary); line-height: 1; }
+  .pr small { font-family: var(--font-body); font-size: 0.9rem; color: var(--color-ink-soft); }
+  .sold-box { margin-top: 1rem; border-radius: var(--radius-card); background: var(--color-mint); color: var(--color-mint-ink); padding: 1rem 1.2rem; }
+  .where { display: flex; align-items: center; gap: 6px; margin: 1rem 0 0; color: var(--color-ink); }
+  .where svg { width: 18px; height: 18px; color: var(--color-primary); flex: none; }
+  .ctas { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .ctas .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .ctas .row a { padding-inline: 0.75rem; }
+</style>

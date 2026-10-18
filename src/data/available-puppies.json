@@ -1,0 +1,100 @@
+{
+  "syncedAt": "2026-10-18T09:43:54.600Z",
+  "available": [
+    {
+      "id": 2938,
+      "name": "Biscuit",
+      "color": "Apricot",
+      "gender": "Female",
+      "age": "2 months",
+      "price": 4088,
+      "image": "2938-1-1f575126.webp",
+      "images": [
+        "2938-1-1f575126.webp",
+        "2938-2-41d245a7.webp",
+        "2938-3-27954ad0.webp",
+        "2938-4-3fa4ec7d.webp"
+      ],
+      "location": "Balestier Area",
+      "origin": "Local",
+      "size": "Miniature",
+      "hdbApproved": true,
+      "video": null,
+      "bookHref": "https://cal.com/puppy-singapore/appointment?puppyid=2938"
+    }
+  ],
+  "recentlyPlaced": [
+    {
+      "id": 2931,
+      "name": "Finn",
+      "color": "Cream",
+      "gender": "Male",
+      "age": null,
+      "price": 4088,
+      "image": "2931-2-c8e08b8d.webp",
+      "images": [
+        "2931-2-c8e08b8d.webp"
+      ],
+      "location": "Balestier Area",
+      "origin": "Local",
+      "size": "Miniature",
+      "hdbApproved": true,
+      "video": null,
+      "bookHref": "https://cal.com/puppy-singapore/appointment?puppyid=2931"
+    },
+    {
+      "id": 2579,
+      "name": null,
+      "color": "Apricot",
+      "gender": "Female",
+      "age": null,
+      "price": 4088,
+      "image": "2579-2-1d98fefc.webp",
+      "images": [
+        "2579-2-1d98fefc.webp"
+      ],
+      "location": "Balestier Area",
+      "origin": "Local",
+      "size": "Miniature",
+      "hdbApproved": true,
+      "video": null,
+      "bookHref": "https://cal.com/puppy-singapore/appointment?puppyid=2579"
+    },
+    {
+      "id": 2581,
+      "name": null,
+      "color": "Apricot",
+      "gender": "Male",
+      "age": null,
+      "price": 3488,
+      "image": "2581-2-c2a03dac.webp",
+      "images": [
+        "2581-2-c2a03dac.webp"
+      ],
+      "location": "Balestier Area",
+      "origin": "Local",
+      "size": "Miniature",
+      "hdbApproved": true,
+      "video": null,
+      "bookHref": "https://cal.com/puppy-singapore/appointment?puppyid=2581"
+    },
+    {
+      "id": 2593,
+      "name": null,
+      "color": "Cream",
+      "gender": "Male",
+      "age": null,
+      "price": 3888,
+      "image": "2593-2-50bc6569.webp",
+      "images": [
+        "2593-2-50bc6569.webp"
+      ],
+      "location": "Balestier Area",
+      "origin": "Local",
+      "size": "Miniature",
+      "hdbApproved": true,
+      "video": null,
+      "bookHref": "https://cal.com/puppy-singapore/appointment?puppyid=2593"
+    }
+  ]
+}

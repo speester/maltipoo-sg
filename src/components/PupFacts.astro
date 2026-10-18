@@ -1,0 +1,65 @@
+---
+// Bakery Box facts row: ONE row of equal columns, Gender · Age · ID · Bred in
+// (inline SVG flag + code, never a flag emoji). A blank feed cell hides its
+// column. Shared by BakeryPupCard and the puppy page so both say the same thing.
+import { type Pup, ageShort, half, originOf } from '../lib/puppy-cards';
+
+interface Props {
+  pup: Pup;
+  large?: boolean;
+}
+const { pup, large = false } = Astro.props;
+const origin = originOf(pup.origin);
+const age = large ? pup.age : ageShort(pup.age);
+const facts = [
+  pup.gender ? { k: 'Gender', v: half(pup.gender) } : null,
+  age ? { k: 'Age', v: age } : null,
+  { k: 'ID', v: String(pup.id) },
+  origin ? { k: 'Bred in', v: origin.code, flag: origin.flag, title: origin.name } : null,
+].filter(Boolean) as { k: string; v: string; flag?: string | null; title?: string }[];
+---
+
+<dl class:list={['facts', large && 'lg']} style={`--n:${facts.length}`}>
+  {facts.map((f) => (
+    <div>
+      <dt>{f.k}</dt>
+      <dd class="v">{f.flag && <Fragment set:html={f.flag} />}{f.title ? <abbr title={f.title}>{f.v}</abbr> : f.v}</dd>
+    </div>
+  ))}
+</dl>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr));
+    background: #fff;
+    border-radius: 14px;
+    padding: 8px 0;
+    margin: 0;
+    text-align: center;
+    font-family: var(--font-body);
+  }
+  .facts > div {
+    font-size: 10.5px;
+    font-weight: 800;
+    line-height: 1.2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 0 2px;
+    min-width: 0;
+    border-left: 1.5px dashed var(--color-tint-300);
+  }
+  .facts > div:first-child { border: 0; }
+  .facts dt { font-size: 9px; text-transform: uppercase; letter-spacing: 0.4px; color: var(--color-accent); }
+  .facts dd { margin: 0; color: var(--color-ink); }
+  .facts abbr { text-decoration: none; }
+  .facts .v { display: flex; align-items: center; justify-content: center; gap: 3px; min-width: 0; white-space: nowrap; }
+  .facts .v :global(.flag) { width: 16px; height: 11px; border-radius: 2px; flex: none; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08); }
+
+  .facts.lg { padding: 12px 0; border: 1px solid var(--color-tint-300); }
+  .facts.lg > div { font-size: 15px; gap: 5px; }
+  .facts.lg dt { font-size: 11px; }
+  .facts.lg .v :global(.flag) { width: 22px; height: 15px; }
+</style>

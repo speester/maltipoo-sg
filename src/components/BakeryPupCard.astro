@@ -1,0 +1,245 @@
+---
+// Bakery Box v14 puppy card (artifact KDrkcYQKYJcd1GwRxzkLtB, finalized 2026-10-14),
+// built field-for-field from PLAN-dachshund-live-listings.md decision 6:
+//   awning (site primary token) -> row 1: 140px round photo + gender badge, then
+//   HDB line (only when the feed ticks it), coat colour, Available, name, breed,
+//   price all-in -> facts row (Gender, Age, ID, Bred in) -> tilted perk stickers
+//   -> full-width WhatsApp row + Book / Video-or-Photos / Info.
+// The whole card links to the puppy page; the buttons sit above that link.
+// A blank feed cell hides its UI. Removed on purpose, never re-add: star rating,
+// review count, AVS badge, "Since 2003", free delivery, Licensed, Dewormed,
+// "Only N left".
+//
+// Palette: the Bakery Box shapes, retinted to dachshund.sg tokens (awning =
+// --color-primary, focus = --color-accent, paper = --color-surface).
+import { Image } from 'astro:assets';
+import PupFacts from './PupFacts.astro';
+import PerkStickers from './PerkStickers.astro';
+import {
+  type Pup,
+  WA_VARIANT,
+  breedShort,
+  displayName,
+  half,
+  photoFor,
+  priceLabel,
+  pupContext,
+  swatch,
+  waLink,
+  waPhotosLink,
+  waBookLink,
+  waSimilarLink,
+} from '../lib/puppy-cards';
+import { perkIcon } from '../lib/perk-icons';
+
+interface Props {
+  pup: Pup;
+  state?: 'available' | 'placed';
+  // The pup's own page. Omitted for a placed pup that has no page.
+  href?: string;
+  headingTag?: 'h2' | 'h3';
+}
+const { pup, state = 'available', href, headingTag: H = 'h3' } = Astro.props;
+
+const available = state === 'available';
+const name = displayName(pup);
+const who = pupContext(pup, { price: available });
+const photo = photoFor(pup.image);
+const price = priceLabel(pup);
+const g = half(pup.gender);
+const alt = `${[pup.color, g === 'Puppy' ? '' : g.toLowerCase(), breedShort(pup)].filter(Boolean).join(' ')} puppy ${name}${
+  available ? ', available in Singapore' : ', placed with a Singapore family'
+}`.replace(/\s+/g, ' ');
+const waSource = `pup:${pup.id}`;
+---
+
+<article class="bk" data-pup={pup.id}>
+  {href && <a class="stretch" href={href} aria-label={`See details for ${who}`}></a>}
+  <span class="paw" aria-hidden="true">🐾</span>
+  <div class="awn" aria-hidden="true"></div>
+  <div class="body">
+    <div class="top">
+      <div class="ph">
+        {photo ? (
+          <Image src={photo} alt={alt} width={280} height={280} fit="cover" loading="lazy" decoding="async" />
+        ) : (
+          <span class="noimg" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="currentColor"><circle cx="16" cy="19" r="9" /><circle cx="8" cy="11" r="3.4" /><circle cx="16" cy="8.5" r="3.4" /><circle cx="24" cy="11" r="3.4" /></svg>
+          </span>
+        )}
+        {pup.gender && <span class:list={['sex', pup.gender === 'Female' ? 'f' : 'm']} aria-hidden="true">{pup.gender === 'Female' ? '♀' : '♂'}</span>}
+      </div>
+      <div class="nm">
+        {pup.hdbApproved === true && <span class="hdbl"><Fragment set:html={perkIcon('hdb')} />HDB approved</span>}
+        {pup.color && <span class="pid"><i class="sw" style={`background:${swatch(pup.color)}`}></i>{pup.color}</span>}
+        {available ? <div class="st"><i></i>Available</div> : <div class="st placed"><i></i>Found a loving home</div>}
+        <H class="pname">{name}</H>
+        <div class="br">{breedShort(pup)}</div>
+        {available && price && <div class="pr">{price} <small>all-in</small></div>}
+      </div>
+    </div>
+
+    <PupFacts pup={pup} />
+
+    <PerkStickers />
+
+    <div class="acts">
+      {available ? (
+        <>
+          <a class="wa" href={waLink(pup)} data-wa-source={waSource} data-wa-variant={WA_VARIANT} aria-label={`WhatsApp to check if ${who} is still available`}>💬 Is {name} still available?</a>
+          {pup.bookHref ? (
+            <a href={pup.bookHref} target="_blank" rel="noopener" aria-label={`Book a visit to meet ${who}`}>📅 Book</a>
+          ) : (
+            <a href={waBookLink(pup)} data-wa-source={waSource} data-wa-variant={WA_VARIANT} aria-label={`Book a visit to meet ${who}`}>📅 Book</a>
+          )}
+          {pup.video ? (
+            <a href={pup.video} target="_blank" rel="noopener" aria-label={`Watch a video of ${who}`}>▶ Video</a>
+          ) : (
+            <a href={waPhotosLink(pup)} data-wa-source={waSource} data-wa-variant={WA_VARIANT} aria-label={`Ask on WhatsApp for more photos of ${who}`}>📸 Photos</a>
+          )}
+          {href ? <a href={href} aria-label={`Details for ${who}`}>🐾 Info</a> : <span class="ghost" aria-hidden="true"></span>}
+        </>
+      ) : (
+        <>
+          <a class="wa" href={waSimilarLink(pup)} data-wa-source={`sold:${pup.id}`} data-wa-variant={WA_VARIANT} aria-label={`WhatsApp to ask about a puppy similar to ${who}`}>💬 Ask about a similar puppy</a>
+          {href && <a class="span3" href={href} aria-label={`Details for ${who}`}>🐾 Info</a>}
+        </>
+      )}
+    </div>
+  </div>
+</article>
+
+<style>
+  .bk {
+    position: relative;
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    filter: drop-shadow(0 10px 16px rgba(74, 46, 26, 0.16));
+  }
+  .bk:has(.stretch):hover { cursor: pointer; }
+
+  .awn {
+    --a: var(--color-primary);
+    height: 26px;
+    background: repeating-linear-gradient(90deg, var(--a) 0 26px, #fff 26px 52px);
+    border-radius: 16px 16px 0 0;
+    position: relative;
+  }
+  .awn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -9px;
+    height: 10px;
+    background: radial-gradient(circle at 13px 0, var(--a) 9px, transparent 9.5px) 0 0 / 26px 10px repeat-x;
+  }
+  .body {
+    background: var(--color-surface);
+    border: 3px solid var(--color-tint-300);
+    border-top: 0;
+    border-radius: 0 0 22px 22px;
+    padding: 18px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .top { display: grid; grid-template-columns: 140px 1fr; gap: 12px; align-items: center; }
+  .ph {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px dotted var(--color-primary);
+    padding: 3px;
+    background: #fff;
+    position: relative;
+    transition: transform 0.35s cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+  .ph :global(img) { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+  .noimg { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--color-tint-200); color: var(--color-tint-300); }
+  .noimg svg { width: 48px; height: 48px; }
+  .sex {
+    position: absolute;
+    right: 2px;
+    bottom: 6px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 900;
+    font-size: 15px;
+    color: #fff;
+    border: 3px solid #fff;
+    line-height: 1;
+    transform: translateY(0.5px);
+  }
+  /* deepened from the artifact's #ff7aa8 / #5b8def so the white glyph clears 4.5:1 */
+  .sex.f { background: #c63c74; }
+  .sex.m { background: #3f6fd1; }
+
+  .nm { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .hdbl { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 900; color: #1f6b4a; margin-bottom: 3px; }
+  .hdbl :global(.ic) { width: 14px; height: 14px; flex: none; }
+  .pid { display: flex; align-items: center; gap: 4px; font-size: 10.5px; font-weight: 900; color: var(--color-primary-700); margin-bottom: 5px; }
+  .sw { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, 0.2); flex: none; }
+  .st { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 800; margin-top: 1px; }
+  .st i { width: 8px; height: 8px; margin: 0 3px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2); }
+  .st.placed i { background: var(--color-primary); box-shadow: 0 0 0 3px rgba(180, 85, 45, 0.2); }
+  .pname {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 24px;
+    line-height: 1;
+    margin: 4px 0 0;
+    color: var(--color-primary-700);
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+  }
+  .br { font-size: 12.5px; font-weight: 800; color: var(--color-ink-soft); }
+  .pr { font-family: var(--font-display); font-weight: 800; font-size: 21px; color: var(--color-primary); line-height: 1.1; margin-top: 3px; }
+  .pr small { font-family: var(--font-body); font-size: 11px; color: var(--color-ink-soft); font-weight: 800; }
+
+
+
+  .acts { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .acts a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 900;
+    text-decoration: none;
+    color: var(--color-primary-700);
+    min-height: 44px;
+    padding: 6px 4px;
+    border-radius: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    background: #fff;
+    box-shadow: 0 2px 0 var(--color-tint-300);
+    transition: transform 0.15s;
+  }
+  .acts a:hover { transform: translateY(-2px); }
+  .acts a.wa { grid-column: 1 / -1; font-size: 14px; background: var(--color-wa); color: #073d20; box-shadow: 0 3px 0 #1a9e4c; }
+  .acts a.span3 { grid-column: 1 / -1; }
+  .acts a:focus-visible { outline: 3px solid var(--color-primary-700); outline-offset: 2px; }
+
+  .stretch { position: absolute; inset: 0; z-index: 1; border-radius: 22px; }
+  .stretch:focus-visible { outline: 3px solid var(--color-primary-700); outline-offset: 3px; }
+  .paw { position: absolute; right: 14px; top: 34px; font-size: 18px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1; }
+  .bk:hover .ph { transform: rotate(-6deg) scale(1.04); }
+  .bk:hover .paw { opacity: 1; animation: hop 0.6s ease-in-out infinite alternate; }
+  @keyframes hop { to { transform: translateY(-5px) rotate(12deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ph, .acts a, .paw { transition: none; }
+    .bk:hover .ph { transform: none; }
+    .bk:hover .paw { animation: none; }
+    .acts a:hover { transform: none; }
+  }
+</style>

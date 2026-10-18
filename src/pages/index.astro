@@ -6,7 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
 import StatStrip from '../components/StatStrip.astro';
-import ListingGrid from '../components/ListingGrid.astro';
+import LivePuppies from '../components/LivePuppies.astro';
 import CaptionedBlock from '../components/CaptionedBlock.astro';
 import FactsCard from '../components/FactsCard.astro';
 import CloudDivider from '../components/CloudDivider.astro';
@@ -14,7 +14,6 @@ import FAQ from '../components/FAQ.astro';
 import CtaClose from '../components/CtaClose.astro';
 import { site, whatsappLink } from '../data/site';
 import { webPageSchema, breadcrumbSchema, faqSchema, productSchema } from '../lib/schema';
-import { availablePups } from '../data/puppies';
 import heroImg from '../assets/site/1-maltipoo-puppy-hero-singapore.webp';
 import swCreamApricot from '../assets/site/2-maltipoo-card-cream-apricot-f.webp';
 import swApricot from '../assets/site/4-maltipoo-card-apricot-teddy.webp';
@@ -111,7 +110,7 @@ const coatSwatches = [
       viewing at the Balestier shop.
     </p>
   </section>
-  <ListingGrid heading="Maltipoo puppies for sale in Singapore" items={availablePups} mode="available" id="recent" />
+  <LivePuppies heading="Maltipoo puppies for sale in Singapore" id="recent" fallback="hide" />
 
   <AnswerCapsule question="What is a Maltipoo?" id="what-is-a-maltipoo">
     A Maltipoo is a small companion cross between a Maltese and a Toy or Miniature Poodle,

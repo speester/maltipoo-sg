@@ -126,3 +126,39 @@ export function productSchema(opts: { name: string; description: string; image?:
     },
   };
 }
+
+// One live puppy (src/pages/puppies/[slug].astro). url is site-relative with no
+// trailing slash (build.format "file").
+export function pupProductSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+  image: string;
+  sku: string;
+  color?: string | null;
+  price?: number | null;
+  soldOut?: boolean;
+}) {
+  const url = `${site.domain}${opts.url}`;
+  const image = opts.image.startsWith('http') ? opts.image : `${site.domain}${opts.image}`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${url}#product`,
+    name: opts.name,
+    description: opts.description,
+    image,
+    sku: opts.sku,
+    category: 'Maltipoo puppy',
+    ...(opts.color ? { color: opts.color } : {}),
+    brand: { '@type': 'Brand', name: site.brand },
+    offers: {
+      '@type': 'Offer',
+      url,
+      priceCurrency: 'SGD',
+      ...(!opts.soldOut && typeof opts.price === 'number' ? { price: String(opts.price) } : {}),
+      availability: opts.soldOut ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+      seller: { '@id': ORG_ID },
+    },
+  };
+}

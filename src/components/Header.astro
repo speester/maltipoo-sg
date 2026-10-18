@@ -31,9 +31,11 @@ const nav = [
       </nav>
 
       <div class="flex items-center gap-2 shrink-0">
-        <a href={whatsappLink('Hi! I would like to ask about Maltipoo puppies.')} class="btn-cta hidden sm:inline-flex text-sm !py-2 !px-5">
-          WhatsApp us
-        </a>
+        <span class="hidden sm:inline-flex">
+          <a href={whatsappLink('Hi! I would like to ask about Maltipoo puppies.')} class="btn-cta text-sm !py-2 !px-5">
+            WhatsApp us
+          </a>
+        </span>
         <button
           id="menu-toggle"
           class="lg:hidden w-11 h-11 flex items-center justify-center rounded-full bg-tint-200 cursor-pointer"

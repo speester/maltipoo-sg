@@ -1,0 +1,80 @@
+---
+// The live Maltipoo listings: a grid of Bakery Box cards fed by
+// src/data/available-puppies.json (`npm run sync:puppies`). Replaces the retired
+// representative-image card grid on / and /puppies.
+//
+// Zero in stock (plan D2): fallback="placed" shows the recently placed pups (max 4)
+// and the waitlist CTA; fallback="hide" renders nothing. A section is never left empty.
+import BakeryPupCard from './BakeryPupCard.astro';
+import CloudDivider from './CloudDivider.astro';
+import OverseasPuppies from './OverseasPuppies.astro';
+import { whatsappLink } from '../data/site';
+import { livePups, liveSyncedAt, placedShowcase, pupPageHref, photoFor } from '../lib/puppy-cards';
+
+interface Props {
+  heading: string;
+  id?: string;
+  fallback?: 'placed' | 'hide';
+  // Exclude one pup (the puppy page's own "other available" grid).
+  exclude?: number | string;
+  max?: number;
+  // Full-width tinted band (used on the puppy page, which is otherwise all paper).
+  band?: boolean;
+}
+const { heading, id = 'available', fallback = 'hide', exclude, max, band = false } = Astro.props;
+
+const pups = livePups().filter((p) => String(p.id) !== String(exclude ?? '') && photoFor(p.image));
+const shown = typeof max === 'number' ? pups.slice(0, max) : pups;
+const placed = shown.length === 0 && fallback === 'placed' ? placedShowcase(4) : [];
+const render = shown.length > 0 || fallback === 'placed';
+// Owner rule 2026-10-18: no local Balestier pup -> Australia reservations, own section.
+const showOverseas = shown.length === 0 && exclude === undefined;
+
+const synced = new Date(liveSyncedAt()).toLocaleDateString('en-SG', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'Asia/Singapore',
+});
+const waitlist = whatsappLink(
+  'Hi, no Maltipoos are listed on your site right now. Could you add me to the waitlist for the next litter?',
+);
+---
+
+{render && band && <CloudDivider fill="var(--color-tint-200)" />}
+{render && (
+  <section class:list={[band ? 'bg-tint-200 py-12' : 'container-site py-10']} id={id}>
+   <div class:list={[band && 'container-site']}>
+    <div class:list={['rounded-[var(--radius-card)] border border-tint-300 border-l-8 border-l-primary/60 px-6 py-4 mb-8', band ? 'bg-surface' : 'bg-tint-200/70']}>
+      <h2 class="text-2xl md:text-3xl m-0">{heading}</h2>
+      {shown.length > 0 ? (
+        <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">Real puppies in our care, from the shop’s live stock list (updated {synced}). Tap a card to meet the pup.</p>
+      ) : (
+        <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">No Maltipoos are available today. Litters are small and move fast, so here are the latest to find their families.</p>
+      )}
+    </div>
+
+    {shown.length > 0 && (
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-9 items-start">
+        {shown.map((pup) => <BakeryPupCard pup={pup} href={pupPageHref(pup)} />)}
+      </div>
+    )}
+
+    {shown.length === 0 && (
+      <>
+        {placed.length > 0 && (
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-9 items-start">
+            {placed.map(({ pup, hasPage }) => <BakeryPupCard pup={pup} state="placed" href={hasPage ? pupPageHref(pup) : undefined} />)}
+          </div>
+        )}
+        <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-[var(--radius-card)] bg-surface border border-tint-300 px-6 py-5">
+          <p class="m-0 flex-1">Join the waitlist and we will WhatsApp you photos of the next Maltipoo litter, with an honest wait time.</p>
+          <a href={waitlist} class="btn-wa" data-wa-source="waitlist">Join the waitlist</a>
+        </div>
+      </>
+    )}
+   </div>
+  </section>
+)}
+
+{showOverseas && <OverseasPuppies />}
