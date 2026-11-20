@@ -13,6 +13,7 @@ export const site = {
   footerDisclosure: 'A Curious Tails brand · AVS licence AS24J00046',
 
   phoneDisplay: '+65 8220 6408',
+  callNumber: '6597921567',
   whatsappNumber: '6582206408',
   email: 'hello@curioustails.sg',
   address: {
@@ -20,10 +21,9 @@ export const site = {
     postal: 'Singapore 320002',
     full: '2 Balestier Road #01-701, Singapore 320002',
   },
-  hours: 'Weekdays 12pm–6pm · Weekends 10am–6pm',
+  hours: 'Tue to Sun, 11am to 6pm · closed Mon',
   hoursSpec: [
-    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '12:00', closes: '18:00' },
-    { days: ['Saturday', 'Sunday'], opens: '10:00', closes: '18:00' },
+    { days: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: '11:00', closes: '18:00' },
   ],
 
   license: {
