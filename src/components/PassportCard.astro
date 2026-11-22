@@ -57,8 +57,13 @@ const callLocal = site.callNumber.slice(2);
 const callShow = `${callLocal.slice(0, 4)} ${callLocal.slice(4)}`;
 // Opens the shop in Google Maps from both the booking block and the perks sheet.
 const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address.street}, ${site.address.postal}`)}`;
-const ask = `Hi Curious Tails! Is ${name} (ID ${id}, ${breed}) still available?`;
-const prefill = `Hi, is ${name} (ID ${id}) still available?`;
+// A placed pup is sold: the message asks for something similar instead.
+const ask = state === 'placed'
+  ? `Hi Curious Tails! Do you have something similar to ${name} (ID ${id}, ${breed})?`
+  : `Hi Curious Tails! Is ${name} (ID ${id}, ${breed}) still available?`;
+const prefill = state === 'placed'
+  ? `Hi, do you have something similar to ${name} (ID ${id})?`
+  : `Hi, is ${name} (ID ${id}) still available?`;
 const chatHref = whatsappLink(ask);
 const sendHref = whatsappLink(prefill);
 const gender = half(pup.gender);

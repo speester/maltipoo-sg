@@ -49,7 +49,7 @@ export const CROSS_BREEDS = {
   'australian mountain doodle': { name: 'Australian Mountain Doodle', parents: ['australian shepherd', 'poodle'] },
   'golden doxie': { name: 'Golden Doxie', parents: ['golden retriever', 'dachshund'] },
   doxiepoo: { name: 'Doxiepoo', parents: ['dachshund', 'poodle'] },
-  pomshi: { name: 'Pomshi', parents: ['pomeranian', 'shiba inu'] },
+  pomshi: { name: 'Pomshi', parents: ['pomeranian', 'shih tzu'] },
   pomachon: { name: 'Pomachon', parents: ['pomeranian', 'bichon frise'] },
   pomski: { name: 'Pomski', parents: ['pomeranian', 'husky'] },
   corgitz: { name: 'Corgitz', parents: ['corgi', 'japanese spitz'] },

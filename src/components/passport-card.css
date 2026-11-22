@@ -696,10 +696,10 @@
   .pc .book .bk-lbl{white-space:normal;overflow:visible;text-overflow:clip;text-align:center;line-height:1.15}
 }
 .pc .pk-mq{min-width:0;max-width:100%}
-/* Placed pups: the same card with no booking, badged "Found a loving home". */
-.pc.placed{position:relative}
-.pc.placed .bk{display:none}
-.pc.placed::before{content:'Found a loving home';position:absolute;top:10px;left:10px;z-index:4;padding:6px 10px;border-radius:99px;background:var(--cta);color:var(--cta-ink);font-weight:800;font-size:12px;line-height:1;box-shadow:0 2px 0 var(--cta-sh)}
+/* Placed pups: no booking, and a "Found a loving home" badge on the top-left of the photo. */
+.pc.placed .bk,.pc.placed .nextopen{display:none}
+.pc.placed .ph{position:relative}
+.pc.placed .ph::before{content:'Found a loving home';position:absolute;top:10px;left:10px;z-index:5;padding:6px 10px;border-radius:99px;background:var(--cta);color:var(--cta-ink);font-weight:800;font-size:12px;line-height:1;box-shadow:0 2px 0 var(--cta-sh);pointer-events:none}
 
 /* ---- Card surface: the top block and the booking block sit inside one card (owner review) ---- */
 /* The reference styles .phone as a descendant, so they never reached the root .pc.phone element. */
