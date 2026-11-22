@@ -1,19 +1,21 @@
 {
-  "syncedAt": "2026-11-22T06:31:06.156Z",
+  "syncedAt": "2026-11-22T08:14:33.084Z",
   "available": [
     {
       "id": 2950,
       "name": "Smokey",
+      "breed": null,
+      "breedNote": null,
       "color": "Red",
       "gender": "Male",
       "age": "2 months",
-      "price": 3888,
-      "image": "2950-1-64963ef1.webp",
+      "price": 3488,
+      "image": "2950-1-149d282b.webp",
       "images": [
-        "2950-1-64963ef1.webp",
-        "2950-2-8558c489.webp",
-        "2950-3-bde3fd88.webp",
-        "2950-4-1ef7b60b.webp"
+        "2950-1-149d282b.webp",
+        "2950-2-530b139a.webp",
+        "2950-3-943a28b2.webp",
+        "2950-4-3b4537b2.webp"
       ],
       "location": "Balestier Area",
       "origin": "Local",
@@ -25,13 +27,15 @@
     {
       "id": 2930,
       "name": "Mochi",
+      "breed": null,
+      "breedNote": null,
       "color": "Apricot",
       "gender": "Male",
       "age": "3 months",
-      "price": 2888,
-      "image": "2930-1-c1a34f51.webp",
+      "price": 2288,
+      "image": "2930-1-5bdf45df.webp",
       "images": [
-        "2930-1-c1a34f51.webp",
+        "2930-1-5bdf45df.webp",
         "2930-2-6f5d5bcb.webp",
         "2930-3-9ac8b11a.webp",
         "2930-4-20224076.webp"
@@ -48,6 +52,8 @@
     {
       "id": 2938,
       "name": "Biscuit",
+      "breed": null,
+      "breedNote": null,
       "color": "Apricot",
       "gender": "Female",
       "age": "3 months",
@@ -66,6 +72,8 @@
     {
       "id": 2931,
       "name": "Finn",
+      "breed": null,
+      "breedNote": null,
       "color": "Cream",
       "gender": "Male",
       "age": null,
@@ -84,9 +92,11 @@
     {
       "id": 2579,
       "name": null,
+      "breed": null,
+      "breedNote": null,
       "color": "Apricot",
       "gender": "Female",
-      "age": "5 months",
+      "age": "6 months",
       "price": 4088,
       "image": "2579-2-1d98fefc.webp",
       "images": [
@@ -102,9 +112,11 @@
     {
       "id": 2581,
       "name": null,
+      "breed": null,
+      "breedNote": null,
       "color": "Apricot",
       "gender": "Male",
-      "age": "5 months",
+      "age": "6 months",
       "price": 3488,
       "image": "2581-2-c2a03dac.webp",
       "images": [

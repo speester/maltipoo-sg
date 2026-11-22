@@ -17,6 +17,9 @@ export const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) 
 export const snapshot = (p) => ({
   id: p.id,
   name: p.name ?? null,
+  // A named mix keeps its name and parents on the placed page too; null = purebred.
+  breed: p.breed ?? null,
+  breedNote: p.breedNote ?? null,
   color: p.color ?? null,
   gender: p.gender ?? null,
   age: p.age ?? null,

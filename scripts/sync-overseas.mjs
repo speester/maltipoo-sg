@@ -4,8 +4,10 @@
 //
 // Ported from Curious Tails scripts/sync-overseas.mjs, narrowed to ONE breed:
 // only rows whose Breed- label (parens stripped, lowercased) is in
-// scripts/puppy-feed.json `overseasLabels` are kept. Crosses (" x ", "mix", "/")
-// are dropped.
+// scripts/puppy-feed.json `overseasLabels`, or is a named crossbreed of this
+// breed (scripts/lib/cross-breeds.mjs) or an "A x B" label with this breed on
+// one side, are kept. A bare "X"/"mix" label with an unknown other parent is
+// dropped.
 //
 // These are RESERVATION-ONLY imports: the puppy is in Australia now; the buyer
 // pays a 50% deposit to begin the import and the balance before the puppy flies
@@ -22,16 +24,20 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { crossBreedOf, siteBreeds } from './lib/cross-breeds.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'src', 'assets', 'overseas');
 const DATA = path.join(ROOT, 'src', 'data', 'overseas-puppies.json');
 const CFG = JSON.parse(await readFile(path.join(ROOT, 'scripts', 'puppy-feed.json'), 'utf8'));
 const LABELS = new Set(CFG.overseasLabels.map((l) => l.toLowerCase()));
+const SITE_BREEDS = siteBreeds(CFG);
 
 const SHEET = '9AEgTOyw1JJaYXhf-5QzWUNwSD3qk-Q4X49LSocqhHWPhhEvHD4RS0ukcgrYJm7mXp0z';
 const OPTIONS =
   'eyJyb3dzTGltaXQiOjUwMDAsImRlYWxUeXBlIjoiYXBwc3VtbyIsImR5bmFtaWNEYXRhIjp7InNoZWV0SGFzaCI6IjIwOTU3NzEyMDYiLCJTQ1BUYWJsZUxhdGVzdFVwZGF0ZVRpbWVzdGFtcCI6MTc5MDE1MTMwODQ1Mn0sInNlYXJjaCI6eyJlbmFibGVkIjp0cnVlLCJjb2x1bW5zIjpbIkJyZWVkLSIsIkFnZS0iLCJEYXRlb2ZCaXJ0aC0iLCJHZW5kZXItIiwiUHJpY2UtIiwiSW1hZ2VVUkwtIiwiTGlzdGluZ1VSTC0iLCJXZWJzaXRlLSIsIk1hcmtVcFByaWNlLSIsIjUwJVByaWNlLSIsIk5vdGVzLSJdfSwic29ydGluZyI6eyJlbmFibGVkIjpmYWxzZSwic2h1ZmZsZSI6ZmFsc2V9LCJwYWdpbmF0aW9uIjp7ImVuYWJsZWQiOnRydWUsIml0ZW1zUGVyUGFnZSI6NDB9LCJmaWx0ZXJzIjp7ImVuYWJsZWQiOnRydWUsInZhbHVlcyI6W3siaWQiOiJCcmVlZC0iLCJ0eXBlIjoibXVsdGlwbGUifSx7ImlkIjoiUHJpY2UtIiwidHlwZSI6Im11bHRpcGxlIn1dfSwibWFwVmlldyI6eyJlbmFibGVkIjpmYWxzZSwiaWQiOm51bGwsIm1hcmtlclR5cGUiOiJwaW4iLCJpbWFnZUNvbElkIjoiIn0sImNhbGVuZGFyVmlldyI6eyJlbmFibGVkIjpmYWxzZSwic3RhcnREYXRlQ29sSWQiOm51bGwsInRpdGxlQ29sSWQiOiJCcmVlZC0ifX0=';
+// Same blob, 300 rows per request (server honours it): ~2 requests per full read, not ~17.
+const FETCH_OPTIONS = Buffer.from(JSON.stringify({ ...JSON.parse(Buffer.from(OPTIONS, 'base64').toString('utf8')), pagination: { enabled: true, itemsPerPage: 300 } })).toString('base64');
 
 // Hard word block (CLAUDE.md). A feed string carrying one is withheld.
 const BLOCKED = /pedigree|\bdna\b|malay/i;
@@ -81,15 +87,20 @@ const rows = [];
 let total = Infinity;
 for (let page = 1; rows.length < total; page++) {
   const q = Buffer.from(JSON.stringify({ paginate: { currentPage: page } })).toString('base64');
-  const url = `https://spread.name/sheet/${SHEET}?query=${encodeURIComponent(q)}&options=${encodeURIComponent(OPTIONS)}`;
-  const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (sg-breed-site sync)' } });
-  if (!res.ok) throw new Error('overseas feed HTTP ' + res.status);
+  const url = `https://spread.name/sheet/${SHEET}?query=${encodeURIComponent(q)}&options=${encodeURIComponent(FETCH_OPTIONS)}`;
+  let res;
+  for (let attempt = 1; ; attempt++) {  // feed rate-limits bursts with 403; retry with a pause
+    res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0 (sg-breed-site sync)' } });
+    if (res.ok) break;
+    const retryable = res.status === 403 || res.status === 429 || res.status >= 500;
+    if (!retryable || attempt >= 6) throw new Error('overseas feed HTTP ' + res.status);
+    await new Promise((r) => setTimeout(r, 20000 * attempt));
+  }
   const json = await res.json();
   const batch = json.table?.rows ?? [];
   total = json.totalRows ?? batch.length;
   if (batch.length === 0) break;
   rows.push(...batch);
-  if (batch.length < 40) break;
   await new Promise((r) => setTimeout(r, 300));
 }
 
@@ -102,7 +113,11 @@ const pups = [];
 const seenIds = new Set();
 for (const r of rows) {
   const label = stripParens(cell(r, 'Breed-'));
-  if (!label || isCross(label) || !LABELS.has(label.toLowerCase())) continue;
+  if (!label) continue;
+  // Purebred of this site, or a named mix that has this breed as a parent.
+  const cross = crossBreedOf(label, SITE_BREEDS);
+  const own = !isCross(label) && LABELS.has(label.toLowerCase());
+  if (!own && !cross) continue;
   if (BLOCKED.test(cell(r, 'Notes-'))) continue;
   const price = num(r, 'MarkUpPrice-');
   const g = cell(r, 'Gender-');
@@ -116,6 +131,8 @@ for (const r of rows) {
     id,
     listingId: cell(r, 'PuppyID-') || cell(r, 'ID-') || null,
     breedLabel: label,
+    breed: cross?.name ?? null,
+    breedNote: cross?.note ?? null,
     gender: /female/i.test(g) ? 'Female' : /^male/i.test(g) ? 'Male' : null,
     age: ageLabel(months) || cell(r, 'Age-') || null,
     canFly: months != null ? months >= 3 : null,

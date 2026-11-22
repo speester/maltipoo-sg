@@ -1,4 +1,18 @@
 {
-  "syncedAt": "2026-10-18T09:43:59.712Z",
-  "pups": []
+  "syncedAt": "2026-11-22T08:14:25.587Z",
+  "pups": [
+    {
+      "id": "os-00b8a022",
+      "listingId": "74615",
+      "breedLabel": "Toy Poodle x Moodle",
+      "breed": "Toy Poodle x Moodle",
+      "breedNote": "Poodle × Moodle",
+      "gender": null,
+      "age": null,
+      "canFly": null,
+      "price": 5000,
+      "deposit": 2500,
+      "image": "os-00b8a022.webp"
+    }
+  ]
 }

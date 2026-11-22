@@ -2,6 +2,8 @@
 // Money page. Copy authored by content-writer against briefs/home.json (2026-07-13).
 // Experience claims trace to config/expertise-library.md; regulatory facts to the
 // CANONICAL block in config/business-context.md (HDB rule 62 verified on hdb.gov.sg).
+import FreeGifts from '../components/FreeGifts.astro';
+import HappyFamilies from '../components/HappyFamilies.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import AnswerCapsule from '../components/AnswerCapsule.astro';
@@ -103,6 +105,11 @@ const coatSwatches = [
     />
   </Hero>
 
+  <LivePuppies heading="Maltipoo puppies for sale in Singapore" id="recent" fallback="hide" />
+  <FreeGifts eagerFirst />
+  <HappyFamilies />
+
+
   <section class="container-site pt-2">
     <p class="text-ink-soft max-w-[65ch] m-0">
       Every "Maltipoo for sale Singapore" page you have open probably shows different puppies
@@ -110,7 +117,6 @@ const coatSwatches = [
       viewing at the Balestier shop.
     </p>
   </section>
-  <LivePuppies heading="Maltipoo puppies for sale in Singapore" id="recent" fallback="hide" />
 
   <AnswerCapsule question="What is a Maltipoo?" id="what-is-a-maltipoo">
     A Maltipoo is a small companion cross between a Maltese and a Toy or Miniature Poodle,

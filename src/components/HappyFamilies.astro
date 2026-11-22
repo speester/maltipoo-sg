@@ -1,0 +1,187 @@
+---
+// Happy Families: edge-to-edge infinite marquee of REAL Curious Tails customer
+// photos as taped polaroids. Breed-neutral on purpose (mixed pool, see
+// PLAN-breed-sg-families-gift-sliders.md). The track is cloned here
+// and looped by loop-strip.ts (auto-scroll when idle, drag when touched). Photos + captions come from src/data/happy-families.json,
+// written by _shared/breed-sliders/export_families.py.
+// Keep count EVEN: the odd/even card tilt must line up across the two halves.
+import { Image } from 'astro:assets';
+import '@fontsource/caveat/latin-500.css';
+import '@fontsource/caveat/latin-700.css';
+import families from '../data/happy-families.json';
+
+interface Props {
+  heading?: string;
+  subhead?: string;
+  count?: number;
+  eagerFirst?: boolean;
+}
+const {
+  heading = 'Happy tails from real Singapore homes',
+  subhead = 'Photos from families who brought a puppy home with us.',
+  count = 12,
+  eagerFirst = false,
+} = Astro.props;
+
+const photos = import.meta.glob<ImageMetadata>('../assets/families/*.webp', {
+  eager: true,
+  import: 'default',
+});
+const picks = (families as { file: string; caption: string }[])
+  .slice(0, count)
+  .filter((f) => photos[`../assets/families/${f.file}`]);
+const track = [...picks, ...picks];
+---
+
+<section class="hf" data-slider="happy-families" aria-labelledby="hf-title">
+  <div class="container-site hf-head">
+    <h2 id="hf-title">{heading}</h2>
+    {subhead && <p class="hf-sub">{subhead}</p>}
+  </div>
+  <div class="hf-strip" data-loop>
+    <ul class="hf-track" data-loop-track>
+      {track.map((f, i) => {
+        const copy = i >= picks.length;
+        const eager = eagerFirst && !copy && i < 4;
+        return (
+          <li class="hf-shot" aria-hidden={copy ? 'true' : undefined}>
+            <figure>
+              <Image
+                src={photos[`../assets/families/${f.file}`]}
+                alt="Puppy with their new family in Singapore"
+                widths={[320, 640]}
+                sizes="(max-width: 639px) 200px, 270px"
+                loading={eager ? 'eager' : 'lazy'}
+                decoding="async"
+                format="webp"
+              />
+              <figcaption>{f.caption}</figcaption>
+            </figure>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hf {
+    --tape: color-mix(in srgb, var(--color-cta) 35%, #fff6c2 65%);
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.5rem, 5vw, 3.75rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+    background-color: var(--color-surface);
+    background-image: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-ink) 8%, transparent) 1px,
+      transparent 1.5px
+    );
+    background-size: 18px 18px;
+  }
+  .hf-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+  .hf-sub {
+    margin-top: 0.5rem;
+    color: var(--color-ink-soft);
+  }
+  /* The strip scrolls: loop-strip.ts drifts it when idle, and a finger or mouse can move it left and right. */
+  .hf-strip {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    padding: 22px 0 22px;
+    cursor: grab;
+    user-select: none;
+    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  }
+  .hf-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .hf-strip.is-dragging {
+    cursor: grabbing;
+  }
+  .hf-track {
+    --gap: 40px;
+    display: flex;
+    gap: var(--gap);
+    /* Trailing gap makes each half exactly one period, so -50% loops with no seam. */
+    padding: 0 var(--gap) 0 0;
+    margin: 0;
+    list-style: none;
+    width: max-content;
+  }
+  .hf-shot {
+    flex: 0 0 auto;
+    width: 270px;
+    margin: 0;
+  }
+  .hf-shot figure {
+    position: relative;
+    margin: 0;
+    padding: 10px 10px 18px;
+    background: #fff;
+    box-shadow: 0 8px 18px rgb(0 0 0 / 0.16);
+  }
+  .hf-shot:nth-child(odd) figure {
+    transform: rotate(-3deg);
+  }
+  .hf-shot:nth-child(even) figure {
+    transform: rotate(2.5deg);
+  }
+  .hf-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+  .hf-shot figcaption {
+    margin-top: 10px;
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    text-align: center;
+    color: var(--color-ink);
+  }
+  /* Tape: centred, then top-left and top-right, so the cards do not look stamped. */
+  .hf-shot figure::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    width: 96px;
+    height: 26px;
+    transform: translateX(-50%) rotate(-4deg);
+    background: var(--tape);
+    opacity: 0.85;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.08);
+  }
+  .hf-shot:nth-child(3n + 2) figure::before {
+    left: -12px;
+    transform: rotate(-10deg);
+  }
+  .hf-shot:nth-child(3n) figure::before {
+    left: auto;
+    right: -14px;
+    transform: rotate(8deg);
+  }
+  @media (max-width: 639px) {
+    .hf-track {
+      --gap: 28px;
+    }
+    .hf-shot {
+      width: 200px;
+    }
+  }
+</style>
+
+<script>
+  import { initLoopStrips } from '../scripts/loop-strip.ts';
+  initLoopStrips();
+</script>

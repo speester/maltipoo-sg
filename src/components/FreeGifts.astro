@@ -1,0 +1,184 @@
+---
+// Free Gifts: edge-to-edge infinite marquee of the Curious Tails 30-item starter
+// kit as dashed "gift tags" with a circle pin. Same items, order and prices as
+// Curious Tails StarterKitMarquee.astro. Data + product photos come from
+// src/data/starter-kit-items.json and src/assets/starter-kit/ (copied verbatim
+// by rollout.py --refresh-kit). Loops with loop-strip.ts: auto-scroll when idle, drag when touched.
+// Keep count EVEN: the track is doubled, so each half must be a whole period.
+import { Image } from 'astro:assets';
+import kit from '../data/starter-kit-items.json';
+
+interface Props {
+  heading?: string;
+  subhead?: string;
+  eagerFirst?: boolean;
+  reverse?: boolean;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+const {
+  heading,
+  subhead = 'Every puppy goes home with these, free of charge.',
+  eagerFirst = false,
+  reverse = true,
+  ctaLabel = 'See available puppies',
+  ctaHref = '/puppies/',
+} = Astro.props;
+
+const photos = import.meta.glob<ImageMetadata>('../assets/starter-kit/*.webp', {
+  eager: true,
+  import: 'default',
+});
+const imgFor = (file: string) => photos[`../assets/starter-kit/${file}`];
+
+const items = (kit.items as { title: string; price: number | null; category: string | null; image: string }[])
+  .filter((i) => imgFor(i.image));
+const total = items.reduce((n, i) => n + (i.price ?? 0), 0);
+// Round down to the nearest $50 so the heading stays true if prices move a little.
+const floorTotal = Math.floor(total / 50) * 50;
+const h = heading ?? `Free starter kit: ${items.length} items worth $${floorTotal}+`;
+const track = [...items, ...items];
+const subFor = (i: { price: number | null; category: string | null }) =>
+  [i.price != null ? `Worth $${i.price}` : null, i.category].filter(Boolean).join(' · ');
+---
+
+<section class="fg" data-slider="free-gifts" aria-labelledby="fg-title">
+  <div class="container-site fg-head">
+    <h2 id="fg-title">{h}</h2>
+    {subhead && <p class="fg-sub">{subhead}</p>}
+  </div>
+  <div class="fg-strip" data-loop data-loop-reverse={reverse ? '1' : undefined}>
+    <ul class="fg-track" data-loop-track>
+      {track.map((item, i) => {
+        const copy = i >= items.length;
+        const idx = i % items.length;
+        const eager = eagerFirst && !copy && idx < 4;
+        return (
+          <li class="fg-tag" aria-hidden={copy ? 'true' : undefined}>
+            <Image
+              src={imgFor(item.image)}
+              alt={`${item.title} included in the free puppy starter kit`}
+              widths={[240, 480]}
+              sizes="240px"
+              loading={eager ? 'eager' : 'lazy'}
+              decoding="async"
+              format="webp"
+            />
+            <p class="fg-title">{item.title}</p>
+            {subFor(item) && <p class="fg-meta">{subFor(item)}</p>}
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+  <div class="container-site fg-cta">
+    <a class="btn btn-primary" href={ctaHref}>{ctaLabel}</a>
+  </div>
+</section>
+
+<style>
+  .fg {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.5rem, 5vw, 3.75rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+    background-color: var(--color-surface);
+  }
+  .fg-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.15;
+    color: var(--color-ink);
+  }
+  .fg-sub {
+    margin-top: 0.5rem;
+    color: var(--color-ink-soft);
+  }
+  /* 16px top padding keeps the circle pins from being clipped. The strip scrolls: loop-strip.ts drifts it when idle,
+     and a finger or mouse can move it left and right. */
+  .fg-strip {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    padding: 16px 0 22px;
+    cursor: grab;
+    user-select: none;
+    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+  }
+  .fg-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .fg-strip.is-dragging {
+    cursor: grabbing;
+  }
+  .fg-track {
+    --gap: 40px;
+    display: flex;
+    gap: var(--gap);
+    padding: 0 var(--gap) 0 0;
+    margin: 0;
+    list-style: none;
+    width: max-content;
+  }
+  .fg-tag {
+    position: relative;
+    flex: 0 0 auto;
+    width: 240px;
+    margin: 0;
+    padding: 14px;
+    background: #fff;
+    border: 3px dashed var(--color-primary);
+    border-radius: 22px;
+  }
+  /* Hollow circle pin centred on the top edge. */
+  .fg-tag::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    width: 22px;
+    height: 22px;
+    transform: translateX(-50%);
+    border: 3px solid var(--color-primary);
+    border-radius: 50%;
+    background: var(--color-surface);
+  }
+  .fg-tag img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 14px;
+  }
+  .fg-title {
+    margin: 12px 0 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--color-primary-700);
+  }
+  .fg-meta {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    color: var(--color-ink-soft);
+  }
+  .fg-cta {
+    margin-top: 1.25rem;
+    text-align: center;
+  }
+  @media (max-width: 639px) {
+    .fg-track {
+      --gap: 28px;
+    }
+    .fg-tag {
+      width: 200px;
+    }
+  }
+</style>
+
+<script>
+  import { initLoopStrips } from '../scripts/loop-strip.ts';
+  initLoopStrips();
+</script>

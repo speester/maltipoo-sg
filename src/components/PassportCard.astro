@@ -17,8 +17,10 @@ interface Props {
   pup: Pup;
   // Adult size: the pup's sheet value (column AQ, e.g. "4 - 5 kg"), else the breed-facts fallback. Null hides the row.
   adult: string | null;
+  // 'placed': a recently placed pup. Same card, no booking, badged "Found a loving home".
+  state?: 'available' | 'placed';
 }
-const { pup, adult } = Astro.props;
+const { pup, adult, state = 'available' } = Astro.props;
 
 const id = String(pup.id);
 const name = displayName(pup);
@@ -65,7 +67,7 @@ const gIcon = G_SVG[gender === 'Girl' ? 'Girl' : 'Boy'];
 ---
 
 <article
-  class="pc phone"
+  class:list={['pc phone', state === 'placed' && 'placed']}
   data-passport
   data-pup={id}
   data-pup-name={name}

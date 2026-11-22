@@ -7,7 +7,7 @@
 // and the waitlist CTA; fallback="hide" renders nothing. A section is never left empty.
 import BakeryPupCard from './BakeryPupCard.astro';
 import PassportCard from './PassportCard.astro';
-import { adultSize } from '../data/breed-facts';
+import { adultFor, breedPlural, breedSingular } from '../data/breed-facts';
 import CloudDivider from './CloudDivider.astro';
 import OverseasPuppies from './OverseasPuppies.astro';
 import { whatsappLink } from '../data/site';
@@ -40,7 +40,7 @@ const synced = new Date(liveSyncedAt()).toLocaleDateString('en-SG', {
   timeZone: 'Asia/Singapore',
 });
 const waitlist = whatsappLink(
-  'Hi, no Cavapoos are listed on your site right now. Could you add me to the waitlist for the next litter?',
+  `Hi, no ${breedPlural} are listed on your site right now. Could you add me to the waitlist for the next litter?`,
 );
 ---
 
@@ -53,13 +53,13 @@ const waitlist = whatsappLink(
       {shown.length > 0 ? (
         <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">Real puppies in our care, from the shop’s live stock list (updated {synced}). Tap a card to meet the pup.</p>
       ) : (
-        <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">No Cavapoos are available today. Litters are small and move fast, so here are the latest to find their families.</p>
+        <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">No {breedPlural} are available today. Litters are small and move fast, so here are the latest to find their families.</p>
       )}
     </div>
 
     {shown.length > 0 && (
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-9 items-start">
-        {shown.map((pup) => <PassportCard pup={pup} adult={pup.adultSize ?? adultSize} />)}
+        {shown.map((pup) => <PassportCard pup={pup} adult={adultFor(pup)} />)}
       </div>
     )}
 
@@ -67,11 +67,11 @@ const waitlist = whatsappLink(
       <>
         {placed.length > 0 && (
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-9 items-start">
-            {placed.map(({ pup, hasPage }) => <BakeryPupCard pup={pup} state="placed" href={hasPage ? pupPageHref(pup) : undefined} />)}
+            {placed.map(({ pup }) => <PassportCard pup={pup} adult={adultFor(pup)} state="placed" />)}
           </div>
         )}
         <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-[var(--radius-card)] bg-surface border border-sky-300 px-6 py-5">
-          <p class="m-0 flex-1">Join the waitlist and we will WhatsApp you photos of the next Cavapoo litter, with an honest wait time.</p>
+          <p class="m-0 flex-1">Join the waitlist and we will WhatsApp you photos of the next {breedSingular} litter, with an honest wait time.</p>
           <a href={waitlist} class="btn-wa" data-wa-source="waitlist">Join the waitlist</a>
         </div>
       </>

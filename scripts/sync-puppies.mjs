@@ -1,19 +1,24 @@
-// Sync the real Dachshund inventory from the owner's SpreadSimple site
+// Sync the real single-breed inventory from the owner's SpreadSimple site
 // (availablepuppies.spread.name) into src/data/available-puppies.json and
 // src/assets/live/*.webp. Re-runnable: `npm run sync:puppies` (runs first in
 // `npm run build:deploy`).
 //
 // Ported from Curious Tails scripts/sync-puppies.mjs (PLAN-dachshund-live-listings.md):
-// - Breed gate: only rows whose `Breed-` label (Chinese suffix stripped) is in
-//   BREED_LABELS. Crosses (" X " / "mix") are excluded; any other label that
-//   mentions "dachs" is reported as unknown and never rendered.
+// - Breed gate: a row is kept when its `Breed-` label (Chinese suffix stripped)
+//   is this site's own breed (BREED_LABELS) OR a named crossbreed of it
+//   (scripts/lib/cross-breeds.mjs, or an "A x B" label with this breed on one side).
+//   Owner decision 2026-10-20: a named mix is listed on the site of BOTH parents
+//   — "Malshi" (Maltese x Shih Tzu) appears on maltese.sg and shihtzu.sg. A bare
+//   "X" label with an unknown other parent ("Poodle X") stays excluded. Any other
+//   label that mentions the breed is reported as unknown and never rendered.
 // - Location gate: scripts/puppy-feed.json `locations` (trim + lowercase); owner
-//   decision 2026-10-18 = "Balestier Area" only on every .sg breed site. Everything
+//   decision 2026-10-20 = "Balestier Area" + "Choa Chu Kang" on every .sg breed site. Everything
 //   else, blank included, is dropped and counted on every run.
 // - Available = the top 33 feed rows (page 1 of the spread site) that pass both
 //   gates, minus sold: Image1 carries the "found a loving home" overlay, or the id
 //   is in src/data/sold-overrides.json.
-// - Recently placed = newest historical dachshunds (same gates) with a clean photo, max 4.
+// - Recently placed = newest historical pups of this breed or its named mixes
+//   (same gates) with a clean photo, max 4.
 // - Photos are downloaded, resized to 800px WebP into src/assets/live/ and served
 //   through Astro <Image>; files no longer referenced are pruned. Never hotlinked.
 // - Puppies that leave the available list go to src/data/placed-archive.json.
@@ -33,6 +38,7 @@ import {
   recordDepartures,
   sgtDate,
 } from './lib/placed-archive.mjs';
+import { crossBreedOf, siteBreeds } from './lib/cross-breeds.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ASSET_DIR = path.join(ROOT, 'src', 'assets', 'live');
@@ -44,32 +50,35 @@ const VERDICT_FILE = path.join(ROOT, 'src', 'data', '.puppy-photo-verdicts.json'
 const prevFeed = existsSync(DATA_FILE) ? JSON.parse(await readFile(DATA_FILE, 'utf8')) : null;
 const archive = existsSync(ARCHIVE_FILE) ? JSON.parse(await readFile(ARCHIVE_FILE, 'utf8')) : { pups: [] };
 
-// Same sheet and spread.name query as Curious Tails (SHEET + OPTIONS constants).
-const SHEET = 'I1dT5XVf1N96882pe1ZISdPxULIp0uvEMWU1nEaf-qstyqVRK-IKhTNhSjTAY1GevnSG';
+// Sheet + options as the live availablepuppies.spread.name page uses them (2026-11-18).
+const SHEET = 'dlg55NJL1N96882pe1ZISdPxULIp0uQxp0zWdoaf-qstyqVRK-IKhTNhSjTA-HEU0S5w';
 const OPTIONS =
-  'eyJyb3dzTGltaXQiOjUwMDAsImRlYWxUeXBlIjoiYXBwc3VtbyIsImR5bmFtaWNEYXRhIjp7InNoZWV0SGFzaCI6IjEwNzA0MzA4NTMiLCJTQ1BUYWJsZUxhdGVzdFVwZGF0ZVRpbWVzdGFtcCI6MTc4NTM5MTI4NDg3MX0sInNlYXJjaCI6eyJlbmFibGVkIjp0cnVlLCJjb2x1bW5zIjpbIkJyZWVkLSIsIlByaWNlJC0iLCJDb2xvci0iLCJBZ2UtIiwiR2VuZGVyLSIsIkhEQkFwcHJvdmVkLSIsIlNpemUtIiwiTG9jYXRpb24tIiwiT3JpZ2luLSIsIkltYWdlLSJdfSwic29ydGluZyI6eyJlbmFibGVkIjp0cnVlLCJzaHVmZmxlIjpmYWxzZX0sInBhZ2luYXRpb24iOnsiZW5hYmxlZCI6dHJ1ZSwiaXRlbXNQZXJQYWdlIjoiMzMifSwiZmlsdGVycyI6eyJlbmFibGVkIjp0cnVlLCJ2YWx1ZXMiOlt7ImlkIjoiQnJlZWQtIiwidHlwZSI6Im11bHRpcGxlIn0seyJpZCI6IkdlbmRlci0iLCJ0eXBlIjoibXVsdGlwbGUifSx7ImlkIjoiTG9jYXRpb24tIiwidHlwZSI6Im11bHRpcGxlIn0seyJpZCI6IkhEQkFwcHJvdmVkLSIsInR5cGUiOiJtdWx0aXBsZSJ9XX0sIm1hcFZpZXciOnsiZW5hYmxlZCI6ZmFsc2UsImlkIjpudWxsLCJtYXJrZXJUeXBlIjoicGluIiwiaW1hZ2VDb2xJZCI6IiJ9LCJjYWxlbmRhclZpZXciOnsiZW5hYmxlZCI6ZmFsc2UsInN0YXJ0RGF0ZUNvbElkIjpudWxsLCJ0aXRsZUNvbElkIjoiQnJlZWQtIn19';
+  'eyJyb3dzTGltaXQiOjUwMDAsImRlYWxUeXBlIjoiYXBwc3VtbyIsImR5bmFtaWNEYXRhIjp7InNoZWV0SGFzaCI6IjE5MjIyOTYwMTMiLCJTQ1BUYWJsZUxhdGVzdFVwZGF0ZVRpbWVzdGFtcCI6MTc5NDk4ODk5MzMxNH0sInNlYXJjaCI6eyJlbmFibGVkIjp0cnVlLCJjb2x1bW5zIjpbIkJyZWVkLSIsIlByaWNlJC0iLCJDb2xvci0iLCJBZ2UtIiwiR2VuZGVyLSIsIkhEQkFwcHJvdmVkLSIsIlNpemUtIiwiTG9jYXRpb24tIiwiT3JpZ2luLSIsIkltYWdlLSJdfSwic29ydGluZyI6eyJlbmFibGVkIjp0cnVlLCJzaHVmZmxlIjpmYWxzZX0sInBhZ2luYXRpb24iOnsiZW5hYmxlZCI6dHJ1ZSwiaXRlbXNQZXJQYWdlIjoiNjYifSwiZmlsdGVycyI6eyJlbmFibGVkIjp0cnVlLCJ2YWx1ZXMiOlt7ImlkIjoiQnJlZWQtIiwidHlwZSI6Im11bHRpcGxlIn0seyJpZCI6IkdlbmRlci0iLCJ0eXBlIjoibXVsdGlwbGUifSx7ImlkIjoiTG9jYXRpb24tIiwidHlwZSI6Im11bHRpcGxlIn0seyJpZCI6IkhEQkFwcHJvdmVkLSIsInR5cGUiOiJtdWx0aXBsZSJ9XX0sIm1hcFZpZXciOnsiZW5hYmxlZCI6ZmFsc2UsImlkIjpudWxsLCJtYXJrZXJUeXBlIjoicGluIiwiaW1hZ2VDb2xJZCI6IiJ9LCJjYWxlbmRhclZpZXciOnsiZW5hYmxlZCI6ZmFsc2UsInN0YXJ0RGF0ZUNvbElkIjpudWxsLCJ0aXRsZUNvbElkIjoiQnJlZWQtIn19';
 
 // Owner-reported sales the sheet has not marked yet.
 const MANUAL_SOLD = new Set(
   existsSync(OVERRIDES_FILE) ? JSON.parse(await readFile(OVERRIDES_FILE, 'utf8')).sold.map(Number) : [],
 );
 
-const AVAILABLE_ROWS = 33; // top of the sheet = page 1 of the spread site
+const AVAILABLE_ROWS = 66; // top of the sheet = page 1 of the live spread site (itemsPerPage 66)
 const MAX_PLACED = 4;
 const IMG_WIDTH = 800;
 const UA = { 'User-Agent': 'Mozilla/5.0 (sg-breed-site sync)' };
 
 // Breed + location gates live in scripts/puppy-feed.json so this script is identical
-// on every .sg breed site. Owner decision 2026-10-18: Balestier Area only.
+// on every .sg breed site. Owner decision 2026-10-20: Balestier Area + Choa Chu Kang.
 const FEED_CFG = JSON.parse(await readFile(path.join(ROOT, 'scripts', 'puppy-feed.json'), 'utf8'));
 const ALLOWED_LOCATIONS = new Set(FEED_CFG.locations.map((l) => l.trim().toLowerCase()));
 const locationAllowed = (p) => !!p.location && ALLOWED_LOCATIONS.has(p.location.trim().toLowerCase());
 
-// Plan decision 4: feed labels (Chinese suffix stripped, lowercased) that are a
-// Dachshund. Phase 1 discovery (logs/feed-discovery-2026-10-14.md) found exactly one.
+// Plan decision 4: feed labels (Chinese suffix stripped, lowercased) that are this
+// site's purebred. Phase 1 discovery (logs/feed-discovery-2026-10-14.md) found exactly one.
 const BREED_LABELS = new Set(FEED_CFG.labels.map((l) => l.toLowerCase()));
 const MENTIONS = new RegExp(FEED_CFG.mentions, 'i');
 const isCross = (label) => /\sx\s|\sx$|\bmix/i.test(label);
+
+// This site's breed, as the parent names used by scripts/lib/cross-breeds.mjs.
+const SITE_BREEDS = siteBreeds(FEED_CFG);
 
 // Hard word block (CLAUDE.md). A feed string carrying one is withheld, never published.
 const BLOCKED = /pedigree|\bdna\b|malay/i;
@@ -85,15 +94,33 @@ const numCell = (row, key) => {
   return c?.value != null && String(c.value).trim() !== '' && Number.isFinite(n) ? n : null;
 };
 
+// Live feed = the same sheet availablepuppies.spread.name reads (re-pointed 2026-11-18).
+// Read it in 300-row pages (the server honours it): a full sync is ~5 requests, not ~37.
+const FETCH_OPTIONS = Buffer.from(
+  JSON.stringify({ ...JSON.parse(Buffer.from(OPTIONS, 'base64').toString('utf8')), pagination: { enabled: true, itemsPerPage: 300 } }),
+).toString('base64');
+
+// The feed rate-limits bursts with 403s. Retry 403/429/5xx with a growing pause instead of failing the site.
+async function feedGet(url) {
+  for (let attempt = 1; ; attempt++) {
+    const res = await fetch(url, { headers: UA });
+    if (res.ok) return res;
+    const retryable = res.status === 403 || res.status === 429 || res.status >= 500;
+    if (!retryable || attempt >= 6) throw new Error(`feed HTTP ${res.status}`);
+    const wait = 20000 * attempt;
+    process.stdout.write(`\nfeed HTTP ${res.status}; retry ${attempt} in ${wait / 1000}s\n`);
+    await new Promise((r) => setTimeout(r, wait));
+  }
+}
+
 async function fetchAllRows() {
   const rows = [];
   for (let page = 1; ; page++) {
     const query = Buffer.from(
       JSON.stringify({ paginate: { currentPage: page }, sortBy: { id: 'INDEX', direction: 'asc' } }),
     ).toString('base64');
-    const url = `https://spread.name/sheet/${SHEET}?query=${encodeURIComponent(query)}&options=${encodeURIComponent(OPTIONS)}`;
-    const res = await fetch(url, { headers: UA });
-    if (!res.ok) throw new Error(`feed page ${page}: HTTP ${res.status}`);
+    const url = `https://spread.name/sheet/${SHEET}?query=${encodeURIComponent(query)}&options=${encodeURIComponent(FETCH_OPTIONS)}`;
+    const res = await feedGet(url);
     const json = await res.json();
     const batch = json.table?.rows ?? [];
     if (batch.length === 0) break;
@@ -240,11 +267,20 @@ function normalize(row) {
   const gender = /^female$/i.test(g) ? 'Female' : /^male$/i.test(g) ? 'Male' : null;
   const id = numCell(row, 'ID-') ?? (cell(row, 'ID-') || String(row.rowIndex));
   const sizeNote = cell(row, 'Size-');
+  // A named mix of this breed is listed exactly like the purebred; `breedName`
+  // and `breedNote` travel to the card and the puppy page so neither ever calls a
+  // Malshi a "Maltese".
+  const cross = crossBreedOf(label, SITE_BREEDS);
+  const isPure = BREED_LABELS.has(key) && !isCross(label);
   return {
     id,
     breedLabel: label,
-    isDachshund: BREED_LABELS.has(key) && !isCross(label),
-    mentionsDachs: MENTIONS.test(label),
+    isPure,
+    isCrossBreed: !!cross,
+    isBreed: isPure || !!cross,
+    breedName: cross?.name ?? null,
+    breedNote: cross?.note ?? null,
+    mentionsBreed: MENTIONS.test(label),
     name: clean('name', cell(row, 'Name-'), id),
     color: clean('colour', cell(row, 'Color-'), id),
     gender,
@@ -274,20 +310,25 @@ const page1Ids = new Set(allPups.slice(0, AVAILABLE_ROWS).map((p) => String(p.id
 
 const unknownLabels = new Map();
 for (const p of allPups) {
-  if (p.mentionsDachs && !p.isDachshund) unknownLabels.set(p.breedLabel, (unknownLabels.get(p.breedLabel) ?? 0) + 1);
+  if (p.mentionsBreed && !p.isBreed) unknownLabels.set(p.breedLabel, (unknownLabels.get(p.breedLabel) ?? 0) + 1);
 }
 
-const dachshunds = allPups.filter((p) => p.isDachshund);
-const pups = dachshunds.filter(locationAllowed);
-const droppedByLocation = dachshunds.length - pups.length;
-const page1Dachs = dachshunds.filter((p) => page1Ids.has(String(p.id)));
-const page1Kept = page1Dachs.filter(locationAllowed);
+const breedPups = allPups.filter((p) => p.isBreed);
+const crossCount = breedPups.filter((p) => p.isCrossBreed).length;
+const pups = breedPups.filter(locationAllowed);
+const droppedByLocation = breedPups.length - pups.length;
+const page1Breed = breedPups.filter((p) => page1Ids.has(String(p.id)));
+const page1Kept = page1Breed.filter(locationAllowed);
 
 const summary = { sold: [], imageErrors: [] };
 
 const toJson = (p, images, { live }) => ({
   id: p.id,
   name: p.name,
+  // null on a purebred: the site then uses its own breed name. A mix carries the
+  // designer name ("Malshi") and its parents ("Maltese × Shih Tzu").
+  breed: p.breedName,
+  breedNote: p.breedNote,
   color: p.color,
   gender: p.gender,
   age: ageLabel(p.row, { live }),
@@ -302,7 +343,7 @@ const toJson = (p, images, { live }) => ({
   bookHref: p.calLink,
 });
 
-// Available: page-1 dachshunds in the two locations, minus sold.
+// Available: page-1 pups of this breed (and its named mixes) in the two locations, minus sold.
 const available = [];
 const soldTop = [];
 for (const p of page1Kept) {
@@ -322,7 +363,7 @@ for (const p of page1Kept) {
   } catch (e) {
     summary.imageErrors.push(`${p.id}: ${e.message}`);
   }
-  if (p.size === 'Standard') warnings.push(`${p.id}: listed as a Standard Dachshund; rendered as Standard (the site places Miniatures)`);
+  if (p.size === 'Standard') warnings.push(`${p.id}: feed marks this pup Standard; rendered as Standard`);
   available.push(toJson(p, images, { live: true }));
 }
 
@@ -429,16 +470,16 @@ await writeFile(VERDICT_FILE, JSON.stringify(verdicts) + '\n');
 
 // ---- report -----------------------------------------------------------------
 console.log('\n=== sync summary ===');
-console.log(`feed: ${rows.length} rows, ${dachshunds.length} ${FEED_CFG.breedName}`);
+console.log(`feed: ${rows.length} rows, ${breedPups.length} ${FEED_CFG.breedName} (${crossCount} of them named mixes)`);
 console.log(
   `location filter: kept ${pups.length}, dropped ${droppedByLocation} (${FEED_CFG.locations.join(' / ')} only)` +
-    ` | page 1: kept ${page1Kept.length}, dropped ${page1Dachs.length - page1Kept.length}`,
+    ` | page 1: kept ${page1Kept.length}, dropped ${page1Breed.length - page1Kept.length}`,
 );
 console.log(`available: ${available.length} (${available.map((p) => `${p.id}${p.name ? ` ${p.name}` : ''}`).join(', ') || 'none'})`);
 console.log(`recently placed: ${recentlyPlaced.length}`);
 if (summary.sold.length) console.log(`dropped from available (sold): ${summary.sold.join(', ')}`);
 if (unknownLabels.size)
-  console.log(`unknown "dachs" labels (never rendered): ${[...unknownLabels].map(([l, n]) => `${l} (${n})`).join(', ')}`);
+  console.log(`unknown breed labels (never rendered): ${[...unknownLabels].map(([l, n]) => `${l} (${n})`).join(', ')}`);
 console.log(
   `placed archive: ${archiveCounts.placed} placed, ${archiveCounts.withdrawn} withdrawn, ${archiveCounts.expired} expired` +
     (departures.length ? ` (left the list today: ${departures.join(', ')})` : ''),
