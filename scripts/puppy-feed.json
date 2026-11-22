@@ -2,7 +2,16 @@
   "breedName": "Maltipoo",
   "breedShort": "Maltipoo",
   "mentions": "maltipoo",
-  "labels": ["maltipoo"],
-  "locations": ["balestier area"],
-  "overseasLabels": ["maltipoo", "moodle"]
+  "labels": [
+    "maltipoo"
+  ],
+  "locations": [
+    "balestier area",
+    "choa chu kang",
+    "choa chu kang area"
+  ],
+  "overseasLabels": [
+    "maltipoo",
+    "moodle"
+  ]
 }

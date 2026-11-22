@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-11-22T03:22:48.195Z",
+  "syncedAt": "2026-11-22T06:31:06.156Z",
   "available": [
     {
       "id": 2950,
@@ -21,6 +21,27 @@
       "hdbApproved": true,
       "video": null,
       "bookHref": "https://cal.com/puppy-singapore/appointment?puppyid=2950"
+    },
+    {
+      "id": 2930,
+      "name": "Mochi",
+      "color": "Apricot",
+      "gender": "Male",
+      "age": "3 months",
+      "price": 2888,
+      "image": "2930-1-c1a34f51.webp",
+      "images": [
+        "2930-1-c1a34f51.webp",
+        "2930-2-6f5d5bcb.webp",
+        "2930-3-9ac8b11a.webp",
+        "2930-4-20224076.webp"
+      ],
+      "location": "Choa Chu Kang",
+      "origin": "Local",
+      "size": "Miniature",
+      "hdbApproved": true,
+      "video": null,
+      "bookHref": "https://cal.com/puppy-singapore/appointment?puppyid=2930"
     }
   ],
   "recentlyPlaced": [

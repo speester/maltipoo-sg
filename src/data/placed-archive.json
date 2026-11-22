@@ -1,7 +1,7 @@
 {
   "_note": "Written by scripts/sync-puppies.mjs, never rebuilt from scratch: puppies that left the available list. status: placed (sold evidence; page stays up, noindex, \"Found a loving home\"), withdrawn (no evidence; no page, URL 301s to /puppies/), expired (past the 90-day retention; URL 301s). placedAt = the day the sync first saw it gone (SGT); lastListed = the last day it was listed. Do not hand-edit; to mark a sale, add the id to sold-overrides.json and re-run the sync.",
   "lastSync": {
-    "at": "2026-11-22T03:22:48.194Z",
+    "at": "2026-11-22T06:31:06.156Z",
     "listed": [
       {
         "id": 2950,
@@ -17,6 +17,24 @@
           "2950-4-1ef7b60b.webp"
         ],
         "location": "Balestier Area",
+        "origin": "Local",
+        "size": "Miniature",
+        "hdbApproved": true
+      },
+      {
+        "id": 2930,
+        "name": "Mochi",
+        "color": "Apricot",
+        "gender": "Male",
+        "age": "3 months",
+        "image": "2930-1-c1a34f51.webp",
+        "images": [
+          "2930-1-c1a34f51.webp",
+          "2930-2-6f5d5bcb.webp",
+          "2930-3-9ac8b11a.webp",
+          "2930-4-20224076.webp"
+        ],
+        "location": "Choa Chu Kang",
         "origin": "Local",
         "size": "Miniature",
         "hdbApproved": true
