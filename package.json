@@ -62,16 +62,19 @@
     "sync:puppies": "node scripts/sync-puppies.mjs",
     "verify": "npm run build && npm run check:tokens && npm run check:kit && npm run check:anchors && npm run check:blog && npm run check:blueprint && npm run check:content && npm run check:contrast && npm run check:design && npm run check:fonts && npm run check:form && npm run check:formstates && npm run check:health && npm run check:hgates && npm run check:imagesrc && npm run check:index && npm run check:links && npm run check:page && npm run check:quotes && npm run check:refs:stale && npm run check:registry && npm run check:schema && npm run check:schema:req && npm run check:sources && npm run check:related && npm run check:keyboard && npm run check:variants && npm run check:dims && npm run check:formaloo-map && npm run check:posts && npm run check:redirects && npm run qc && npm run audit && python scripts/ledger.py check",
     "verify:scaffold": "npm run build && npm run check:kit && npm run check:tokens && npm run check:blueprint && npm run check:content && npm run check:design && npm run check:contrast && npm run check:fonts && npm run check:formstates && npm run check:health && npm run check:schema",
-    "wordcount": "node scripts/wordcount.mjs"
+    "wordcount": "node scripts/wordcount.mjs",
+    "test:card": "node --experimental-strip-types --test tests/*.test.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@tailwindcss/vite": "^4.3.2",
     "astro": "^7.0.6",
     "gsap": "^3.15.0",
-    "tailwindcss": "^4.3.2"
+    "tailwindcss": "^4.3.2",
+    "qrcode-generator": "1.4.4"
   },
   "devDependencies": {
-    "sharp": "^0.35.3"
+    "sharp": "^0.35.3",
+    "happy-dom": "^21.0.4"
   }
 }

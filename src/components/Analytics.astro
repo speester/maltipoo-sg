@@ -30,6 +30,35 @@ const id = site.ga4MeasurementId;
     });
     setTimeout(loadGA, 4000);
 
+    // Passport card delegate. Mirrors cardEvent() in src/lib/ga4-card.ts; keep the two in step.
+    var CARD_EVENTS = ['book_viewing_click', 'whatsapp_click', 'send_click', 'call_click', 'earliest_visit_click', 'date_select', 'time_select', 'photo_dot_click', 'photo_arrow_click', 'photo_tap', 'photo_swipe', 'video_play_click', 'perks_open', 'kit_list_toggle', 'perks_close', 'whatsapp_web_click', 'whatsapp_app_click', 'call_copy_click', 'call_dial_click', 'popup_close', 'maps_click'];
+    function cardEvents(el, pupEl) {
+      var name = el.getAttribute('data-ga4-event');
+      if (CARD_EVENTS.indexOf(name) === -1) return [];
+      var pup = {};
+      if (pupEl) pup = { puppy_id: pupEl.getAttribute('data-pup'), puppy_name: pupEl.getAttribute('data-pup-name'), breed: pupEl.getAttribute('data-pup-breed') };
+      var params = Object.assign({}, pup);
+      var label = el.getAttribute('data-ga4-label');
+      if (label) params[name === 'book_viewing_click' ? 'viewing' : 'label'] = label;
+      var out = [{ name: name, params: params }];
+      var a = el.closest('a[href]');
+      var href = a ? a.getAttribute('href') || '' : '';
+      if (name !== 'whatsapp_click' && href.indexOf('wa.me') !== -1) out.push({ name: 'whatsapp_click', params: Object.assign({ button: name }, pup) });
+      return out;
+    }
+
+    // Passport card delegate (see src/lib/ga4-card.ts). Runs first; a card hit stops the generic listener below.
+    document.addEventListener('click', function (e) {
+      const t = e.target;
+      if (!t || !t.closest) return;
+      const card = t.closest('[data-ga4-event]');
+      if (!card || location.hostname !== 'maltipoo.sg') return;
+      const evs = cardEvents(card, card.closest('[data-pup]'));
+      if (!evs.length) return;
+      e.stopImmediatePropagation();
+      loadGA();
+      evs.forEach(function (ev) { gtag('event', ev.name, ev.params); });
+    }, true);
     document.addEventListener('click', function (e) {
       const t = e.target;
       if (!t || !t.closest) return;

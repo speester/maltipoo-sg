@@ -9,6 +9,10 @@ import archiveData from '../data/placed-archive.json';
 export interface Pup {
   id: number | string;
   name: string | null;
+  // A named crossbreed of this site's breed ("Malshi"); null on a purebred.
+  breed?: string | null;
+  // Its parent breeds ("Maltese x Shih Tzu"); null on a purebred.
+  breedNote?: string | null;
   color: string | null;
   gender: 'Male' | 'Female' | null;
   age: string | null;
@@ -24,6 +28,8 @@ export interface Pup {
   video?: string | null;
   // The shop's cal.com booking link for this exact pup (feed CalLink-).
   bookHref?: string | null;
+  // Adult size from sheet column AQ ("Adult Size"), e.g. "4 - 5 kg". Absent or null = no AQ value; the card falls back.
+  adultSize?: string | null;
 }
 
 export interface PlacedPup extends Pup {
@@ -39,16 +45,15 @@ const photos = import.meta.glob<ImageMetadata>('../assets/live/*.webp', { eager:
 export const photoFor = (file: string | null | undefined) => (file ? photos[`../assets/live/${file}`] : undefined);
 
 export const pupPageSlug = (p: Pup): string => slugOf(p);
-export const pupPageHref = (p: Pup) => `/puppies/${pupPageSlug(p)}`;
+export const pupPageHref = (p: Pup) => `/puppies/${pupPageSlug(p)}/`;
 
 export const half = (g: Pup['gender']) => (g === 'Female' ? 'Girl' : g === 'Male' ? 'Boy' : 'Puppy');
 
 /** The pup's name, or the shop's puppy number when the sheet has no name yet. */
 export const displayName = (p: Pup) => p.name ?? `Pup #${p.id}`;
 
-// Single-breed site: the feed's Size- column (a Dachshund field) is ignored here.
-export const breedShort = (_p: Pup) => 'Maltipoo';
-export const breedLong = (_p: Pup) => 'Maltipoo';
+export const breedShort = (p: Pup) => p.breed ?? 'Maltipoo';
+export const breedLong = (p: Pup) => p.breed ?? 'Maltipoo';
 
 export const priceLabel = (p: Pup) => (typeof p.price === 'number' ? `$${p.price.toLocaleString('en-SG')}` : null);
 
@@ -56,7 +61,7 @@ export const priceLabel = (p: Pup) => (typeof p.price === 'number' ? `$${p.price
 export const ageShort = (age: string | null) =>
   age ? age.replace(/\s*months?\b/i, ' mo').replace(/\s*weeks?\b/i, ' wk') : null;
 
-/** Full aria context: "Biscuit, Apricot Maltipoo girl, $4,088 all-in". */
+/** Full aria context: "Eirenos, Apricot Maltipoo boy, $3,888 all-in". */
 export const pupContext = (p: Pup, { price = true } = {}) =>
   [
     displayName(p),
@@ -160,4 +165,20 @@ export function placedShowcase(max = 4): { pup: Pup; hasPage: boolean }[] {
     out.push({ pup, hasPage: false });
   }
   return out.slice(0, max);
+}
+
+// ---- passport card helpers (plan Task 3) -------------------------------------
+/** YouTube video id from a watch, shorts, youtu.be or embed URL. Null when there is none. */
+export function youtubeId(url: string | null | undefined): string | null {
+  if (!url) return null;
+  const m = url.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+
+/** The pup's photos in order, resolved with photoFor. Falls back to the main image and drops missing files. */
+export function cardPhotos(p: Pup): ImageMetadata[] {
+  const fromList = (p.images ?? []).map((f) => photoFor(f)).filter((x): x is ImageMetadata => Boolean(x));
+  if (fromList.length) return fromList;
+  const one = photoFor(p.image);
+  return one ? [one] : [];
 }

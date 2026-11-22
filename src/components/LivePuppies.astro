@@ -1,11 +1,13 @@
 ---
-// The live Maltipoo listings: a grid of Bakery Box cards fed by
+// The live Cavapoo listings: a grid of Bakery Box cards fed by
 // src/data/available-puppies.json (`npm run sync:puppies`). Replaces the retired
-// representative-image card grid on / and /puppies.
+// representative-image card grid on / and /puppies/.
 //
 // Zero in stock (plan D2): fallback="placed" shows the recently placed pups (max 4)
 // and the waitlist CTA; fallback="hide" renders nothing. A section is never left empty.
 import BakeryPupCard from './BakeryPupCard.astro';
+import PassportCard from './PassportCard.astro';
+import { adultSize } from '../data/breed-facts';
 import CloudDivider from './CloudDivider.astro';
 import OverseasPuppies from './OverseasPuppies.astro';
 import { whatsappLink } from '../data/site';
@@ -30,6 +32,7 @@ const render = shown.length > 0 || fallback === 'placed';
 // Owner rule 2026-10-18: no local Balestier pup -> Australia reservations, own section.
 const showOverseas = shown.length === 0 && exclude === undefined;
 
+// Passport card (plan D3): available pups only. Sold and placed pups never enter this grid.
 const synced = new Date(liveSyncedAt()).toLocaleDateString('en-SG', {
   day: 'numeric',
   month: 'long',
@@ -37,26 +40,26 @@ const synced = new Date(liveSyncedAt()).toLocaleDateString('en-SG', {
   timeZone: 'Asia/Singapore',
 });
 const waitlist = whatsappLink(
-  'Hi, no Maltipoos are listed on your site right now. Could you add me to the waitlist for the next litter?',
+  'Hi, no Cavapoos are listed on your site right now. Could you add me to the waitlist for the next litter?',
 );
 ---
 
-{render && band && <CloudDivider fill="var(--color-tint-200)" />}
+{render && band && <CloudDivider fill="var(--color-sky-200)" />}
 {render && (
-  <section class:list={[band ? 'bg-tint-200 py-12' : 'container-site py-10']} id={id}>
+  <section class:list={[band ? 'bg-sky-200 py-12' : 'container-site py-10']} id={id}>
    <div class:list={[band && 'container-site']}>
-    <div class:list={['rounded-[var(--radius-card)] border border-tint-300 border-l-8 border-l-primary/60 px-6 py-4 mb-8', band ? 'bg-surface' : 'bg-tint-200/70']}>
+    <div class:list={['rounded-[var(--radius-card)] border border-sky-300 border-l-8 border-l-primary/60 px-6 py-4 mb-8', band ? 'bg-surface' : 'bg-sky-200/70']}>
       <h2 class="text-2xl md:text-3xl m-0">{heading}</h2>
       {shown.length > 0 ? (
         <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">Real puppies in our care, from the shop’s live stock list (updated {synced}). Tap a card to meet the pup.</p>
       ) : (
-        <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">No Maltipoos are available today. Litters are small and move fast, so here are the latest to find their families.</p>
+        <p class="m-0 mt-1 text-[15px] text-ink-soft max-w-[65ch]">No Cavapoos are available today. Litters are small and move fast, so here are the latest to find their families.</p>
       )}
     </div>
 
     {shown.length > 0 && (
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-9 items-start">
-        {shown.map((pup) => <BakeryPupCard pup={pup} href={pupPageHref(pup)} />)}
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-9 items-start">
+        {shown.map((pup) => <PassportCard pup={pup} adult={pup.adultSize ?? adultSize} />)}
       </div>
     )}
 
@@ -67,8 +70,8 @@ const waitlist = whatsappLink(
             {placed.map(({ pup, hasPage }) => <BakeryPupCard pup={pup} state="placed" href={hasPage ? pupPageHref(pup) : undefined} />)}
           </div>
         )}
-        <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-[var(--radius-card)] bg-surface border border-tint-300 px-6 py-5">
-          <p class="m-0 flex-1">Join the waitlist and we will WhatsApp you photos of the next Maltipoo litter, with an honest wait time.</p>
+        <div class="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-[var(--radius-card)] bg-surface border border-sky-300 px-6 py-5">
+          <p class="m-0 flex-1">Join the waitlist and we will WhatsApp you photos of the next Cavapoo litter, with an honest wait time.</p>
           <a href={waitlist} class="btn-wa" data-wa-source="waitlist">Join the waitlist</a>
         </div>
       </>

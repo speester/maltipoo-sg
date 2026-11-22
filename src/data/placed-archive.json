@@ -1,20 +1,20 @@
 {
   "_note": "Written by scripts/sync-puppies.mjs, never rebuilt from scratch: puppies that left the available list. status: placed (sold evidence; page stays up, noindex, \"Found a loving home\"), withdrawn (no evidence; no page, URL 301s to /puppies/), expired (past the 90-day retention; URL 301s). placedAt = the day the sync first saw it gone (SGT); lastListed = the last day it was listed. Do not hand-edit; to mark a sale, add the id to sold-overrides.json and re-run the sync.",
   "lastSync": {
-    "at": "2026-10-18T09:43:54.597Z",
+    "at": "2026-11-22T03:22:48.194Z",
     "listed": [
       {
-        "id": 2938,
-        "name": "Biscuit",
-        "color": "Apricot",
-        "gender": "Female",
+        "id": 2950,
+        "name": "Smokey",
+        "color": "Red",
+        "gender": "Male",
         "age": "2 months",
-        "image": "2938-1-1f575126.webp",
+        "image": "2950-1-64963ef1.webp",
         "images": [
-          "2938-1-1f575126.webp",
-          "2938-2-41d245a7.webp",
-          "2938-3-27954ad0.webp",
-          "2938-4-3fa4ec7d.webp"
+          "2950-1-64963ef1.webp",
+          "2950-2-8558c489.webp",
+          "2950-3-bde3fd88.webp",
+          "2950-4-1ef7b60b.webp"
         ],
         "location": "Balestier Area",
         "origin": "Local",
@@ -23,5 +23,29 @@
       }
     ]
   },
-  "pups": []
+  "pups": [
+    {
+      "id": 2938,
+      "name": "Biscuit",
+      "color": "Apricot",
+      "gender": "Female",
+      "age": "2 months",
+      "image": "2938-1-1f575126.webp",
+      "images": [
+        "2938-1-1f575126.webp",
+        "2938-2-41d245a7.webp",
+        "2938-3-27954ad0.webp",
+        "2938-4-3fa4ec7d.webp"
+      ],
+      "location": "Balestier Area",
+      "origin": "Local",
+      "size": "Miniature",
+      "hdbApproved": true,
+      "status": "placed",
+      "placedAt": "2026-11-22",
+      "lastListed": "2026-10-18",
+      "source": "sync",
+      "evidence": "sold-overlay"
+    }
+  ]
 }

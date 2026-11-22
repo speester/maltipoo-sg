@@ -1,0 +1,284 @@
+---
+// Passport puppy card (artifact v23), ported from _passport-card-reference/pass-src.html.
+// Server-rendered: every WhatsApp and booking link is a real href, so it works with JS off.
+// Behaviour lives in src/scripts/passport-card.ts. Styles in ./passport-card.css (scoped under .pc).
+// Every button carries data-ga4-event and data-ga4-label; Analytics.astro sends them.
+import { Image } from 'astro:assets';
+import './passport-card.css';
+import { site, whatsappLink } from '../data/site';
+import { displayName, breedShort, half, priceLabel, cardPhotos, youtubeId, originOf, type Pup } from '../lib/puppy-cards';
+import { buildDays, hr } from '../lib/passport-booking';
+import { CARD_CLOSED_DOWS, dayButtonsHtml, nextTextFor } from '../scripts/passport-card';
+import { I, FLAG_SG, BELL, G_SVG } from '../lib/passport-icons';
+import { PERKS } from '../data/passport-perks';
+import starterKit from '../data/starter-kit-items.json';
+
+interface Props {
+  pup: Pup;
+  // Adult size: the pup's sheet value (column AQ, e.g. "4 - 5 kg"), else the breed-facts fallback. Null hides the row.
+  adult: string | null;
+}
+const { pup, adult } = Astro.props;
+
+const id = String(pup.id);
+const name = displayName(pup);
+const breed = breedShort(pup);
+const price = priceLabel(pup);
+const origin = originOf(pup.origin);
+const photos = cardPhotos(pup);
+const vid = youtubeId(pup.video);
+
+// Slides: photos in order, with the video in second place (or first when there is only one).
+type Slide = { t: 'img'; src: (typeof photos)[number]; i: number } | { t: 'vid' };
+const slides: Slide[] = photos.map((src, i) => ({ t: 'img', src, i }));
+if (vid) slides.splice(Math.min(1, slides.length), 0, { t: 'vid' });
+const multi = slides.length > 1;
+const altFor = (i: number) => `${name}, ${(pup.color ?? 'puppy').toLowerCase()} ${breed} puppy, photo ${i + 1} of ${photos.length}`;
+
+// Booking strip: today plus seven days, Singapore time, closed Mondays. Re-dated on the client at load.
+const now = new Date();
+const days = buildDays(now, 8, [...CARD_CLOSED_DOWS]);
+const dayHtml = dayButtonsHtml(days, now);
+const nextText = nextTextFor(days, now);
+const SLOTS = [11, 12, 13, 14, 15, 16, 17];
+
+// Kit list from the starter-kit data: grouped by category, worth = sum of prices.
+const kitItems = (starterKit as { items: { title: string; price: number; category: string }[] }).items;
+const kitGroups = [...new Set(kitItems.map((k) => k.category))].map((cat) => {
+  const items = kitItems.filter((k) => k.category === cat);
+  return { cat, items, worth: items.reduce((a, k) => a + k.price, 0) };
+});
+const kitWorth = kitItems.reduce((a, k) => a + k.price, 0);
+const KITC = ['#e5383b', '#2f7fd6', '#0f9d6e', '#ef8a00', '#8b5cf6', '#d6416c'];
+
+const callLocal = site.callNumber.slice(2);
+const callShow = `${callLocal.slice(0, 4)} ${callLocal.slice(4)}`;
+// Opens the shop in Google Maps from both the booking block and the perks sheet.
+const mapsHref = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${site.address.street}, ${site.address.postal}`)}`;
+const ask = `Hi Curious Tails! Is ${name} (ID ${id}, ${breed}) still available?`;
+const prefill = `Hi, is ${name} (ID ${id}) still available?`;
+const chatHref = whatsappLink(ask);
+const sendHref = whatsappLink(prefill);
+const gender = half(pup.gender);
+const gCls = gender === 'Girl' ? 'girl' : 'boy';
+const gIcon = G_SVG[gender === 'Girl' ? 'Girl' : 'Boy'];
+---
+
+<article
+  class="pc phone"
+  data-passport
+  data-pup={id}
+  data-pup-name={name}
+  data-pup-breed={breed}
+  data-wa={site.whatsappNumber}
+  data-call={site.callNumber}
+  data-call-show={callShow}
+  data-phone={site.phoneDisplay}
+  data-hours={site.hours}
+>
+  <div class="wa-head">
+    <span class="hb" aria-hidden="true" set:html={I.back}></span>
+    <span class="logo" role="img" aria-label="Curious Tails logo" style="background-image:url(/brand/curious-tails-logo.webp)"></span>
+    <div class="who">
+      <b>{site.parent.name}<svg class="verified" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12.00 1.00 L13.83 2.78 L16.21 1.84 L17.22 4.18 L19.78 4.22 L19.82 6.78 L22.16 7.79 L21.22 10.17 L23.00 12.00 L21.22 13.83 L22.16 16.21 L19.82 17.22 L19.78 19.78 L17.22 19.82 L16.21 22.16 L13.83 21.22 L12.00 23.00 L10.17 21.22 L7.79 22.16 L6.78 19.82 L4.22 19.78 L4.18 17.22 L1.84 16.21 L2.78 13.83 L1.00 12.00 L2.78 10.17 L1.84 7.79 L4.18 6.78 L4.22 4.22 L6.78 4.18 L7.79 1.84 L10.17 2.78 Z"/><path d="M7.6 12.3l2.9 2.9 5.9-6" fill="none" stroke="#fff" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></b>
+      <small class="rot" aria-live="off"><span>online</span><span><em class="rot-rev"><b class="stars" aria-label="5 stars">★★★★★</b><em class="rot-txt">76 Google reviews</em></em></span><span>AVS licensed · {site.license.avsNumber}</span></small>
+    </div>
+  </div>
+
+  <div class="wa-body">
+    <div class="bub in">
+      <div class={`car ${multi ? 'bars' : 'single'}`} data-car style="--dur:3.4s">
+        <div class="ph">
+          <div class="car-track" data-act="car-next">
+            {slides.map((sl, k) =>
+              sl.t === 'vid' ? (
+                <div class="vslide" data-yt={vid}>
+                  <img src={`https://i.ytimg.com/vi/${vid}/oar2.jpg`} alt={`Video of ${name}`} loading="lazy" decoding="async" draggable="false" />
+                  <span class="vtag"><span set:html={I.play}></span>Video</span>
+                  <button type="button" class="vplay" data-act="vplay" data-ga4-event="video_play_click" aria-label={`Play video of ${name}`}>
+                    <span set:html={I.play}></span>
+                  </button>
+                </div>
+              ) : (
+                <Image
+                  src={sl.src}
+                  widths={[720]}
+                  format="webp"
+                  sizes="(min-width: 640px) 360px, 100vw"
+                  alt={altFor(sl.i)}
+                  loading={k === 0 ? 'eager' : 'lazy'}
+                  decoding="async"
+                  class={k === 0 ? 'on' : undefined}
+                />
+              ),
+            )}
+          </div>
+          {multi && (
+            <>
+              <div class="ind bars">
+                {slides.map((sl, k) => (
+                  <button
+                    type="button"
+                    data-act="car-go"
+                    data-ci={k}
+                    data-ga4-event="photo_dot_click"
+                    data-ga4-label={sl.t === 'vid' ? 'video' : `photo_${sl.i + 1}`}
+                    aria-label={sl.t === 'vid' ? 'Show video' : `Show photo ${sl.i + 1}`}
+                  >
+                    <b class="fill"></b>
+                  </button>
+                ))}
+              </div>
+              <button type="button" class="nav prev" data-act="car-prev" data-ga4-event="photo_arrow_click" data-ga4-label="prev" aria-label="Previous photo">
+                <span set:html={I.left}></span>
+              </button>
+              <button type="button" class="nav next" data-act="car-fwd" data-ga4-event="photo_arrow_click" data-ga4-label="next" aria-label="Next photo">
+                <span set:html={I.right}></span>
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+
+      <div class="bp">
+        <div class="det k7">
+          <div class="pp-h">
+            <b>{name}</b>
+            <span class="bh"><strong class="breed">{breed}</strong><small class="pid" aria-label={`Puppy ID ${id}`}>ID<b>{id}</b></small></span>
+          </div>
+          <div class="dx">
+            {price && (
+              <span class="hang">
+                <span set:html={BELL}></span>
+                <span class="coin" aria-label={`From ${price} all-in`}><small>from</small>{price}<small>all-in</small></span>
+              </span>
+            )}
+            <div class="pp">
+              <span><small>Gender</small><b><span class={`gemo ${gCls}`} aria-hidden="true" set:html={gIcon}></span><em>{gender}</em></b></span>
+              {origin && (
+                <span>
+                  <small>Bred in</small>
+                  <b>{origin.flag ? <span set:html={origin.flag}></span> : null}<em>{origin.name}</em></b>
+                </span>
+              )}
+              {pup.age && <span><small>Age</small><b><em>{pup.age}</em></b></span>}
+              {adult && <span><small>Adult size</small><b><em>{adult}</em></b></span>}
+            </div>
+          </div>
+          <button type="button" class="nextopen" data-act="next-open" data-ga4-event="earliest_visit_click">
+            <span class="no-ic"><span set:html={I.clock}></span></span>
+            <span class="no-tx"><small>Earliest visit</small><b class="next-t">{nextText}</b></span>
+            <span class="go">Book It<span set:html={I.right}></span></span>
+          </button>
+        </div>
+
+        <button type="button" class="peek pk-mq" data-act="sheet" data-ga4-event="perks_open" data-ga4-label="strip" aria-haspopup="dialog" aria-label="See all 6 perks">
+          <span class="mq">
+            <span class="mq-in">
+              {[0, 1].map(() => (
+                <>
+                  {PERKS.map((k) => (
+                    <span style={`--c:${k.c}`}>
+                      <i set:html={I[k.icon]}></i>
+                      {k.mq}
+                    </span>
+                  ))}
+                </>
+              ))}
+            </span>
+          </span>
+          <span class="all">All 6</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="bub in cont">
+      <div class="bk" data-book>
+        <div class="bk-h">
+          <span class="bk-ic" style="--c:#2f7fd6" set:html={I.cal}></span>
+          Meet {name}
+          <small><span class="bk-ic sm" style="--c:#e5383b" set:html={I.pin}></span><a class="maps" href={mapsHref} target="_blank" rel="noopener" data-ga4-event="maps_click" data-ga4-label="booking">{site.address.street}</a></small>
+        </div>
+        <div class="dates scroll" data-style="scroll" role="group" aria-label="Viewing day" set:html={dayHtml}></div>
+        <div class="slots" role="group" aria-label="Viewing time">
+          {SLOTS.map((h) => (
+            <button type="button" class="slot" data-act="slot" data-h={h} data-ga4-event="time_select" data-ga4-label={hr(h)} aria-pressed="false">{hr(h)}</button>
+          ))}
+        </div>
+        <div class="acts">
+          <a class="book" data-act="book" data-ga4-event="book_viewing_click" href="#">
+            <span set:html={I.cal}></span><span class="bk-lbl">Book viewing</span>
+          </a>
+          <a class="ic chat" href={chatHref} target="_blank" rel="noopener" data-ga4-event="whatsapp_click" data-ga4-label="chat_icon" aria-label="Chat on WhatsApp" title="Chat on WhatsApp">
+            <span set:html={I.chat}></span>
+          </a>
+          <a class="ic call" data-act="call" data-ga4-event="call_click" href={`tel:+${site.callNumber}`} aria-label={`Call ${callShow}`} title={`Call ${callShow}`}>
+            <span set:html={I.phone}></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="composer s-ring">
+    <label class="field" for={`msg-${id}`}>
+      <span set:html={I.smile}></span>
+      <textarea id={`msg-${id}`} data-msg rows="1" wrap="off" data-prefill={prefill} aria-label="Message to Curious Tails" autocomplete="off">{prefill}</textarea>
+    </label>
+    <a class="tip" data-ga4-event="send_click" data-ga4-label="tap_to_send" href={sendHref} tabindex="-1" aria-hidden="true">Tap to send</a>
+    <a class="send" data-ga4-event="send_click" data-ga4-label="send_button" href={sendHref} aria-label="Send on WhatsApp">
+      <span set:html={I.send}></span>
+    </a>
+  </div>
+
+  <div class="scrim" data-act="sheet-close" data-ga4-event="perks_close" data-ga4-label="backdrop"></div>
+  <div class="sheet" role="dialog" aria-modal="true" aria-label={`Everything that comes with ${name}`} tabindex="-1">
+    <button type="button" class="grab" data-act="sheet-close" data-ga4-event="perks_close" data-ga4-label="handle" aria-label="Close"></button>
+    <h3>Everything that comes with {name}</h3>
+    <ul class="perks">
+      {PERKS.map((k) => (
+        <li style={`--c:${k.c}`}>
+          <span class="pi" set:html={I[k.icon]}></span>
+          <span class="tx"><b>{k.title}</b><small>{k.detail}</small></span>
+          {k.v && (
+            <span class="pv">
+              {k.worth && <small>worth</small>}
+              {k.v}
+            </span>
+          )}
+        </li>
+      ))}
+    </ul>
+    <div class="kitd">
+      <button type="button" class="kit-tg" data-act="kit" aria-expanded="false" aria-controls={`kit-${id}`}>
+        <span>What's in the {kitItems.length}-item kit</span>
+        <span set:html={I.up}></span>
+      </button>
+      <div class="kit-body" id={`kit-${id}`} hidden>
+        {kitGroups.map((g, n) => (
+          <div class="kgrp" style={`--c:${KITC[n % KITC.length]}`}>
+            <div class="kc">{g.cat}<span>{g.items.length} items · worth ${g.worth}</span></div>
+            <ul>
+              {g.items.map((it) => (
+                <li><span>{it.title}</span><span><small>worth</small> ${it.price}</span></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <div class="kt"><span>{kitItems.length} items</span><span><small>worth</small> ${kitWorth}</span></div>
+      </div>
+    </div>
+    <div class="sh-info">
+      <div style="--c:#e5383b"><span set:html={I.pin}></span><a class="maps" href={mapsHref} target="_blank" rel="noopener" data-ga4-event="maps_click" data-ga4-label="sheet">{site.address.street}, {site.address.postal}</a></div>
+      <div style="--c:#2f7fd6"><span set:html={I.clock}></span>{site.hours}</div>
+      <div style="--c:#0f9d6e"><span set:html={I.shield}></span>AVS licensed pet shop · {site.license.avsNumber}</div>
+    </div>
+    <button type="button" class="sh-done" data-act="sheet-close" data-ga4-event="perks_close" data-ga4-label="back_to_booking">Back to booking</button>
+  </div>
+</article>
+
+<script>
+  import { initPassportCards, startPassportClock } from '../scripts/passport-card.ts';
+  initPassportCards();
+  startPassportClock();
+</script>
